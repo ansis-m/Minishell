@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/11 19:20:39 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:46:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,29 @@ void	configure_sigaction(void)
 
 	action.sa_handler = c_sig_handler;
 	action.sa_flags = SA_NODEFER;
+	sigemptyset(&action.sa_mask);
+	sigaddset(&action.sa_mask, SIGINT);
 	sigaction(SIGINT, &action, 0);
+}
+
+void	free_tokens(char ***tokens)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (*(tokens + i))
+	{
+		j = 0;
+		while (*(*(tokens + i) + j))
+		{
+			free(*(*(tokens + i) + j));
+			j++;
+		}
+		free(*(tokens + i));
+		i++;
+	}
+	free(tokens);
 }
 
 int	run_command(char *s)
@@ -56,6 +78,7 @@ int	run_command(char *s)
 			printf("argument: %s\n", *(*(tokens + i) + j));
 		printf("~~~~~~~~~~~~~~~~~~\n");		
 	}
+	free_tokens(tokens);
 	return (0);
 }
 
