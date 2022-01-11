@@ -6,7 +6,7 @@
 #    By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/10 16:22:42 by amalecki          #+#    #+#              #
-#    Updated: 2022/01/10 16:36:31 by amalecki         ###   ########.fr        #
+#    Updated: 2022/01/11 17:49:21 by amalecki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC = main.c
 
 CC = cc
 
-CFLAGS = -Wall -Wextra  #-pthread -lpthread -fsanitize=thread -Werror
+CFLAGS = -Wall -Wextra  -g#-pthread -lpthread -fsanitize=thread -Werror
 
 NAME = minishell
 
