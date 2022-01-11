@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:07:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/11 19:19:07 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:07:33 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	count_arguments(char *command)
 			command++;
 	while (*command && *command != '|' && *command != '>' && *command != '<' )
 	{
-		if (*command == ' ' || *command == '\t')
+		if (in_charset(*command))
 		{
 			result++;
-			while (*command == ' ' || *command == '\t')
+			while (in_charset(*command))
 				command++;
 		}
 		if (*command == '|')
@@ -36,12 +36,11 @@ int	count_arguments(char *command)
 		if (*command == 34)
 		{
 			command++;
+			result++;
 			while (*command && *command != 34)
 				command++;
 		}
 		command++;
-		if (! *command)
-			result++;
 	}
 	return (result);
 }
@@ -76,7 +75,7 @@ int	get_arguments(char **array, char *command)
 			size++;
 	}
 	else
-		while (*(command + size) && *(command + size) != ' ' && *(command + size) != '\t')
+		while (*(command + size) && *(command + size) != ' ' && *(command + size) != '\t' && *(command + size) != '>' && *(command + size) != '<')
 			size++;
 	*array = (char *)malloc(sizeof(char) * (size + 1));
 	ft_strlcpy(*array, command, size + 1);

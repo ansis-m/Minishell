@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/11 19:20:17 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/11 20:08:15 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/history.h>
 
 # define TERMINAL "terminal: "
+# define C_CHAR_SET "-=#@.,"
 
 typedef struct s_tokens
 {
@@ -40,5 +41,10 @@ int		count_arguments(char *command);
 //get_tokens_utils.c
 int		count_pipes(char *s);
 void	ft_strlcpy(char *dst, const char *src, size_t dstsize);
+bool	ft_isalnum(int c);
+bool	in_charset(char c);
+
+//free_memory.c
+void	free_tokens(char ***tokens);
 
 #endif
