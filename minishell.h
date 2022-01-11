@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/10 18:17:16 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/11 19:20:17 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
 # define TERMINAL "terminal: "
 
 typedef struct s_tokens
@@ -31,5 +30,15 @@ typedef struct s_tokens
 }	t_tokens;
 
 //main.c
+
+//get_tokens.c
+char	***get_tokens(char *s);
+int		get_command(char ***array, char *command);
+int		get_arguments(char **array, char *command);
+int		count_arguments(char *command);
+
+//get_tokens_utils.c
+int		count_pipes(char *s);
+void	ft_strlcpy(char *dst, const char *src, size_t dstsize);
 
 #endif

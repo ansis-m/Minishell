@@ -6,11 +6,11 @@
 #    By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/10 16:22:42 by amalecki          #+#    #+#              #
-#    Updated: 2022/01/11 17:49:21 by amalecki         ###   ########.fr        #
+#    Updated: 2022/01/11 19:22:17 by amalecki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = main.c
+SRC = main.c get_tokens.c get_tokens_utils.c
 
 CC = cc
 
