@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:07:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/11 20:07:33 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 09:55:04 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,12 @@ int	count_arguments(char *command)
 			command++;
 	while (*command == '|')
 			command++;
-	while (*command == ' ')
-			command++;
 	while (*command && *command != '|' && *command != '>' && *command != '<' )
 	{
 		if (in_charset(*command))
-		{
 			result++;
-			while (in_charset(*command))
+		while (in_charset(*command))
 				command++;
-		}
 		if (*command == '|')
 			return (result);
 		if (*command == 34)
@@ -45,6 +41,25 @@ int	count_arguments(char *command)
 	return (result);
 }
 
+void	initial_offset(int *offset, char **command)
+{
+	while (**command == ' ' || **command == '\t')
+	{
+		(*offset)++;
+		(*command)++;
+	}
+	while (**command == '|')
+	{
+		(*offset)++;
+		(*command)++;
+	}
+	while (**command == ' ' || **command == '\t')
+	{
+		(*offset)++;
+		(*command)++;
+	}
+}
+
 int	get_arguments(char **array, char *command)
 {
 	int		size;
@@ -52,21 +67,7 @@ int	get_arguments(char **array, char *command)
 
 	size = 0;
 	offset = 0;
-	while (*command == ' ' || *command == '\t')
-	{
-		offset++;
-		command++;
-	}
-	while (*command == '|')
-	{
-		offset++;
-		command++;
-	}
-	while (*command == ' ' || *command == '\t')
-	{
-		offset++;
-		command++;
-	}
+	initial_offset(&offset, &command);
 	if (*command == 34)
 	{
 		command++;
@@ -75,7 +76,7 @@ int	get_arguments(char **array, char *command)
 			size++;
 	}
 	else
-		while (*(command + size) && *(command + size) != ' ' && *(command + size) != '\t' && *(command + size) != '>' && *(command + size) != '<')
+		while (*(command + size) && *(command + size) != ' ' && *(command + size) != '|' && *(command + size) != '>' && *(command + size) != '<')
 			size++;
 	*array = (char *)malloc(sizeof(char) * (size + 1));
 	ft_strlcpy(*array, command, size + 1);

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:13:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/11 20:07:43 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 09:44:47 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	*(dst + i) = '\0';
 }
 
-bool	ft_isalnum(int c)
+bool	ft_isalnum(int c) //some errors
 {
 	if ((c >= '0' && c <= '9' ) || (c >= 'A' && c <= 'Z' )
 		|| (c >= 'a' && c <= 'z' ))
@@ -56,8 +56,10 @@ bool	ft_isalnum(int c)
 	return (false);
 }
 
-bool	in_charset(char c)
+bool	in_charset(int c) //needs more work
 {
+	if (c == '|')
+		return (false);
 	if (ft_isalnum(c))
 		return (true);
 	return (false);

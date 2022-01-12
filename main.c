@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/11 19:49:04 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 09:44:17 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	configure_sigaction(void)
 int	run_command(char *s)
 {
 	char	***tokens;
-	char	*input_file;
 	char	**output;
 
 	tokens = get_tokens(s);
