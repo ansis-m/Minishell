@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 14:36:49 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:58:43 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,41 +21,22 @@
 // 	int		n_commands;
 // }	t_instructions;
 
-size_t	ft_strlen(const char *c)
+char	*find_path(char *system_paths, char *command)
 {
-	size_t	i;
-
-	i = 0;
-	while (*(c + i++))
-		;
-	return (i - 1);
+	printf("command from path constructor %s\n", command);
+	
+	return (ft_strdup("/usr/bin/ls"));
 }
 
-char	*ft_strdup(const char *c)
-{
-	size_t		i;
-	char		*result;
-
-	result = (char *)malloc(ft_strlen(c) + 1);
-	if (!result)
-		return (NULL);
-	i = 0;
-	while (i <= ft_strlen(c))
-	{
-		*(result + i) = *(c + i);
-		i++;
-	}
-	return (result);
-}
-
-void	construct_paths(t_instructions *instructions)
+int	construct_paths(t_instructions *instructions)
 {
 	char	*system_paths;
 	char	**paths_ptr;
 	int		i;
 
 	system_paths = getenv("PATH");
-	instructions->command_paths = (char **)malloc(sizeof(char *) * instructions->n_commands);
+	instructions->command_paths
+		= (char **)ft_calloc(instructions->n_commands, sizeof(char *));
 	if (! instructions->command_paths)
 	{
 		perror("Problem allocating command paths");
@@ -65,9 +46,12 @@ void	construct_paths(t_instructions *instructions)
 	i = 0;
 	while (i < instructions->n_commands)
 	{
-		*(paths_ptr + i) = ft_strdup("/usr/bin/ls");
+		*(paths_ptr + i) = find_path(system_paths, **(instructions->tokens + i));
+		if (!*(paths_ptr + i))
+			return (0);
 		i++;
 	}
+	return (1);
 }
 
 int	execute_commands(t_instructions instructions)
@@ -112,8 +96,8 @@ int	run_command(char *s)
 			printf("argument: %s\n", *(*(temp + i) + j));
 		printf("~~~~~~~~~~~~~~~~~~\n");		
 	}
-	construct_paths(&instructions);
-	return_status = execute_commands(instructions);
+	if (construct_paths(&instructions))
+		return_status = execute_commands(instructions);
 	free_io(instructions.io);
 	free_paths(instructions.command_paths, instructions.n_commands);
 	free_tokens(instructions.tokens);

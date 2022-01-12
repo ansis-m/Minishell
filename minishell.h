@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 14:37:19 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 15:53:15 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,11 @@ char	**get_io(char *s);
 //configure_sigaction.c
 void	c_sig_handler(int signum);
 void	configure_sigaction(void);
+
+//libft_utils.h
+void	*ft_calloc(size_t count, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
+size_t	ft_strlen(const char *c);
+char	*ft_strdup(const char *c);
 
 #endif
