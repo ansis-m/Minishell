@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:19:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 10:22:00 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 11:03:17 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,5 @@ void	configure_sigaction(void)
 	action.sa_handler = c_sig_handler;
 	action.sa_flags = SA_NODEFER;
 	sigemptyset(&action.sa_mask);
-	sigaddset(&action.sa_mask, SIGINT);
 	sigaction(SIGINT, &action, 0);
 }
