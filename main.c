@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 15:58:43 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 16:22:10 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,36 @@
 
 char	*find_path(char *system_paths, char *command)
 {
-	printf("command from path constructor %s\n", command);
-	
+	char	temp[500];
+	char	*ptr;
+	int		i;
+	int		j;
+
+	ptr = temp;
+	memset(temp, 0, 500);
+	while (*system_paths)
+	{
+		*ptr = *system_paths;
+		system_paths++;
+		ptr++;
+		if (*system_paths == ':' || *system_paths == '\0')
+		{
+			if (*system_paths == ':')
+				system_paths++;
+			i = 0;
+			*ptr = '/';
+			ptr++;
+			while (*(command + i))
+			{
+				*ptr = *(command + i);
+				ptr++;
+				i++;
+			}
+			ptr = temp;
+			printf("string: %s\n", ptr);
+			memset(temp, 0, 500);
+		}
+	}
 	return (ft_strdup("/usr/bin/ls"));
 }
 
