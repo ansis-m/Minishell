@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 09:39:08 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 10:22:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_tokens
 }	t_tokens;
 
 //main.c
+void	infinite_loop(void);
 
 //get_tokens.c
 char	***get_tokens(char *s);
@@ -46,5 +47,14 @@ bool	in_charset(int c);
 
 //free_memory.c
 void	free_tokens(char ***tokens);
+void	free_io(char **io);
+void	exit_gracefully(void);
+
+//get_io_files.c
+char	**get_io(char *s);
+
+//configure_sigaction.c
+void	c_sig_handler(int signum);
+void	configure_sigaction(void);
 
 #endif

@@ -1,54 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_memory.c                                      :+:      :+:    :+:   */
+/*   get_io_files.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 10:17:45 by amalecki         ###   ########.fr       */
+/*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
+/*   Updated: 2022/01/12 10:10:16 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tokens(char ***tokens)
+char	**get_io(char *s)
 {
-	int	i;
-	int	j;
+	char	**io;
 
-	i = 0;
-	while (*(tokens + i))
+	io = (char **)malloc(sizeof(char *) * 5);
+	if (!io)
 	{
-		j = 0;
-		while (*(*(tokens + i) + j))
-		{
-			free(*(*(tokens + i) + j));
-			j++;
-		}
-		free(*(tokens + i));
-		i++;
+		perror("problem with memory allocation");
+		exit(1);
 	}
-	free(tokens);
-}
-
-void	free_io(char **io)
-{
-	int	i;
-
-	i = 0;
-	while (i < 5)
-	{
-		free(*(io + i));
-		i++;
-	}
-	free(io);
-}
-
-void	exit_gracefully(void)
-{
-	rl_clear_history();
-	//free all memory
-	printf("\n");
-	exit(0);
+	for (int i = 0; i < 5; i++) //for now skip the io files. have to be done later!
+		*(io + i) = NULL;
+	return (io);
 }

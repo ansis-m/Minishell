@@ -1,54 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_memory.c                                      :+:      :+:    :+:   */
+/*   configure_sigaction.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 10:17:45 by amalecki         ###   ########.fr       */
+/*   Created: 2022/01/12 10:19:18 by amalecki          #+#    #+#             */
+/*   Updated: 2022/01/12 10:22:00 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_tokens(char ***tokens)
+//Ctrl-C == SIGINT kill child processes and print a new terminal
+//Ctrl-D == EOF exit the shell
+//Ctrl-\ == SIGQUIT -do nothing
+void	c_sig_handler(int signum)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	while (*(tokens + i))
+	if (signum == SIGINT)
 	{
-		j = 0;
-		while (*(*(tokens + i) + j))
-		{
-			free(*(*(tokens + i) + j));
-			j++;
-		}
-		free(*(tokens + i));
-		i++;
+		printf("\n");
+		infinite_loop();
 	}
-	free(tokens);
 }
 
-void	free_io(char **io)
+void	configure_sigaction(void)
 {
-	int	i;
+	struct sigaction	action;
 
-	i = 0;
-	while (i < 5)
-	{
-		free(*(io + i));
-		i++;
-	}
-	free(io);
-}
-
-void	exit_gracefully(void)
-{
-	rl_clear_history();
-	//free all memory
-	printf("\n");
-	exit(0);
+	action.sa_handler = c_sig_handler;
+	action.sa_flags = SA_NODEFER;
+	sigemptyset(&action.sa_mask);
+	sigaddset(&action.sa_mask, SIGINT);
+	sigaction(SIGINT, &action, 0);
 }
