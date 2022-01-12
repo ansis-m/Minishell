@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 15:53:15 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:41:05 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 
-# define TERMINAL "MINISHELL: "
+# define TERMINAL "MINISHELL OF BOLT and ANSIS: "
 # define C_CHAR_SET "-=#@.,"
-# define PATH "/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:"
 
 typedef struct s_instructions
 {
@@ -69,5 +69,10 @@ void	*ft_calloc(size_t count, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
 size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *c);
+
+//construct_paths.c
+char	*find_path(char *system_paths, char *command);
+int		construct_paths(t_instructions *instructions);
+char	*command_not_found(char *command);
 
 #endif

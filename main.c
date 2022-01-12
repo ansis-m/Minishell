@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 16:22:10 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/12 17:08:15 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,67 +20,6 @@
 // 	char	**io;
 // 	int		n_commands;
 // }	t_instructions;
-
-char	*find_path(char *system_paths, char *command)
-{
-	char	temp[500];
-	char	*ptr;
-	int		i;
-	int		j;
-
-	ptr = temp;
-	memset(temp, 0, 500);
-	while (*system_paths)
-	{
-		*ptr = *system_paths;
-		system_paths++;
-		ptr++;
-		if (*system_paths == ':' || *system_paths == '\0')
-		{
-			if (*system_paths == ':')
-				system_paths++;
-			i = 0;
-			*ptr = '/';
-			ptr++;
-			while (*(command + i))
-			{
-				*ptr = *(command + i);
-				ptr++;
-				i++;
-			}
-			ptr = temp;
-			printf("string: %s\n", ptr);
-			memset(temp, 0, 500);
-		}
-	}
-	return (ft_strdup("/usr/bin/ls"));
-}
-
-int	construct_paths(t_instructions *instructions)
-{
-	char	*system_paths;
-	char	**paths_ptr;
-	int		i;
-
-	system_paths = getenv("PATH");
-	instructions->command_paths
-		= (char **)ft_calloc(instructions->n_commands, sizeof(char *));
-	if (! instructions->command_paths)
-	{
-		perror("Problem allocating command paths");
-		exit(1);
-	}
-	paths_ptr = instructions->command_paths;
-	i = 0;
-	while (i < instructions->n_commands)
-	{
-		*(paths_ptr + i) = find_path(system_paths, **(instructions->tokens + i));
-		if (!*(paths_ptr + i))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	execute_commands(t_instructions instructions)
 {
@@ -98,7 +37,7 @@ int	execute_commands(t_instructions instructions)
 		if (pid == 0)
 		{
 			execve(*(paths + i), *(tokens + i), NULL);
-			printf("command %s: something went terribly wrong\n", **(tokens + i));
+			printf("%s: something went terribly wrong\n", **(tokens + i));
 			exit(2);
 		}
 		else
@@ -142,13 +81,10 @@ void	infinite_loop(void)
 		s = readline("\e[1;32m"TERMINAL"\e[0;37m");
 		if (s == NULL)
 			exit_gracefully();
-		if (*s == 'a')
+		if (*s == '\0')
 		{
-			while (true)
-			{
-				printf("got a \n");
-				sleep(1);
-			}	
+			free(s);
+			continue ;
 		}
 		add_history(s);
 		return_status = run_command(s);
