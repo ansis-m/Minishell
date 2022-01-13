@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 17:08:15 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/13 18:26:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ void	infinite_loop(void)
 
 int	main(void)
 {
+	printf("%s\n", getenv("PATH"));
 	configure_sigaction();
 	infinite_loop();
 	return (0);
