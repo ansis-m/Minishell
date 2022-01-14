@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 13:42:54 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:05:33 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ void	exit_gracefully(void);
 char	**get_io(char *s);
 void	allocate_io(char ***io);
 void	get_redirection(char *s, char **io, char **io_err, bool combined);
+void	parse_doublequotes(char *s, int *i);
+
+//get_io_files_utils.c
+void	manage_greater_than(char *s, char **io);
+void	manage_ampersand(char *s, char **io);
+void	manage_one(char *s, char **io);
+void	manage_two(char *s, char **io);
 void	clear_redirections(char **io, char **io1, char **io2, char **io3);
 
 //configure_sigaction.c

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 16:10:42 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:06:21 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,6 @@ io[4] holds "< filename"
 >& redirect both*/
 
 /* << */
-
-void	clear_redirections(char **io, char **io1, char **io2, char **io3)
-{
-	if (io)
-	{
-		free(*io);
-		*io = NULL;
-	}
-	if (io1)
-	{
-		free(*io1);
-		*io1 = NULL;
-	}
-	if (io2)
-	{
-		free(*io2);
-		*io2 = NULL;
-	}
-	if (io3)
-	{
-		free(*io3);
-		*io3 = NULL;
-	}
-}
 
 void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
@@ -94,61 +70,11 @@ void	allocate_io(char ***io)
 	}
 }
 
-void	manage_greater_than(char *s, char **io)
+void	parse_doublequotes(char *s, int *i)
 {
-	if (*(s + 1) == '>')
-	{
-		clear_redirections(io + 0, NULL, io + 2, NULL);
-		*(s) = ' ';
-		get_redirection(s + 1, io + 2, NULL, false);
-	}
-	else if (*(s + 1) == '&')
-	{
-		clear_redirections(io + 0, io + 1, io + 2, io + 3);
-		get_redirection(s, io + 0, io + 1, true);
-	}
-	else
-	{
-		clear_redirections(io + 0, NULL, io + 2, NULL);
-		get_redirection(s, io + 0, NULL, false);
-	}
-}
-
-void	manage_ampersand(char *s, char **io)
-{
-	if (*(s + 1) == '>' && *(s + 2) == '>')
-	{
-		clear_redirections(io + 0, io + 1, io + 2, io + 3);
-		*(s) = ' ';
-		*(s + 1) = ' ';
-		*(s + 2) = ' ';
-		get_redirection(s + 1, io + 2, io + 3, true);
-	}
-	else if (*(s + 1) == '>')
-	{
-		clear_redirections(io + 0, io + 1, io + 2, io + 3);
-		*(s) = ' ';
-		get_redirection(s + 1, io + 0, io + 1, true);
-	}
-}
-
-void	manage_one(char *s, char **io)
-{
-	if (*(s + 1) == '>' && *(s + 2) == '>')
-	{
-		clear_redirections(io + 0, NULL, io + 2, NULL);
-		*(s) = ' ';
-		*(s + 1) = ' ';
-		*(s + 2) = ' ';
-		get_redirection(s + 1, io + 2, NULL, false);
-	}
-	else if (*(s + 1) == '>')
-	{
-		clear_redirections(io + 0, NULL, io + 2, NULL);
-		*(s) = ' ';
-		*(s + 1) = ' ';
-		get_redirection(s + 1, io + 0, NULL, false);
-	}
+	(*i)++;
+	while (*(s + *i) != '"')
+		(*i)++;
 }
 
 char	**get_io(char *s)
@@ -161,19 +87,17 @@ char	**get_io(char *s)
 	while (*(s + i))
 	{
 		if (*(s + i) == '"')
-		{
-			i++;
-			while (*(s + i) != '"')
-				i++;
-		}
+			parse_doublequotes(s, &i);
 		if (*(s + i) == '<')
 			get_redirection(s + i, io + 4, NULL, false);
-		if (*(s + i) == '>')
+		else if (*(s + i) == '>')
 			manage_greater_than(s + i, io);
-		if (*(s + i) == '&')
+		else if (*(s + i) == '&')
 			manage_ampersand(s + i, io);
-		if (*(s + i) == '1')
+		else if (*(s + i) == '1')
 			manage_one(s + i, io);
+		else if (*(s + i) == '2')
+			manage_two(s + i, io);
 		i++;
 	}
 	return (io);
