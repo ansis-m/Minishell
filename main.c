@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:15:45 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:53:36 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,10 @@ int	run_command(char *s)
 	}
 	for(int i = 0; i < 5; i++)
 		printf("redirection filename: %s\n", instructions.io[i]);
+	printf("path for the cd command %s\n", instructions.path);
 	if (construct_paths(&instructions))
 		return_status = execute_commands(instructions);
+	free(instructions.path);
 	free_io(instructions.io);
 	free_paths(instructions.command_paths, instructions.n_commands);
 	free_tokens(instructions.tokens);

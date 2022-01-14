@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:13:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 11:22:01 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:22:55 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,17 @@ bool	ft_isalnum(int c) //some errors
 	return (false);
 }
 
-bool	in_charset(int c) //needs more work
+bool	in_charset(int c)
 {
-	if (c == '|')
-		return (false);
+	int	i;
+
+	i = 0;
+	while (*(C_CHAR_SET + i))
+	{
+		if (c == *(C_CHAR_SET + i))
+			return (true);
+		i++;
+	}
 	if (ft_isalnum(c))
 		return (true);
 	return (false);

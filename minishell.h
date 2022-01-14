@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:20:59 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 18:21:24 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/stat.h>
 
 # define TERMINAL "MINISHELL OF BOLT and ANSIS: "
-# define C_CHAR_SET "-=#@.,"
+# define C_CHAR_SET "-=#@.,/"
 
 typedef struct s_instructions
 {
