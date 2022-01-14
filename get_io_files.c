@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 13:00:33 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 13:27:45 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ io[4] holds "< filename"
 
 void	get_cat_redirection(char *s, char **io);
 
-void	get_redirection(char *s, char **io)
+void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
 	char	temp[500];
 	char	*ptr;
@@ -41,6 +41,8 @@ void	get_redirection(char *s, char **io)
 	i = 0;
 	free(*io);
 	*s = ' ';
+	if (*(s + 1) == '&')
+		*(s + 1) = ' ';
 	while (*s == ' ')
 		s++;
 	while (*s && *s != ' ')
@@ -49,6 +51,11 @@ void	get_redirection(char *s, char **io)
 		*(s++) = ' ';
 	}
 	*io = strdup(temp);
+	if (combined)
+	{
+		free(*io_err);
+		*io_err = strdup(temp);
+	}
 	printf("string from the function %s\n", *io);
 }
 
@@ -86,13 +93,15 @@ char	**get_io(char *s)
 				i++;
 		}
 		if (*(s + i) == '<')
-			get_redirection(s + i, io + 4);
+			get_redirection(s + i, io + 4, NULL, false);
 		if (*(s + i) == '>')
 		{
 			if (*(s + i + 1) == '>')
 				;//get_cat_redirection(s + i, io);
+			else if (*(s + i + 1) == '&')
+				get_redirection(s + i, io + 0, io + 1, true);
 			else
-				get_redirection(s + i, io + 0);
+				get_redirection(s + i, io + 0, NULL, false);
 		}
 		i++;
 	}
