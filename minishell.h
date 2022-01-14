@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/13 18:40:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 10:41:05 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_instructions
 {
 	char	***tokens;
 	char	**io;
+	char	*path;
 	char	**command_paths;
 	int		n_commands;
 }	t_instructions;
