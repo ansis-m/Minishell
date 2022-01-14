@@ -1,0 +1,18 @@
+total 200
+drwxr-xr-x 1 ansis ansis   512 Jan 14 14:33 .
+drwxr-xr-x 1 ansis ansis   512 Jan 14 13:54 ..
+drwxr-xr-x 1 ansis ansis   512 Jan 14 13:46 .git
+-rw-r--r-- 1 ansis ansis     0 Jan 13 18:56 .gitignore
+-rw-r--r-- 1 ansis ansis  1312 Jan 13 18:56 Makefile
+-rw-r--r-- 1 ansis ansis     0 Jan 14 13:32 aaa
+-rw-r--r-- 1 ansis ansis  1336 Jan 13 18:56 configure_sigaction.c
+-rw-r--r-- 1 ansis ansis  2139 Jan 13 18:56 construct_paths.c
+-rw-r--r-- 1 ansis ansis  1452 Jan 13 18:56 free_memory.c
+-rw-r--r-- 1 ansis ansis  3174 Jan 14 14:32 get_io_files.c
+-rw-r--r-- 1 ansis ansis  3062 Jan 13 18:56 get_tokens.c
+-rw-r--r-- 1 ansis ansis  1730 Jan 14 11:24 get_tokens_utils.c
+-rw-r--r-- 1 ansis ansis  1529 Jan 13 18:56 libft_utils.c
+-rw-r--r-- 1 ansis ansis  2732 Jan 14 13:32 main.c
+-rwxr-xr-x 1 ansis ansis 67168 Jan 14 14:33 minishell
+-rw-r--r-- 1 ansis ansis  2574 Jan 14 13:42 minishell.h
+ls: cannot access 'hsghsfg': No such file or directory
