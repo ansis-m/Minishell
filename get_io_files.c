@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 13:43:41 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 14:49:21 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,43 @@ void	allocate_io(char ***io)
 	}
 }
 
+void	manage_greater_than(char *s, char **io)
+{
+	if (*(s + 1) == '>')
+	{
+		clear_redirections(io + 0, NULL, io + 2, NULL);
+		*(s) = ' ';
+		get_redirection(s + 1, io + 2, NULL, false);
+	}
+	else if (*(s + 1) == '&')
+	{
+		clear_redirections(io + 0, io + 1, io + 2, io + 3);
+		get_redirection(s, io + 0, io + 1, true);
+	}
+	else
+	{
+		clear_redirections(io + 0, NULL, io + 2, NULL);
+		get_redirection(s, io + 0, NULL, false);
+	}
+}
+
+void	manage_ampersand(char *s, char **io)
+{
+	if (*(s + 1) == '>' && *(s + 2) == '>')
+	{
+		clear_redirections(io + 0, io + 1, io + 2, io + 3);
+		*(s) = ' ';
+		*(s + 1) = ' ';
+		get_redirection(s + 1, io + 2, io + 3, true);
+	}
+	else if (*(s + 1) == '>')
+	{
+		clear_redirections(io + 0, io + 1, io + 2, io + 3);
+		*(s) = ' ';
+		get_redirection(s + 1, io + 0, io + 1, true);
+	}
+}
+
 char	**get_io(char *s)
 {
 	char	**io;
@@ -115,20 +152,9 @@ char	**get_io(char *s)
 		if (*(s + i) == '<')
 			get_redirection(s + i, io + 4, NULL, false);
 		if (*(s + i) == '>')
-		{
-			if (*(s + i + 1) == '>')
-				;//get_cat_redirection(s + i, io);
-			else if (*(s + i + 1) == '&')
-			{
-				clear_redirections(io + 0, io + 1, io + 2, io + 3);
-				get_redirection(s + i, io + 0, io + 1, true);
-			}
-			else
-			{
-				clear_redirections(io + 0, NULL, io + 2, NULL);
-				get_redirection(s + i, io + 0, NULL, false);
-			}
-		}
+			manage_greater_than(s + i, io);
+		if (*(s + i) == '&')
+			manage_ampersand(s + i, io);
 		i++;
 	}
 	return (io);
