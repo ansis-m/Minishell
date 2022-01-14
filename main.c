@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/13 18:26:59 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:08:00 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	run_command(char *s)
 			printf("argument: %s\n", *(*(temp + i) + j));
 		printf("~~~~~~~~~~~~~~~~~~\n");		
 	}
+	printf("< inredirection filename: %s\n", instructions.io[4]);
 	if (construct_paths(&instructions))
 		return_status = execute_commands(instructions);
 	free_io(instructions.io);
