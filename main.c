@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 12:48:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:15:45 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	run_command(char *s)
 	t_instructions	instructions;
 
 	instructions.io = get_io(s);
+	instructions.path = get_path(s);
 	instructions.tokens = get_tokens(s);
 	instructions.n_commands = count_pipes(s) + 1;
 	char ***temp = instructions.tokens;

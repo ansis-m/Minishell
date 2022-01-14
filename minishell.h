@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:05:33 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:20:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,12 @@ void	*ft_memset(void *s, int c, size_t n);
 size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *c);
 
-//construct_paths.c
+//construct_command_paths.c
 char	*find_path(char *system_paths, char *command);
 int		construct_paths(t_instructions *instructions);
 char	*command_not_found(char *command);
+
+//get_relative_path.c
+char	*get_path(char *s);
 
 #endif
