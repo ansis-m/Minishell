@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 16:10:42 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:21:57 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,9 +116,9 @@ void	manage_greater_than(char *s, char **io)
 
 void	manage_ampersand(char *s, char **io)
 {
+	clear_redirections(io + 0, io + 1, io + 2, io + 3);
 	if (*(s + 1) == '>' && *(s + 2) == '>')
 	{
-		clear_redirections(io + 0, io + 1, io + 2, io + 3);
 		*(s) = ' ';
 		*(s + 1) = ' ';
 		*(s + 2) = ' ';
@@ -126,7 +126,6 @@ void	manage_ampersand(char *s, char **io)
 	}
 	else if (*(s + 1) == '>')
 	{
-		clear_redirections(io + 0, io + 1, io + 2, io + 3);
 		*(s) = ' ';
 		get_redirection(s + 1, io + 0, io + 1, true);
 	}
@@ -134,9 +133,9 @@ void	manage_ampersand(char *s, char **io)
 
 void	manage_one(char *s, char **io)
 {
+	clear_redirections(io + 0, NULL, io + 2, NULL);
 	if (*(s + 1) == '>' && *(s + 2) == '>')
 	{
-		clear_redirections(io + 0, NULL, io + 2, NULL);
 		*(s) = ' ';
 		*(s + 1) = ' ';
 		*(s + 2) = ' ';
@@ -144,7 +143,24 @@ void	manage_one(char *s, char **io)
 	}
 	else if (*(s + 1) == '>')
 	{
-		clear_redirections(io + 0, NULL, io + 2, NULL);
+		*(s) = ' ';
+		*(s + 1) = ' ';
+		get_redirection(s + 1, io + 0, NULL, false);
+	}
+}
+
+void	manage_two(char *s, char **io)
+{
+	clear_redirections(NULL, io + 1, NULL, io + 3);
+	if (*(s + 1) == '>' && *(s + 2) == '>')
+	{
+		*(s) = ' ';
+		*(s + 1) = ' ';
+		*(s + 2) = ' ';
+		get_redirection(s + 1, io + 2, NULL, false);
+	}
+	else if (*(s + 1) == '>')
+	{
 		*(s) = ' ';
 		*(s + 1) = ' ';
 		get_redirection(s + 1, io + 0, NULL, false);
@@ -168,12 +184,14 @@ char	**get_io(char *s)
 		}
 		if (*(s + i) == '<')
 			get_redirection(s + i, io + 4, NULL, false);
-		if (*(s + i) == '>')
+		else if (*(s + i) == '>')
 			manage_greater_than(s + i, io);
-		if (*(s + i) == '&')
+		else if (*(s + i) == '&')
 			manage_ampersand(s + i, io);
-		if (*(s + i) == '1')
+		else if (*(s + i) == '1')
 			manage_one(s + i, io);
+		else if (*(s + i) == '2')
+			manage_two(s + i, io);
 		i++;
 	}
 	return (io);
