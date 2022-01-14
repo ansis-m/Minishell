@@ -1,0 +1,7 @@
+This is a list of tasks that we are working on:
+
+Ansis:
+1) Improve the command parser
+2) Implement the function that gets the REDIRECTION from the input string: get_io_files.command
+
+Bolt:
