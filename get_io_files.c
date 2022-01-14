@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 14:49:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 16:10:42 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ io[4] holds "< filename"
 >& redirect both*/
 
 /* << */
-
-void	get_cat_redirection(char *s, char **io);
 
 void	clear_redirections(char **io, char **io1, char **io2, char **io3)
 {
@@ -76,7 +74,6 @@ void	get_redirection(char *s, char **io, char **io_err, bool combined)
 	*io = strdup(temp);
 	if (combined)
 		*io_err = strdup(temp);
-	printf("string from the function %s\n", *io);
 }
 
 void	allocate_io(char ***io)
@@ -124,6 +121,7 @@ void	manage_ampersand(char *s, char **io)
 		clear_redirections(io + 0, io + 1, io + 2, io + 3);
 		*(s) = ' ';
 		*(s + 1) = ' ';
+		*(s + 2) = ' ';
 		get_redirection(s + 1, io + 2, io + 3, true);
 	}
 	else if (*(s + 1) == '>')
@@ -131,6 +129,25 @@ void	manage_ampersand(char *s, char **io)
 		clear_redirections(io + 0, io + 1, io + 2, io + 3);
 		*(s) = ' ';
 		get_redirection(s + 1, io + 0, io + 1, true);
+	}
+}
+
+void	manage_one(char *s, char **io)
+{
+	if (*(s + 1) == '>' && *(s + 2) == '>')
+	{
+		clear_redirections(io + 0, NULL, io + 2, NULL);
+		*(s) = ' ';
+		*(s + 1) = ' ';
+		*(s + 2) = ' ';
+		get_redirection(s + 1, io + 2, NULL, false);
+	}
+	else if (*(s + 1) == '>')
+	{
+		clear_redirections(io + 0, NULL, io + 2, NULL);
+		*(s) = ' ';
+		*(s + 1) = ' ';
+		get_redirection(s + 1, io + 0, NULL, false);
 	}
 }
 
@@ -155,6 +172,8 @@ char	**get_io(char *s)
 			manage_greater_than(s + i, io);
 		if (*(s + i) == '&')
 			manage_ampersand(s + i, io);
+		if (*(s + i) == '1')
+			manage_one(s + i, io);
 		i++;
 	}
 	return (io);
