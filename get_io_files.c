@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 11:03:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:09:21 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,31 @@ io[4] holds "< filename"
 
 /* << */
 
+void	get_in_redirection(char *s, char **io)
+{
+	char	temp[500];
+	char	*ptr;
+	int		i;
+
+	memset(temp, 0, 500);
+	ptr = temp;
+	i = 0;
+	free(*io);
+	*s = ' ';
+	while (*s == ' ')
+		s++;
+	while (*s && *s != ' ')
+	{
+		*(ptr++) = *s;
+		*(s++) = ' ';
+	}
+	*io = strdup(temp);
+	printf("string from the function %s\n", *io);
+}
+
 char	**get_io(char *s)
 {
 	char	**io;
-	char	temp[500];
-	char	ptr;
 	int		i;
 
 	io = (char **)malloc(sizeof(char *) * 5);
@@ -43,8 +63,19 @@ char	**get_io(char *s)
 	}
 	for (int i = 0; i < 5; i++) //initialize with NULL
 		*(io + i) = NULL;
-	memset(temp, 0, 500);
-	ptr = temp;
-
+	i = 0;
+	while (*(s + i))
+	{
+		if (*(s + i) == '"')
+		{
+			i++;
+			while (*(s + i) != '"')
+				i++;
+		}
+		if (*(s + i) == '<')
+			get_in_redirection(s + i, io + 4);
+		printf("modified string %s\n", s);
+		i++;
+	}
 	return (io);
 }
