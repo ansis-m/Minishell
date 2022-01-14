@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 12:09:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 13:00:33 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ io[4] holds "< filename"
 
 /* << */
 
-void	get_in_redirection(char *s, char **io)
+void	get_cat_redirection(char *s, char **io);
+
+void	get_redirection(char *s, char **io)
 {
 	char	temp[500];
 	char	*ptr;
@@ -50,19 +52,30 @@ void	get_in_redirection(char *s, char **io)
 	printf("string from the function %s\n", *io);
 }
 
+void	allocate_io(char ***io)
+{
+	int	i;
+
+	*io = (char **)malloc(sizeof(char *) * 5);
+	if (!*io)
+	{
+		perror("problem with memory allocation");
+		exit(1);
+	}
+	i = 0;
+	while (i < 5)
+	{
+		*(*io + i) = NULL;
+		i++;
+	}
+}
+
 char	**get_io(char *s)
 {
 	char	**io;
 	int		i;
 
-	io = (char **)malloc(sizeof(char *) * 5);
-	if (!io)
-	{
-		perror("problem with memory allocation");
-		exit(1);
-	}
-	for (int i = 0; i < 5; i++) //initialize with NULL
-		*(io + i) = NULL;
+	allocate_io(&io);
 	i = 0;
 	while (*(s + i))
 	{
@@ -73,8 +86,14 @@ char	**get_io(char *s)
 				i++;
 		}
 		if (*(s + i) == '<')
-			get_in_redirection(s + i, io + 4);
-		printf("modified string %s\n", s);
+			get_redirection(s + i, io + 4);
+		if (*(s + i) == '>')
+		{
+			if (*(s + i + 1) == '>')
+				;//get_cat_redirection(s + i, io);
+			else
+				get_redirection(s + i, io + 0);
+		}
 		i++;
 	}
 	return (io);

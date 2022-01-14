@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 10:41:05 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 12:54:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	exit_gracefully(void);
 
 //get_io_files.c
 char	**get_io(char *s);
+void	allocate_io(char ***io);
+void	get_redirection(char *s, char **io);
 
 //configure_sigaction.c
 void	c_sig_handler(int signum);
