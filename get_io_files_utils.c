@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:54:52 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:04:52 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 17:25:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,18 @@ void	manage_one(char *s, char **io)
 	}
 }
 
+/* io array:
+io[0] holds  "> filename" (the same as 1> filename)
+io[1] holds "2>filename" (redirects stderr)
+io[2] holds ">> filename" (1>> filename means the same)
+io[3] holds "2>>filename" (redirects stderr in append mode)
+io[4] holds "< filename"
+&> filename (both stderr and stdout) -modifies both io[0] and io[1]
+&>>filename - modifies both io[2] and io[3]
+2>&1 copies io[0] to io[1] and copies io[2] to io[3]
+1>&2 vice versa
+>& redirect both*/
+
 void	manage_two(char *s, char **io)
 {
 	clear_redirections(NULL, io + 1, NULL, io + 3);
@@ -81,7 +93,7 @@ void	manage_two(char *s, char **io)
 	{
 		*(s) = ' ';
 		*(s + 1) = ' ';
-		get_redirection(s + 1, io + 0, NULL, false);
+		get_redirection(s + 1, io + 1, NULL, false);
 	}
 }
 
