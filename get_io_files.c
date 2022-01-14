@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 12:09:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/14 13:27:45 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ io[4] holds "< filename"
 
 /* << */
 
-void	get_in_redirection(char *s, char **io)
+void	get_cat_redirection(char *s, char **io);
+
+void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
 	char	temp[500];
 	char	*ptr;
@@ -39,6 +41,8 @@ void	get_in_redirection(char *s, char **io)
 	i = 0;
 	free(*io);
 	*s = ' ';
+	if (*(s + 1) == '&')
+		*(s + 1) = ' ';
 	while (*s == ' ')
 		s++;
 	while (*s && *s != ' ')
@@ -47,7 +51,30 @@ void	get_in_redirection(char *s, char **io)
 		*(s++) = ' ';
 	}
 	*io = strdup(temp);
+	if (combined)
+	{
+		free(*io_err);
+		*io_err = strdup(temp);
+	}
 	printf("string from the function %s\n", *io);
+}
+
+void	allocate_io(char ***io)
+{
+	int	i;
+
+	*io = (char **)malloc(sizeof(char *) * 5);
+	if (!*io)
+	{
+		perror("problem with memory allocation");
+		exit(1);
+	}
+	i = 0;
+	while (i < 5)
+	{
+		*(*io + i) = NULL;
+		i++;
+	}
 }
 
 char	**get_io(char *s)
@@ -55,14 +82,7 @@ char	**get_io(char *s)
 	char	**io;
 	int		i;
 
-	io = (char **)malloc(sizeof(char *) * 5);
-	if (!io)
-	{
-		perror("problem with memory allocation");
-		exit(1);
-	}
-	for (int i = 0; i < 5; i++) //initialize with NULL
-		*(io + i) = NULL;
+	allocate_io(&io);
 	i = 0;
 	while (*(s + i))
 	{
@@ -73,8 +93,16 @@ char	**get_io(char *s)
 				i++;
 		}
 		if (*(s + i) == '<')
-			get_in_redirection(s + i, io + 4);
-		printf("modified string %s\n", s);
+			get_redirection(s + i, io + 4, NULL, false);
+		if (*(s + i) == '>')
+		{
+			if (*(s + i + 1) == '>')
+				;//get_cat_redirection(s + i, io);
+			else if (*(s + i + 1) == '&')
+				get_redirection(s + i, io + 0, io + 1, true);
+			else
+				get_redirection(s + i, io + 0, NULL, false);
+		}
 		i++;
 	}
 	return (io);
