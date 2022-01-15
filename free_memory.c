@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 17:45:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 11:20:36 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ void	free_io(char **io)
 	free(io);
 }
 
-void	free_paths(char **paths, int count)
+void	free_paths(char **paths)
 {
 	int	i;
 
 	i = 0;
-	while (i < count)
+	while (paths && *(paths + i))
 	{
 		free(*(paths + i));
 		i++;

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 10:43:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 19:59:36 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,58 +20,134 @@
 // 	char	**io;
 // 	int		n_commands;
 // }	t_instructions;
-int	is_builtin(char *command)
+void	open_pipes(int m, int n, int fd[][n])
 {
-	if (strlen(command) == 2 && !strncmp(command, "cd", 2))
-		return (1);
-	return (0);
+	int	i;
+
+	if (m > 900)
+	{
+		printf("More than 900 pipes. What is wrong with you?\n");
+		exit(1);
+	}
+	i = 0;
+	while (i < m)
+	{
+		if (pipe(fd[i]) != 0)
+		{
+			perror("Problem opening pipe");
+			exit (1);
+		}
+		i++;
+	}
 }
 
-int	execute_builtin(int b, char **command, char *path)
+void	close_pipes(int m, int n, int fd[][n])
 {
-	if (b == 1)
+	int	i;
+
+	i = 0;
+	while (i < m)
 	{
-		return (chdir(*(command + 1)));
+		close(fd[i][0]);
+		close(fd[i][1]);
+		i++;
 	}
-	return (0);
+}
+
+int	get_input(char **io)
+{
+	int	fd;
+	
+	printf("hello from input %s\n", io[4]);
+	if (io[4] == NULL)
+		return (STDIN_FILENO);
+	else
+	{
+		fd = open(io[4], O_RDONLY, 0777);
+		if (fd == -1)
+		{
+			printf("file %s does not exist\n", io[4]);
+		}
+		else
+		{
+			dup2(fd, STDIN_FILENO);
+		}
+		return (fd);
+	}
 }
 
 int	execute_commands(t_instructions instructions)
 {
-	static int	return_status;
 	int			i;
 	int			b;
 	int			pid;
 	char		***tokens;
+	int			input;
+	int			fd[1000][2];
+	// fd[0] read
+	// fd[1] write
 
 	i = 0;
 	tokens = instructions.tokens;
+	//open_pipes(instructions.n_commands - 1, 2, fd);
+	int stdin_copy = dup(STDIN_FILENO);
+	input = get_input(instructions.io);
 	while (*(tokens + i))
 	{
 		b = is_builtin(**(tokens + i));
 		if (b)
-			return_status = execute_builtin(b, *(tokens + i), instructions.path);
+			execute_builtin(b, *(tokens + i), instructions.path);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
 			{
+				//if (i == 0)
+				//if(i == instructions.n_commands - 1);
+					//get_output(instructions.io);
+				//close_pipes(instructions.n_commands - 1, 2, fd);
 				execve(*instructions.command_paths + i, *(tokens + i), NULL);
 				printf("%s: something went terribly wrong\n", **(tokens + i));
 				exit(2);
 			}
-			else
-				waitpid(pid, NULL, WCONTINUED);
 		}
 		i++;
 	}
+	close(input);
+	dup2(stdin_copy, STDIN_FILENO);
+	//close_pipes(instructions.n_commands - 1, 2, fd);
+	waitpid(pid, NULL, WCONTINUED);
 	return (0);
+}
+
+void	erase_trailing_spaces(char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s && *s)
+	{
+		s++;
+		i++;
+	}
+	if (i)
+	{
+		s--;
+		i--;
+	}
+	while (i && *s == ' ')
+	{
+		*s = '\0';
+		i--;
+		s--;
+	}
 }
 
 int	run_command(char *s)
 {
 	t_instructions	instructions;
 
+	erase_trailing_spaces(s);
 	instructions.io = get_io(s);
 	instructions.path = get_path(s);
 	instructions.tokens = get_tokens(s);
@@ -91,7 +167,7 @@ int	run_command(char *s)
 		execute_commands(instructions);
 	free(instructions.path);
 	free_io(instructions.io);
-	free_paths(instructions.command_paths, instructions.n_commands);
+	free_paths(instructions.command_paths);
 	free_tokens(instructions.tokens);
 	return (0);
 }
