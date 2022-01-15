@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:53:36 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 10:43:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,28 +20,49 @@
 // 	char	**io;
 // 	int		n_commands;
 // }	t_instructions;
+int	is_builtin(char *command)
+{
+	if (strlen(command) == 2 && !strncmp(command, "cd", 2))
+		return (1);
+	return (0);
+}
+
+int	execute_builtin(int b, char **command, char *path)
+{
+	if (b == 1)
+	{
+		return (chdir(*(command + 1)));
+	}
+	return (0);
+}
 
 int	execute_commands(t_instructions instructions)
 {
-	int		i;
-	int		pid;
-	char	***tokens;
-	char	**paths;
+	static int	return_status;
+	int			i;
+	int			b;
+	int			pid;
+	char		***tokens;
 
 	i = 0;
 	tokens = instructions.tokens;
-	paths = instructions.command_paths;
 	while (*(tokens + i))
 	{
-		pid = fork();
-		if (pid == 0)
-		{
-			execve(*(paths + i), *(tokens + i), NULL);
-			printf("%s: something went terribly wrong\n", **(tokens + i));
-			exit(2);
-		}
+		b = is_builtin(**(tokens + i));
+		if (b)
+			return_status = execute_builtin(b, *(tokens + i), instructions.path);
 		else
-			waitpid(pid, NULL, WCONTINUED);
+		{
+			pid = fork();
+			if (pid == 0)
+			{
+				execve(*instructions.command_paths + i, *(tokens + i), NULL);
+				printf("%s: something went terribly wrong\n", **(tokens + i));
+				exit(2);
+			}
+			else
+				waitpid(pid, NULL, WCONTINUED);
+		}
 		i++;
 	}
 	return (0);
@@ -49,7 +70,6 @@ int	execute_commands(t_instructions instructions)
 
 int	run_command(char *s)
 {
-	int				return_status;
 	t_instructions	instructions;
 
 	instructions.io = get_io(s);
@@ -68,12 +88,12 @@ int	run_command(char *s)
 		printf("redirection filename: %s\n", instructions.io[i]);
 	printf("path for the cd command %s\n", instructions.path);
 	if (construct_paths(&instructions))
-		return_status = execute_commands(instructions);
+		execute_commands(instructions);
 	free(instructions.path);
 	free_io(instructions.io);
 	free_paths(instructions.command_paths, instructions.n_commands);
 	free_tokens(instructions.tokens);
-	return (return_status);
+	return (0);
 }
 
 void	infinite_loop(void)
@@ -99,7 +119,6 @@ void	infinite_loop(void)
 
 int	main(void)
 {
-	printf("%s\n", getenv("PATH"));
 	configure_sigaction();
 	infinite_loop();
 	return (0);

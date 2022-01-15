@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:41:40 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 15:52:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 09:50:49 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,20 @@ char	*ft_strdup(const char *c)
 		i++;
 	}
 	return (result);
+}
+
+int	ft_strncmp(const char *str1, const char *str2, size_t num)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < num)
+	{
+		if (*(str1 + i) != *(str2 + i))
+			return ((unsigned char)*(str1 + i) - (unsigned char)*(str2 + i));
+		else if (!*(str1 + i))
+			return (0);
+		i++;
+	}
+	return (0);
 }

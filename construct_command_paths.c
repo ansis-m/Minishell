@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   construct_paths.c                                  :+:      :+:    :+:   */
+/*   construct_command_paths.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/13 18:08:33 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 10:45:49 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 char	*command_not_found(char *command)
 {
-	printf("\nCommand '%s' not found!\n", command);
+	if (! is_builtin(command))
+		printf("\nCommand '%s' not found!\n", command);
 	return (NULL);
 }
 
@@ -27,7 +28,7 @@ char	*find_path(char *system_paths, char *command)
 
 	ptr = temp;
 	memset(temp, 0, 1000);
-	while (*system_paths)
+	while (*system_paths && !is_builtin(command))
 	{
 		*(ptr++) = *(system_paths++);
 		if (*system_paths == ':' || *system_paths == '\0')
@@ -67,7 +68,7 @@ int	construct_paths(t_instructions *instructions)
 	{
 		*(paths_ptr + i) = find_path(system_paths,
 				**(instructions->tokens + i));
-		if (!*(paths_ptr + i))
+		if (!*(paths_ptr + i) && !is_builtin(**(instructions->tokens + i)))
 			return (0);
 		i++;
 	}
