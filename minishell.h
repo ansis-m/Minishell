@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 18:21:24 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 10:39:52 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <sys/stat.h>
 
 # define TERMINAL "MINISHELL OF BOLT and ANSIS: "
-# define C_CHAR_SET "-=#@.,/"
+# define C_CHAR_SET "-=~#@.,/"
 
 typedef struct s_instructions
 {
@@ -39,6 +39,7 @@ typedef struct s_instructions
 
 //main.c
 void	infinite_loop(void);
+int		is_builtin(char *command);
 
 //get_tokens.c
 char	***get_tokens(char *s);
@@ -80,6 +81,7 @@ void	*ft_calloc(size_t count, size_t size);
 void	*ft_memset(void *s, int c, size_t n);
 size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *c);
+int		ft_strncmp(const char *str1, const char *str2, size_t num);
 
 //construct_command_paths.c
 char	*find_path(char *system_paths, char *command);
