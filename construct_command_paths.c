@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 10:45:49 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/15 16:38:33 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	construct_paths(t_instructions *instructions)
 
 	system_paths = getenv("PATH");
 	instructions->command_paths
-		= (char **)ft_calloc(instructions->n_commands, sizeof(char *));
+		= (char **)ft_calloc(instructions->n_commands + 1, sizeof(char *));
 	if (! instructions->command_paths)
 	{
 		perror("Problem allocating command paths");

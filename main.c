@@ -6,65 +6,80 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 10:43:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 10:21:23 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// global variable: variables and definitions as a dictionary.linked list?
-
-// typedef struct s_instructions
-// {
-// 	char	***tokens;
-// 	char	**io;
-// 	int		n_commands;
-// }	t_instructions;
-int	is_builtin(char *command)
+void	open_pipes(int m, int n, int fd[][n])
 {
-	if (strlen(command) == 2 && !strncmp(command, "cd", 2))
-		return (1);
-	return (0);
-}
+	int	i;
 
-int	execute_builtin(int b, char **command, char *path)
-{
-	if (b == 1)
+	if (m > 900)
 	{
-		return (chdir(*(command + 1)));
+		printf("More than 900 pipes. What is wrong with you?\n");
+		exit(1);
 	}
-	return (0);
+	i = 0;
+	while (i < m)
+	{
+		if (pipe(fd[i]) != 0)
+		{
+			perror("Problem opening pipe");
+			exit (1);
+		}
+		i++;
+	}
 }
 
+void	close_pipes(int m, int n, int fd[][n])
+{
+	int	i;
+
+	i = 0;
+	while (i < m)
+	{
+		close(fd[i][0]);
+		close(fd[i][1]);
+		i++;
+	}
+}
+
+// fd[0] read
+// fd[1] write
 int	execute_commands(t_instructions instructions)
 {
-	static int	return_status;
-	int			i;
-	int			b;
-	int			pid;
-	char		***tokens;
+	t_redirection	redirection;
+	int				i;
+	int				b;
+	int				pid;
+	char			***tokens;
 
 	i = 0;
 	tokens = instructions.tokens;
+	init_redirection(&redirection, &instructions);
 	while (*(tokens + i))
 	{
 		b = is_builtin(**(tokens + i));
 		if (b)
-			return_status = execute_builtin(b, *(tokens + i), instructions.path);
+			execute_builtin(b, *(tokens + i), instructions.path);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
 			{
+				if (i == 0);
+				if (i == instructions.n_commands - 1);
 				execve(*instructions.command_paths + i, *(tokens + i), NULL);
 				printf("%s: something went terribly wrong\n", **(tokens + i));
 				exit(2);
 			}
-			else
-				waitpid(pid, NULL, WCONTINUED);
 		}
 		i++;
 	}
+	close_redirection(&redirection, &instructions);
+	waitpid(pid, NULL, WCONTINUED);
 	return (0);
 }
 
@@ -91,7 +106,7 @@ int	run_command(char *s)
 		execute_commands(instructions);
 	free(instructions.path);
 	free_io(instructions.io);
-	free_paths(instructions.command_paths, instructions.n_commands);
+	free_paths(instructions.command_paths);
 	free_tokens(instructions.tokens);
 	return (0);
 }
