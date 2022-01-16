@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:54:52 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:25:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 10:57:04 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	manage_two(char *s, char **io)
 		*(s) = ' ';
 		*(s + 1) = ' ';
 		*(s + 2) = ' ';
-		get_redirection(s + 1, io + 2, NULL, false);
+		get_redirection(s + 1, io + 3, NULL, false);
 	}
 	else if (*(s + 1) == '>')
 	{

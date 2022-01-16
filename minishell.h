@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 09:58:58 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 10:42:00 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,5 +105,14 @@ char	*command_not_found(char *command);
 
 //get_relative_path.c
 char	*get_path(char *s);
+
+//redirection.c
+void	init_redirection(t_redirection	*redirection,
+			t_instructions	*instructions);
+void	close_redirection(t_redirection	*redirection,
+			t_instructions	*instructions);
+int		get_input(char **io);
+int		get_err_output(char **io);
+int		get_output(char **io);
 
 #endif
