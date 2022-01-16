@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 15:41:53 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 15:56:42 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,12 @@ void	manage_pipes(int i, int count, t_redirection redirection)
 
 	if (i == 1)// != 0)
 	{
-		dup2(redirection.fd[i - 1][0], redirection.input);
+		dup2(redirection.fd[i - 1][0], STDIN_FILENO);
 		close(redirection.fd[i - 1][1]);
 	}
 	if (i ==0)// != count - 1)
 	{
-		dup2(redirection.fd[i][1], redirection.output);
+		dup2(redirection.fd[i][1], STDOUT_FILENO);
 		close(redirection.fd[0][0]);
 	}
 	j = 0;

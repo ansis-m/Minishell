@@ -1,0 +1,8 @@
+redirection input 0
+redirection output 12
+path: /usr/bin/wc
+     22      27     316
+redirection input 0
+redirection output 18
+path: /usr/bin/wc
+     22      27     316
