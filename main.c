@@ -6,20 +6,12 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 19:59:36 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 10:09:15 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// global variable: variables and definitions as a dictionary.linked list?
-
-// typedef struct s_instructions
-// {
-// 	char	***tokens;
-// 	char	**io;
-// 	int		n_commands;
-// }	t_instructions;
 void	open_pipes(int m, int n, int fd[][n])
 {
 	int	i;
@@ -57,7 +49,7 @@ void	close_pipes(int m, int n, int fd[][n])
 int	get_input(char **io)
 {
 	int	fd;
-	
+
 	printf("hello from input %s\n", io[4]);
 	if (io[4] == NULL)
 		return (STDIN_FILENO);
@@ -67,31 +59,92 @@ int	get_input(char **io)
 		if (fd == -1)
 		{
 			printf("file %s does not exist\n", io[4]);
+			return (STDIN_FILENO);
 		}
-		else
+		dup2(fd, STDIN_FILENO);
+		return (fd);
+	}
+}
+/* This function gets I/O redirections and
+substitues all the chars associated with redirection in string s with spaces*/
+/* io array:
+io[0] holds  "> filename" (the same as 1> filename)
+io[1] holds "2>filename" (redirects stderr)
+io[2] holds ">> filename" (1>> filename means the same)
+io[3] holds "2>>filename" (redirects stderr in append mode)
+io[4] holds "< filename"
+&> filename (both stderr and stdout) -modifies both io[0] and io[1]
+&>>filename - modifies both io[2] and io[3]
+2>&1 copies io[0] to io[1] and copies io[2] to io[3]
+1>&2 vice versa
+>& redirect both*/
+
+/* << */
+int	get_output(char **io)
+{
+	int	fd;
+
+	if (io[0] == NULL && io[2] == NULL)
+		return (STDOUT_FILENO);
+	else if (io[0] != NULL)
+	{
+		printf("hello from output: write mode %s\n", io[0]);
+		fd = open(io[0], O_RDWR | O_CREAT, 0777);
+		if (fd == -1)
 		{
-			dup2(fd, STDIN_FILENO);
+			printf("Problem opening/creating file %s\n", io[0]);
+			return (STDOUT_FILENO);
 		}
+		dup2(fd, STDOUT_FILENO);
+		return (fd);
+	}
+	else if (io[2] != NULL)
+	{
+		printf("hello from output: append mode %s\n", io[2]);
+		fd = open(io[2], O_RDWR | O_APPEND | O_CREAT, 0777);
+		if (fd == -1)
+		{
+			printf("Problem opening/creating file %s\n", io[2]);
+			return (STDOUT_FILENO);
+		}
+		dup2(fd, STDOUT_FILENO);
 		return (fd);
 	}
 }
 
+void	init_redirection(t_redirection	*redirection, t_instructions	*instructions)
+{
+	redirection->stdin_copy = dup(STDIN_FILENO);
+	redirection->stdout_copy = dup(STDOUT_FILENO);
+	redirection->stderr_copy = dup(STDERR_FILENO);
+	redirection->input = get_input(instructions->io);
+	redirection->output = get_output(instructions->io);
+	open_pipes(instructions->n_commands - 1, 2, redirection->fd);
+}
+
+void	close_redirection(t_redirection	*redirection, t_instructions	*instructions)
+{
+	close(redirection->input);
+	close(redirection->output);
+	dup2(redirection->stdin_copy, STDIN_FILENO);
+	dup2(redirection->stdout_copy, STDOUT_FILENO);
+	dup2(redirection->stderr_copy, STDERR_FILENO);
+	close_pipes(instructions->n_commands - 1, 2, redirection->fd);
+}
+
+// fd[0] read
+// fd[1] write
 int	execute_commands(t_instructions instructions)
 {
-	int			i;
-	int			b;
-	int			pid;
-	char		***tokens;
-	int			input;
-	int			fd[1000][2];
-	// fd[0] read
-	// fd[1] write
+	t_redirection	redirection;
+	int				i;
+	int				b;
+	int				pid;
+	char			***tokens;
 
 	i = 0;
 	tokens = instructions.tokens;
-	//open_pipes(instructions.n_commands - 1, 2, fd);
-	int stdin_copy = dup(STDIN_FILENO);
-	input = get_input(instructions.io);
+	init_redirection(&redirection, &instructions);
 	while (*(tokens + i))
 	{
 		b = is_builtin(**(tokens + i));
@@ -102,10 +155,8 @@ int	execute_commands(t_instructions instructions)
 			pid = fork();
 			if (pid == 0)
 			{
-				//if (i == 0)
-				//if(i == instructions.n_commands - 1);
-					//get_output(instructions.io);
-				//close_pipes(instructions.n_commands - 1, 2, fd);
+				if (i == 0);
+				if (i == instructions.n_commands - 1);
 				execve(*instructions.command_paths + i, *(tokens + i), NULL);
 				printf("%s: something went terribly wrong\n", **(tokens + i));
 				exit(2);
@@ -113,9 +164,7 @@ int	execute_commands(t_instructions instructions)
 		}
 		i++;
 	}
-	close(input);
-	dup2(stdin_copy, STDIN_FILENO);
-	//close_pipes(instructions.n_commands - 1, 2, fd);
+	close_redirection(&redirection, &instructions);
 	waitpid(pid, NULL, WCONTINUED);
 	return (0);
 }
