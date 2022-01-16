@@ -1,0 +1,25 @@
+redirection input 0
+redirection output 27
+Makefile
+configure_sigaction.c
+construct_command_paths.c
+execute_builtins.c
+free_memory.c
+get_io_files.c
+get_io_files_utils.c
+get_relative_path.c
+get_tokens.c
+get_tokens_utils.c
+libft_utils.c
+main.c
+minishell
+minishell.h
+output
+redirection.c
+test
+redirection input 0
+redirection output 27
+[0;36mls: something went terribly wrong[0;37m
+redirection input 0
+redirection output 27
+[0;36mls: something went terribly wrong[0;37m

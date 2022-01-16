@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 10:21:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 15:41:53 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,32 @@ void	close_pipes(int m, int n, int fd[][n])
 	}
 }
 
+void	manage_pipes(int i, int count, t_redirection redirection)
+{
+	int	j;
+
+	if (i == 1)// != 0)
+	{
+		dup2(redirection.fd[i - 1][0], redirection.input);
+		close(redirection.fd[i - 1][1]);
+	}
+	if (i ==0)// != count - 1)
+	{
+		dup2(redirection.fd[i][1], redirection.output);
+		close(redirection.fd[0][0]);
+	}
+	j = 0;
+	// while (j < count)
+	// {
+	// 	printf("closing %d\n", j);
+	// 	if (j != i - 1)
+	// 		close(redirection->fd[j][0]);
+	// 	if (j != i)
+	// 		close(redirection->fd[j][1]);
+	// 	j++;
+	// }
+}
+
 // fd[0] read
 // fd[1] write
 int	execute_commands(t_instructions instructions)
@@ -69,10 +95,14 @@ int	execute_commands(t_instructions instructions)
 			pid = fork();
 			if (pid == 0)
 			{
-				if (i == 0);
-				if (i == instructions.n_commands - 1);
-				execve(*instructions.command_paths + i, *(tokens + i), NULL);
-				printf("%s: something went terribly wrong\n", **(tokens + i));
+				if (instructions.n_commands > 1)
+					manage_pipes(i, instructions.n_commands, redirection);
+				printf("redirection input %d\n", redirection.input);
+				printf("redirection output %d\n", redirection.output);
+				printf("path: %s\n", *(instructions.command_paths + i));
+				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
+				perror("Error executing");
+				printf("\e[0;36m%s: something went terribly wrong\e[0;37m\n", **(tokens + i));
 				exit(2);
 			}
 		}
@@ -94,14 +124,14 @@ int	run_command(char *s)
 	char ***temp = instructions.tokens;
 	for (int i = 0; *(temp + i) != 0; i++)
 	{
-		printf("command: %s\n", *(*(temp + i) + 0));
+		printf("\e[0;31mcommand: %s\n", *(*(temp + i) + 0));
 		for(int j = 1; *(*(temp + i) + j) != 0; j++)
 			printf("argument: %s\n", *(*(temp + i) + j));
 		printf("~~~~~~~~~~~~~~~~~~\n");		
 	}
 	for(int i = 0; i < 5; i++)
 		printf("redirection filename: %s\n", instructions.io[i]);
-	printf("path for the cd command %s\n", instructions.path);
+	printf("path for the cd command %s\n\e[0;37m", instructions.path);
 	if (construct_paths(&instructions))
 		execute_commands(instructions);
 	free(instructions.path);
@@ -118,7 +148,7 @@ void	infinite_loop(void)
 
 	while (true)
 	{
-		s = readline("\e[1;32m"TERMINAL"\e[0;37m");
+		s = readline("\e[0;32m"TERMINAL"\e[0;37m");
 		if (s == NULL)
 			exit_gracefully();
 		if (*s == '\0')

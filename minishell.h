@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 10:42:00 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 14:20:00 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct s_redirection
 
 //main.c
 void	infinite_loop(void);
+void	open_pipes(int m, int n, int fd[][n]);
+void	close_pipes(int m, int n, int fd[][n]);
 
 //get_tokens.c
 char	***get_tokens(char *s);
