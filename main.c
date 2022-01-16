@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 18:59:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/16 19:12:58 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,36 +50,21 @@ void	manage_pipes(int i, int count, t_redirection redirection)
 {
 	int	j;
 
-	printf("ENTER MANAGE PIPES %d\n", i);
 	j = 0;
 	while (j < count)
 	{
-		printf("j-loop i:%d\n", i);
 		if (j != i - 1)
-		{
-			printf("i: %d, closing %d0\n", i, j);
-			close(redirection.fd[j][0]);	
-		}
+			close(redirection.fd[j][0]);
 		if (j != i)
-		{
-			printf("i: %d, closing %d1\n", i, j);
 			close(redirection.fd[j][1]);
-		}
 		j++;
 	}
 	if (i == count - 1)
-	{
-		printf("enter i==count-1 i:%d\n", i);
 		dup2(redirection.fd[i - 1][0], STDIN_FILENO);
-	}
 	if (i == 0)
-	{
-		printf("enter i==0 i: %d\n", i);
 		dup2(redirection.fd[0][1], STDOUT_FILENO);
-	}
 	else if (i != count -1 && i != 0)
 	{
-		printf("enter else if i: %d\n", i);
 		dup2(redirection.fd[i - 1][0], STDIN_FILENO);
 		dup2(redirection.fd[i][1], STDOUT_FILENO);
 	}
@@ -108,7 +93,8 @@ int	execute_commands(t_instructions instructions)
 			pid = fork();
 			if (pid == 0)
 			{
-				manage_pipes(i, instructions.n_commands, redirection);
+				if (instructions.n_commands > 1)
+					manage_pipes(i, instructions.n_commands, redirection);
 				printf("\e[0;31mredirection input %d\n", redirection.input);
 				printf("redirection output %d\n", redirection.output);
 				printf("path: %s\e[0;37m\n", *(instructions.command_paths + i));
