@@ -6,72 +6,12 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 19:12:58 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 08:50:47 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_pipes(int m, int n, int fd[][n])
-{
-	int	i;
-
-	if (m > 900)
-	{
-		printf("More than 900 pipes. What is wrong with you?\n");
-		exit(1);
-	}
-	i = 0;
-	while (i < m)
-	{
-		if (pipe(fd[i]) != 0)
-		{
-			perror("Problem opening pipe");
-			exit (1);
-		}
-		i++;
-	}
-}
-
-void	close_pipes(int m, int n, int fd[][n])
-{
-	int	i;
-
-	i = 0;
-	while (i < m)
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-		i++;
-	}
-}
-
-void	manage_pipes(int i, int count, t_redirection redirection)
-{
-	int	j;
-
-	j = 0;
-	while (j < count)
-	{
-		if (j != i - 1)
-			close(redirection.fd[j][0]);
-		if (j != i)
-			close(redirection.fd[j][1]);
-		j++;
-	}
-	if (i == count - 1)
-		dup2(redirection.fd[i - 1][0], STDIN_FILENO);
-	if (i == 0)
-		dup2(redirection.fd[0][1], STDOUT_FILENO);
-	else if (i != count -1 && i != 0)
-	{
-		dup2(redirection.fd[i - 1][0], STDIN_FILENO);
-		dup2(redirection.fd[i][1], STDOUT_FILENO);
-	}
-}
-
-// fd[0] read
-// fd[1] write
 int	execute_commands(t_instructions instructions)
 {
 	t_redirection	redirection;
@@ -86,21 +26,27 @@ int	execute_commands(t_instructions instructions)
 	while (*(tokens + i))
 	{
 		b = is_builtin(**(tokens + i));
-		if (b)
+		if (b == 1 || b == 2)
 			execute_builtin(b, *(tokens + i), instructions.path);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
 			{
-				if (instructions.n_commands > 1)
-					manage_pipes(i, instructions.n_commands, redirection);
+				connect_pipes(i, instructions.n_commands, redirection);
 				printf("\e[0;31mredirection input %d\n", redirection.input);
 				printf("redirection output %d\n", redirection.output);
 				printf("path: %s\e[0;37m\n", *(instructions.command_paths + i));
+				if (b)
+				{
+					execute_builtin(b, *(tokens + i), instructions.path);
+					free_paths(*(tokens + i));
+					free(instructions.path);
+					exit_gracefully();
+				}
 				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
-				perror("\e[0;36mError executing");
-				printf("%s: something went terribly wrong\e[0;37m\n", **(tokens + i));
+				perror("\e[0;36mError executing command");
+				printf("%s: was not executed\e[0;37m\n", **(tokens + i));
 				exit(2);
 			}
 		}

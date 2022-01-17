@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:07:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 09:55:04 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 09:06:13 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ int	count_arguments(char *command)
 			command++;
 	while (*command && *command != '|' && *command != '>' && *command != '<' )
 	{
-		if (in_charset(*command))
-			result++;
-		while (in_charset(*command))
-				command++;
-		if (*command == '|')
-			return (result);
 		if (*command == 34)
 		{
 			command++;
@@ -36,7 +30,12 @@ int	count_arguments(char *command)
 			while (*command && *command != 34)
 				command++;
 		}
-		command++;
+		if (*command && in_charset(*command))
+			result++;
+		while (*command && in_charset(*command))
+				command++;
+		if (*command && *command != '|')
+			command++;
 	}
 	return (result);
 }

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 19:09:15 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 08:43:21 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,10 @@ void	close_redirection(t_redirection	*redirection,
 int		get_input(char **io);
 int		get_err_output(char **io);
 int		get_output(char **io);
+
+//pipes.c
+void	open_pipes(int m, int n, int fd[][n]);
+void	close_pipes(int m, int n, int fd[][n]);
+void	connect_pipes(int i, int count, t_redirection redirection);
 
 #endif
