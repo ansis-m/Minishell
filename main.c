@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 08:50:47 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:21:31 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ int	execute_commands(t_instructions instructions)
 				if (b)
 				{
 					execute_builtin(b, *(tokens + i), instructions.path);
-					free_paths(*(tokens + i));
-					free(instructions.path);
-					exit_gracefully();
 				}
 				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
 				perror("\e[0;36mError executing command");

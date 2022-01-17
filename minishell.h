@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 08:43:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 10:00:45 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,5 +121,8 @@ int		get_output(char **io);
 void	open_pipes(int m, int n, int fd[][n]);
 void	close_pipes(int m, int n, int fd[][n]);
 void	connect_pipes(int i, int count, t_redirection redirection);
+
+//echo.c
+void	echo(char **command);
 
 #endif
