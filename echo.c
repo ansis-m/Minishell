@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:55:36 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:27:08 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:44:23 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,24 @@
 
 void	echo(char **command)
 {
-	printf("echo placeholder");
-	fflush(stdout);
-	exit_gracefully();
+	int		i;
+	bool	newline;
+
+	newline = true;
+	i = 1;
+	if (*(command + 1) && !strncmp(*(command + 1), "-n", 2))
+	{
+		i = 2;
+		newline = false;
+	}
+	while (*(command + i))
+	{
+		write(STDOUT_FILENO, *(command + i), strlen(*(command + i)));
+		i++;
+		if (*(command + i))
+			write(STDOUT_FILENO, " ", 1);
+	}
+	if (newline)
+		write(STDOUT_FILENO, "\n", 1);
+	exit(0);
 }
