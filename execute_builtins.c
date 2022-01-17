@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:25:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:57:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,7 @@ int	execute_builtin(int b, char **command, char *path)
 	if (b == 3)
 		echo(command);
 	if (b == 4)
-	{
-		printf("pwd placeholder");
-		exit_gracefully();
-	}
+		pwd();
 	if (b == 5)
 	{
 		printf("export placeholder");
