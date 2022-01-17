@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:21:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 12:30:16 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	execute_commands(t_instructions instructions)
 	init_redirection(&redirection, &instructions);
 	while (*(tokens + i))
 	{
+		pid = 0;
 		b = is_builtin(**(tokens + i));
 		if (b == 1 || b == 2)
 			execute_builtin(b, *(tokens + i), instructions.path);
@@ -50,7 +51,8 @@ int	execute_commands(t_instructions instructions)
 		i++;
 	}
 	close_redirection(&redirection, &instructions);
-	waitpid(pid, NULL, WCONTINUED);
+	if (pid)
+		waitpid(pid, NULL, WCONTINUED);
 	return (0);
 }
 
