@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 13:34:12 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:23:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,20 +63,21 @@ void	free_paths(char **paths)
 void	exit_gracefully(void)
 {
 	rl_clear_history();
-	free_global();
 	printf("\n");
 	exit(0);
 }
 
-void	free_global(void)
+void	clean_up_and_exit(t_instructions instructions, bool global, bool ext)
 {
-	int	i;
-
-	i = 0;
-	while (g_env.env_var && *(g_env.env_var + i))
+	if (global)
+		free_global();
+	free(instructions.path);
+	free_io(instructions.io);
+	free_paths(instructions.command_paths);
+	free_tokens(instructions.tokens);
+	if (ext)
 	{
-		free(*(g_env.env_var + i));
-		i++;
+		rl_clear_history();
+		exit(0);
 	}
-	free(g_env.env_var);
 }

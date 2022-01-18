@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:55:36 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 13:35:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:15:40 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ void	echo(char **command)
 	}
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
-	free_global();
 	exit(0);
 }

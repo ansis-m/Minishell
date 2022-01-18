@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:56:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 13:35:40 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:15:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,5 @@ void	pwd(void)
 	if (getcwd(buf, 9999))
 		write(STDOUT_FILENO, buf, ft_strlen(buf));
 	write(STDOUT_FILENO, "\n", 1);
-	free_global();
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 14:02:53 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:20:31 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,12 @@ int	construct_paths(t_instructions *instructions)
 		*(paths_ptr + i) = find_path(system_paths,
 				**(instructions->tokens + i));
 		if (!*(paths_ptr + i) && !is_builtin(**(instructions->tokens + i)))
+		{
+			free(system_paths);
 			return (0);
+		}
 		i++;
 	}
+	free(system_paths);
 	return (1);
 }

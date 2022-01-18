@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 10:22:57 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:07:26 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	execute_builtin(int b, char **command, char *path)
 {
 	if (b == 1)
 		return (chdir(*(command + 1)));
-	if (b == 2)
-		exit_gracefully();
 	if (b == 3)
 		echo(command);
 	if (b == 4)

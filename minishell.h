@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 13:29:55 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 20:22:17 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,10 @@ void	infinite_loop(void);
 void	open_pipes(int m, int n, int fd[][n]);
 void	close_pipes(int m, int n, int fd[][n]);
 
+//expand_variables.c
+char	*get_variable(int *i, char *s);
+void	expand_variables(char **s);
+
 //get_tokens.c
 char	***get_tokens(char *s);
 int		get_command(char ***array, char *command);
@@ -79,7 +83,7 @@ void	free_tokens(char ***tokens);
 void	free_io(char **io);
 void	free_paths(char **paths);
 void	exit_gracefully(void);
-void	free_global(void);
+void	clean_up_and_exit(t_instructions instructions, bool global, bool ext);
 
 //get_io_files.c
 char	**get_io(char *s);
@@ -135,6 +139,7 @@ void	connect_pipes(int i, int count, t_redirection redirection);
 
 //manage_environment_variables.c
 void	init_env(int argc, char *argv[], char *envp[]);
+void	free_global(void);
 
 //echo.c
 void	echo(char **command);

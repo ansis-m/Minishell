@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:17:33 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 10:20:37 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:21:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,17 @@ void	init_env(int argc, char *argv[], char *envp[])
 		j++;
 	}
 	g_env.size = i;
+}
+
+void	free_global(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_env.env_var && *(g_env.env_var + i))
+	{
+		free(*(g_env.env_var + i));
+		i++;
+	}
+	free(g_env.env_var);
 }
