@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:41:40 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 09:10:22 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 11:55:42 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,25 @@ int	ft_strncmp(const char *str1, const char *str2, size_t num)
 		i++;
 	}
 	return (0);
+}
+
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
+{
+	size_t	strlen_src;
+	size_t	strlen_dst;
+	size_t	i;
+
+	strlen_src = ft_strlen(src);
+	strlen_dst = ft_strlen(dst);
+	i = 0;
+	while (*(src + i) && i + strlen_dst < dstsize - 1 && dstsize)
+	{
+		*(dst + i + strlen_dst) = *(src + i);
+		i++;
+		*(dst + i + strlen_dst) = '\0';
+	}
+	if (dstsize < strlen_dst)
+		return (dstsize + strlen_src);
+	else
+		return (strlen_dst + strlen_src);
 }

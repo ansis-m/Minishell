@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/17 11:56:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 13:35:40 by amalecki         ###   ########.fr       */
+/*   Created: 2022/01/18 10:00:57 by amalecki          #+#    #+#             */
+/*   Updated: 2022/01/18 13:34:54 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(void)
-{
-	char	buf[10000];
+extern t_environment	g_env;
 
-	if (getcwd(buf, 9999))
-		write(STDOUT_FILENO, buf, ft_strlen(buf));
-	write(STDOUT_FILENO, "\n", 1);
+void	env(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_env.env_var && *(g_env.env_var + i))
+	{
+		printf("%s\n", *(g_env.env_var + i));
+		i++;
+	}
 	free_global();
 	exit(0);
 }

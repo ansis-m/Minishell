@@ -6,11 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 11:20:36 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:34:12 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_environment	g_env;
 
 void	free_tokens(char ***tokens)
 {
@@ -61,6 +63,20 @@ void	free_paths(char **paths)
 void	exit_gracefully(void)
 {
 	rl_clear_history();
+	free_global();
 	printf("\n");
 	exit(0);
+}
+
+void	free_global(void)
+{
+	int	i;
+
+	i = 0;
+	while (g_env.env_var && *(g_env.env_var + i))
+	{
+		free(*(g_env.env_var + i));
+		i++;
+	}
+	free(g_env.env_var);
 }

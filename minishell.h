@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 09:41:58 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 13:29:55 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_instructions
 typedef struct s_environment
 {
 	char	**env_var;
+	int		size;
+	char	exit_status;
 
 }	t_environment;
 
@@ -77,6 +79,7 @@ void	free_tokens(char ***tokens);
 void	free_io(char **io);
 void	free_paths(char **paths);
 void	exit_gracefully(void);
+void	free_global(void);
 
 //get_io_files.c
 char	**get_io(char *s);
@@ -105,6 +108,7 @@ void	*ft_memset(void *s, int c, size_t n);
 size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *c);
 int		ft_strncmp(const char *str1, const char *str2, size_t num);
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 //construct_command_paths.c
 char	*find_path(char *system_paths, char *command);
@@ -129,10 +133,16 @@ void	open_pipes(int m, int n, int fd[][n]);
 void	close_pipes(int m, int n, int fd[][n]);
 void	connect_pipes(int i, int count, t_redirection redirection);
 
+//manage_environment_variables.c
+void	init_env(int argc, char *argv[], char *envp[]);
+
 //echo.c
 void	echo(char **command);
 
 //pwd.c
 void	pwd(void);
+
+//env.c
+void	env(void);
 
 #endif
