@@ -6,11 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 12:30:16 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:16:41 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_environment	env;
 
 int	execute_commands(t_instructions instructions)
 {
@@ -105,8 +107,33 @@ void	infinite_loop(void)
 	}
 }
 
-int	main(void)
+void	init_env(int argc, char *argv[], char *envp[])
 {
+	int	i;
+	int	j;
+
+	i = 0;
+	while (envp && *(envp + i))
+		i++;
+	if (argc > 1)
+		printf("Minishell does not take arguments: '%s' not used\n", argv[1]);
+	env.env_var = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!env.env_var)
+	{
+		perror("Problem with memory allocation");
+		exit(1);
+	}
+	j = 0;
+	while (j < i)
+	{
+		*(env.env_var + j) = ft_strdup(envp[j]);
+		j++;
+	}
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	init_env(argc, argv, envp);
 	configure_sigaction();
 	infinite_loop();
 	return (0);

@@ -6,11 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 12:48:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:47:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_environment	env;
 
 char	*command_not_found(char *command)
 {
@@ -29,7 +31,7 @@ char	*find_path(char *system_paths, char *command)
 	ptr = temp;
 	memset(temp, 0, 1000);
 	if (stat(command, &info) != -1)
-		return (strdup(command));
+		return (ft_strdup(command));
 	while (*system_paths && !is_builtin(command))
 	{
 		*(ptr++) = *(system_paths++);
@@ -43,11 +45,31 @@ char	*find_path(char *system_paths, char *command)
 				*(ptr++) = *(command + i++);
 			ptr = temp;
 			if (stat(ptr, &info) != -1)
-				return (strdup(ptr));
+				return (ft_strdup(ptr));
 			memset(temp, 0, 1000);
 		}
 	}
 	return (command_not_found(command));
+}
+
+char	*find_system_paths(char *variable)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (env.env_var && *(env.env_var + i))
+	{
+		if (!ft_strncmp(*(env.env_var + i), variable, ft_strlen(variable)))
+		{
+			j = 0;
+			while (j < ft_strlen(variable) + 1 && *(*(env.env_var + i) + j))
+				j++;
+			return (strdup(*(env.env_var + i) + j));
+		}
+		i++;
+	}
+	return (NULL);
 }
 
 int	construct_paths(t_instructions *instructions)
@@ -56,7 +78,7 @@ int	construct_paths(t_instructions *instructions)
 	char	**paths_ptr;
 	int		i;
 
-	system_paths = getenv("PATH");
+	system_paths = find_system_paths("PATH");
 	instructions->command_paths
 		= (char **)ft_calloc(instructions->n_commands + 1, sizeof(char *));
 	if (! instructions->command_paths)

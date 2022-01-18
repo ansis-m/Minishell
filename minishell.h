@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:58:26 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:41:58 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <fcntl.h>
 
 # define TERMINAL "MINISHELL OF BOLT and ANSIS: "
-# define C_CHAR_SET "-'=_~#@.,/"
+# define C_CHAR_SET "-'=_~#+@.,/"
 
 typedef struct s_instructions
 {
@@ -37,6 +37,12 @@ typedef struct s_instructions
 	char	**command_paths;
 	int		n_commands;
 }	t_instructions;
+
+typedef struct s_environment
+{
+	char	**env_var;
+
+}	t_environment;
 
 typedef struct s_redirection
 {
@@ -104,6 +110,7 @@ int		ft_strncmp(const char *str1, const char *str2, size_t num);
 char	*find_path(char *system_paths, char *command);
 int		construct_paths(t_instructions *instructions);
 char	*command_not_found(char *command);
+char	*find_system_paths(char *variable);
 
 //get_relative_path.c
 char	*get_path(char *s);

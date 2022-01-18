@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:41:40 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 09:50:49 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:10:22 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ char	*ft_strdup(const char *c)
 
 	result = (char *)malloc(ft_strlen(c) + 1);
 	if (!result)
-		return (NULL);
+	{
+		perror("Problem with memory allocation");
+		exit(1);
+	}
 	i = 0;
 	while (i <= ft_strlen(c))
 	{
