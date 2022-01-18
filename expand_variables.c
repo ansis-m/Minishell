@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 20:21:38 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 21:47:36 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,49 @@ char	*get_variable(int *i, char *s)
 	return (NULL);
 }
 
-void	expand_variables(char **s)
+void	check_command_line(char **s)
 {
-	char	temp[20000];
-	char	*ptr;
-	char	*variable;
-	char	*expanded;
-	int		i;
-
 	if (ft_strlen(*s) > 2000)
 	{
 		printf("Command line buffer over 2000 chars. Exit normally.\n");
 		exit(0);
 	}
+}
+
+void	expand(int *i, char *s, char **ptr, bool quotes)
+{
+	char	*variable;
+	char	*expanded;
+	char	*local;
+
+	local = *ptr;
+	(*i)++;
+	variable = get_variable(i, s);
+	printf("variable %s\n", variable);
+	expanded = find_system_paths(variable);
+	free(variable);
+	if (!expanded)
+		return ;
+	printf("expanded %s\n", expanded);
+	if (!quotes)
+		*(local++) = 34;
+	ft_strlcat(local, expanded, 20000 - *i);
+	local += ft_strlen(expanded);
+	*ptr += ft_strlen(expanded) + 2 * (1 - quotes);
+	if (!quotes)
+		*(local++) = 34;
+	free(expanded);
+}
+
+void	expand_variables(char **s)
+{
+	char	temp[20000];
+	char	*ptr;
+	int		i;
+	bool	quotes;
+
+	quotes = false;
+	check_command_line(s);
 	ft_memset(temp, 0, 20000);
 	ptr = temp;
 	i = 0;
@@ -56,21 +86,11 @@ void	expand_variables(char **s)
 				*(ptr++) = *(*s + i++);
 		}
 		if (*(*s + i) == '$')
-		{
-			i++;
-			variable = get_variable(&i, *s);
-			printf("variable %s\n", variable);
-			expanded = find_system_paths(variable);
-			free(variable);
-			if (!expanded)
-				continue ;
-			printf("expanded %s\n", expanded);
-			*(ptr++) = 34;
-			ft_strlcat(ptr, expanded, 20000 - i);
-			ptr += ft_strlen(expanded);
-			*(ptr++) = 34;
-			free(expanded);
-		}
+			expand(&i, *s, &ptr, quotes);
+		if (*(*s + i) == 34 && quotes)
+			quotes = false;
+		else if (*(*s + i) == 34 && !quotes)
+			quotes = true;
 		if (*(*s + i))
 			*(ptr++) = *(*s + i++);
 	}
