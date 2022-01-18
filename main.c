@@ -6,48 +6,14 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 10:21:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:16:41 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	open_pipes(int m, int n, int fd[][n])
-{
-	int	i;
+t_environment	env;
 
-	if (m > 900)
-	{
-		printf("More than 900 pipes. What is wrong with you?\n");
-		exit(1);
-	}
-	i = 0;
-	while (i < m)
-	{
-		if (pipe(fd[i]) != 0)
-		{
-			perror("Problem opening pipe");
-			exit (1);
-		}
-		i++;
-	}
-}
-
-void	close_pipes(int m, int n, int fd[][n])
-{
-	int	i;
-
-	i = 0;
-	while (i < m)
-	{
-		close(fd[i][0]);
-		close(fd[i][1]);
-		i++;
-	}
-}
-
-// fd[0] read
-// fd[1] write
 int	execute_commands(t_instructions instructions)
 {
 	t_redirection	redirection;
@@ -61,25 +27,34 @@ int	execute_commands(t_instructions instructions)
 	init_redirection(&redirection, &instructions);
 	while (*(tokens + i))
 	{
+		pid = 0;
 		b = is_builtin(**(tokens + i));
-		if (b)
+		if (b == 1 || b == 2)
 			execute_builtin(b, *(tokens + i), instructions.path);
 		else
 		{
 			pid = fork();
 			if (pid == 0)
 			{
-				if (i == 0);
-				if (i == instructions.n_commands - 1);
-				execve(*instructions.command_paths + i, *(tokens + i), NULL);
-				printf("%s: something went terribly wrong\n", **(tokens + i));
+				connect_pipes(i, instructions.n_commands, redirection);
+				printf("\e[0;31mredirection input %d\n", redirection.input);
+				printf("redirection output %d\n", redirection.output);
+				printf("path: %s\e[0;37m\n", *(instructions.command_paths + i));
+				if (b)
+				{
+					execute_builtin(b, *(tokens + i), instructions.path);
+				}
+				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
+				perror("\e[0;36mError executing command");
+				printf("%s: was not executed\e[0;37m\n", **(tokens + i));
 				exit(2);
 			}
 		}
 		i++;
 	}
 	close_redirection(&redirection, &instructions);
-	waitpid(pid, NULL, WCONTINUED);
+	if (pid)
+		waitpid(pid, NULL, WCONTINUED);
 	return (0);
 }
 
@@ -94,14 +69,14 @@ int	run_command(char *s)
 	char ***temp = instructions.tokens;
 	for (int i = 0; *(temp + i) != 0; i++)
 	{
-		printf("command: %s\n", *(*(temp + i) + 0));
+		printf("\e[0;31mcommand: %s\n", *(*(temp + i) + 0));
 		for(int j = 1; *(*(temp + i) + j) != 0; j++)
 			printf("argument: %s\n", *(*(temp + i) + j));
 		printf("~~~~~~~~~~~~~~~~~~\n");		
 	}
 	for(int i = 0; i < 5; i++)
 		printf("redirection filename: %s\n", instructions.io[i]);
-	printf("path for the cd command %s\n", instructions.path);
+	printf("path for the cd command %s\n\e[0;37m", instructions.path);
 	if (construct_paths(&instructions))
 		execute_commands(instructions);
 	free(instructions.path);
@@ -118,7 +93,7 @@ void	infinite_loop(void)
 
 	while (true)
 	{
-		s = readline("\e[1;32m"TERMINAL"\e[0;37m");
+		s = readline("\e[0;32m"TERMINAL"\e[0;37m");
 		if (s == NULL)
 			exit_gracefully();
 		if (*s == '\0')
@@ -132,8 +107,33 @@ void	infinite_loop(void)
 	}
 }
 
-int	main(void)
+void	init_env(int argc, char *argv[], char *envp[])
 {
+	int	i;
+	int	j;
+
+	i = 0;
+	while (envp && *(envp + i))
+		i++;
+	if (argc > 1)
+		printf("Minishell does not take arguments: '%s' not used\n", argv[1]);
+	env.env_var = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!env.env_var)
+	{
+		perror("Problem with memory allocation");
+		exit(1);
+	}
+	j = 0;
+	while (j < i)
+	{
+		*(env.env_var + j) = ft_strdup(envp[j]);
+		j++;
+	}
+}
+
+int	main(int argc, char *argv[], char *envp[])
+{
+	init_env(argc, argv, envp);
 	configure_sigaction();
 	infinite_loop();
 	return (0);

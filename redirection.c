@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:16:44 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/16 10:50:48 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/17 11:48:07 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ int	get_input(char **io)
 {
 	int	fd;
 
-	printf("hello from input %s\n", io[4]);
+	printf("\e[0;31mhello from input %s\e[0;37m\n", io[4]);
 	if (io[4] == NULL)
 		return (STDIN_FILENO);
 	else
 	{
-		fd = open(io[4], O_RDONLY, 0444);
+		fd = open(io[4], O_RDONLY, 0666);
 		if (fd == -1)
 		{
 			printf("file %s does not exist\n", io[4]);
@@ -56,19 +56,6 @@ int	get_input(char **io)
 	}
 }
 
-/* io array:
-io[0] holds  "> filename" (the same as 1> filename)
-io[1] holds "2>filename" (redirects stderr)
-io[2] holds ">> filename" (1>> filename means the same)
-io[3] holds "2>>filename" (redirects stderr in append mode)
-io[4] holds "< filename"
-&> filename (both stderr and stdout) -modifies both io[0] and io[1]
-&>>filename - modifies both io[2] and io[3]
-2>&1 copies io[0] to io[1] and copies io[2] to io[3]
-1>&2 vice versa
->& redirect both*/
-/* << */
-
 int	get_output(char **io)
 {
 	int	fd;
@@ -77,7 +64,7 @@ int	get_output(char **io)
 		return (STDOUT_FILENO);
 	else if (io[0] != NULL)
 	{
-		printf("hello from output: write mode %s\n", io[0]);
+		printf("\e[0;31mhello from output: write mode %s\e[0;37m\n", io[0]);
 		unlink(io[0]);
 		fd = open(io[0], O_RDWR | O_CREAT, 0666);
 		if (fd == -1)
@@ -89,7 +76,7 @@ int	get_output(char **io)
 	}
 	else if (io[2] != NULL)
 	{
-		printf("hello from output: append mode %s\n", io[2]);
+		printf("\e[0;31mhello from output: append mode %s\e[0;37m\n", io[2]);
 		fd = open(io[2], O_RDWR | O_APPEND | O_CREAT, 0666);
 		if (fd == -1)
 		{
@@ -109,7 +96,7 @@ int	get_err_output(char **io)
 		return (STDERR_FILENO);
 	else if (io[1] != NULL)
 	{
-		printf("hello from error: write mode %s\n", io[1]);
+		printf("\e[0;31mhello from error: write mode %s\e[0;37m\n", io[1]);
 		unlink(io[1]);
 		fd = open(io[1], O_RDWR | O_CREAT, 0666);
 		if (fd == -1)
@@ -121,7 +108,7 @@ int	get_err_output(char **io)
 	}
 	else if (io[3] != NULL)
 	{
-		printf("hello from error: append mode %s\n", io[3]);
+		printf("\e[0;31mhello from error: append mode %s\e[0;37m\n", io[3]);
 		fd = open(io[3], O_RDWR | O_APPEND | O_CREAT, 0777);
 		if (fd == -1)
 		{

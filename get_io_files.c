@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 17:06:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 09:48:17 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,9 @@ void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
 	char	temp[500];
 	char	*ptr;
-	int		i;
 
 	memset(temp, 0, 500);
 	ptr = temp;
-	i = 0;
 	*s = ' ';
 	if (*(s + 1) == '&')
 		*(s + 1) = ' ';
