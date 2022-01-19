@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   libft_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/18 10:00:57 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 19:42:25 by amalecki         ###   ########.fr       */
+/*   Created: 2022/01/19 14:36:54 by amalecki          #+#    #+#             */
+/*   Updated: 2022/01/19 14:38:26 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_environment	g_env;
-
-void	env(t_instructions instructions)
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	int	i;
+	size_t	strlen_src;
+	size_t	strlen_dst;
+	size_t	i;
 
+	strlen_src = ft_strlen(src);
+	strlen_dst = ft_strlen(dst);
 	i = 0;
-	while (g_env.env_var && *(g_env.env_var + i))
+	while (*(src + i) && i + strlen_dst < dstsize - 1 && dstsize)
 	{
-		if (ft_strlen(*(g_env.env_var + i)))
-			printf("%s\n", *(g_env.env_var + i));
+		*(dst + i + strlen_dst) = *(src + i);
 		i++;
+		*(dst + i + strlen_dst) = '\0';
 	}
-	clean_up_and_exit(instructions, true, true);
+	if (dstsize < strlen_dst)
+		return (dstsize + strlen_src);
+	else
+		return (strlen_dst + strlen_src);
 }

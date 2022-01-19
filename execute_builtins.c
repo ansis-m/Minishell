@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 10:17:48 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:39:36 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,9 @@ int	execute_builtin(int b, char **command, t_instructions instructions)
 	if (b == 4)
 		pwd(instructions);
 	if (b == 5)
-		export(command, instructions);
+		export(command);
 	if (b == 6)
-	{
-		printf("unset placeholder");
-		exit_gracefully();
-	}
+		unset(command);
 	if (b == 7)
 		env(instructions);
 	return (0);

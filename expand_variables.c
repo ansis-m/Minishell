@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 09:17:48 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 14:39:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	free(variable);
 	if (!expanded)
 		return ;
-	printf("expanded %s\n", expanded);
 	if (!quotes)
 		*(local++) = 34;
 	ft_strlcat(local, expanded, 20000 - *i);

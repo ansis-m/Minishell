@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 09:20:11 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 19:45:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	execute_commands(t_instructions instructions)
 	while (*(tokens + i))
 	{
 		b = is_builtin(**(tokens + i));
-		if (b == 1 || b == 5 || b == 2)
+		if (b == 1 || b == 5 || b == 2 || b == 6)
 			execute_builtin(b, *(tokens + i), instructions);
 		else
 		{

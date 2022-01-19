@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 10:12:23 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 14:34:22 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 20:39:08 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,19 +100,25 @@ void	add_env_variable(char *command)
 	g_env.env_var = new;
 }
 
-void	export(char **command, t_instructions instructions)
+void	export(char **command)
 {
 	char	argument[2000];
 	char	*global_ptr;
 	int		indicator;
+	int		i;
 
 	if (!check_arguments(command))
 		return ;
-	ft_memset(argument, 0, 1000);
-	extract_argument(argument, *(command + 1));
-	indicator = searh_argument(&global_ptr, argument, *(command + 1));
-	if (indicator == -3)
-		add_env_variable(*(command + 1));
-	else if (indicator >= 0)
-		edit_env_variable(indicator, *(command + 1));
+	i = 1;
+	while (*(command + i))
+	{
+		ft_memset(argument, 0, 1000);
+		extract_argument(argument, *(command + i));
+		indicator = searh_argument(&global_ptr, argument, *(command + i));
+		if (indicator == -3)
+			add_env_variable(*(command + i));
+		else if (indicator >= 0)
+			edit_env_variable(indicator, *(command + i));
+		i++;
+	}
 }
