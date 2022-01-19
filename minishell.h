@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 11:25:03 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 12:40:41 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,6 @@ void	env(t_instructions instructions);
 //export.c
 void	export(char **command, t_instructions instructions);
 int		check_arguments(char **command);
+int		searh_argument(char **global_ptr, char *argument, char *command);
 
 #endif
