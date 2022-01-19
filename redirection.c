@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:16:44 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:48:07 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:22:12 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ int	get_input(char **io)
 {
 	int	fd;
 
-	printf("\e[0;31mhello from input %s\e[0;37m\n", io[4]);
 	if (io[4] == NULL)
 		return (STDIN_FILENO);
 	else
@@ -64,7 +63,6 @@ int	get_output(char **io)
 		return (STDOUT_FILENO);
 	else if (io[0] != NULL)
 	{
-		printf("\e[0;31mhello from output: write mode %s\e[0;37m\n", io[0]);
 		unlink(io[0]);
 		fd = open(io[0], O_RDWR | O_CREAT, 0666);
 		if (fd == -1)
@@ -76,7 +74,6 @@ int	get_output(char **io)
 	}
 	else if (io[2] != NULL)
 	{
-		printf("\e[0;31mhello from output: append mode %s\e[0;37m\n", io[2]);
 		fd = open(io[2], O_RDWR | O_APPEND | O_CREAT, 0666);
 		if (fd == -1)
 		{
@@ -96,7 +93,6 @@ int	get_err_output(char **io)
 		return (STDERR_FILENO);
 	else if (io[1] != NULL)
 	{
-		printf("\e[0;31mhello from error: write mode %s\e[0;37m\n", io[1]);
 		unlink(io[1]);
 		fd = open(io[1], O_RDWR | O_CREAT, 0666);
 		if (fd == -1)
@@ -108,7 +104,6 @@ int	get_err_output(char **io)
 	}
 	else if (io[3] != NULL)
 	{
-		printf("\e[0;31mhello from error: append mode %s\e[0;37m\n", io[3]);
 		fd = open(io[3], O_RDWR | O_APPEND | O_CREAT, 0777);
 		if (fd == -1)
 		{
