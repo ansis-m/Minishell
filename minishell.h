@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 20:22:17 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 08:51:27 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	parse_doublequotes(char *s, int *i);
 
 //execute_builtins.c
 int		is_builtin(char *command);
-int		execute_builtin(int b, char **command, char *path);
+int		execute_builtin(int b, char **command, t_instructions instructions);
 
 //get_io_files_utils.c
 void	manage_greater_than(char *s, char **io);

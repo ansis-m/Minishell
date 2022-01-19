@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 20:21:32 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 08:53:58 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,8 @@ int	execute_commands(t_instructions instructions)
 	while (*(tokens + i))
 	{
 		b = is_builtin(**(tokens + i));
-		if (b == 2)
-			clean_up_and_exit(instructions, true, true);
-		else if (b == 1)
-			execute_builtin(b, *(tokens + i), instructions.path);
+		if (b == 1 || b == 5 || b == 2)
+			execute_builtin(b, *(tokens + i), instructions);
 		else
 		{
 			pid = fork();
@@ -40,7 +38,7 @@ int	execute_commands(t_instructions instructions)
 			{
 				connect_pipes(i, instructions.n_commands, redirection);
 				if (b)
-					execute_builtin(b, *(tokens + i), instructions.path);
+					execute_builtin(b, *(tokens + i), instructions);
 				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
 				perror("\e[0;36mError executing command");
 				printf("%s: was not executed\e[0;37m\n", **(tokens + i));
