@@ -6,18 +6,18 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 11:56:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 17:15:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:00:33 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	pwd(void)
+void	pwd(t_instructions instructions)
 {
 	char	buf[10000];
 
 	if (getcwd(buf, 9999))
 		write(STDOUT_FILENO, buf, ft_strlen(buf));
 	write(STDOUT_FILENO, "\n", 1);
-	exit(0);
+	clean_up_and_exit(instructions, true, true);
 }

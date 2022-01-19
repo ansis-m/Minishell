@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 08:53:05 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:07:03 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ int	execute_builtin(int b, char **command, t_instructions instructions)
 	if (b == 2)
 		clean_up_and_exit(instructions, true, true);
 	if (b == 3)
-		echo(command);
+		echo(command, instructions);
 	if (b == 4)
-		pwd();
+		pwd(instructions);
 	if (b == 5)
 	{
 		printf("export placeholder");
@@ -52,8 +52,6 @@ int	execute_builtin(int b, char **command, t_instructions instructions)
 		exit_gracefully();
 	}
 	if (b == 7)
-	{
-		env();
-	}
+		env(instructions);
 	return (0);
 }

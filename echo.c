@@ -6,13 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:55:36 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 17:15:40 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:00:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	echo(char **command)
+void	echo(char **command, t_instructions instructions)
 {
 	int		i;
 	bool	newline;
@@ -33,5 +33,5 @@ void	echo(char **command)
 	}
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
-	exit(0);
+	clean_up_and_exit(instructions, true, true);
 }

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 08:51:27 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:02:23 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,12 +142,12 @@ void	init_env(int argc, char *argv[], char *envp[]);
 void	free_global(void);
 
 //echo.c
-void	echo(char **command);
+void	echo(char **command, t_instructions instructions);
 
 //pwd.c
-void	pwd(void);
+void	pwd(t_instructions instructions);
 
 //env.c
-void	env(void);
+void	env(t_instructions instructions);
 
 #endif

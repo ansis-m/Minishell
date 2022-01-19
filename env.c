@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:00:57 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 17:15:50 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:02:04 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern t_environment	g_env;
 
-void	env(void)
+void	env(t_instructions instructions)
 {
 	int	i;
 
@@ -24,5 +24,5 @@ void	env(void)
 		printf("%s\n", *(g_env.env_var + i));
 		i++;
 	}
-	exit(0);
+	clean_up_and_exit(instructions, true, true);
 }
