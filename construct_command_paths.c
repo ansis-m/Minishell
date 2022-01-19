@@ -6,13 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 09:47:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 17:20:31 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern t_environment	env;
+extern t_environment	g_env;
 
 char	*command_not_found(char *command)
 {
@@ -58,14 +58,14 @@ char	*find_system_paths(char *variable)
 	size_t	j;
 
 	i = 0;
-	while (env.env_var && *(env.env_var + i))
+	while (g_env.env_var && *(g_env.env_var + i))
 	{
-		if (!ft_strncmp(*(env.env_var + i), variable, ft_strlen(variable)))
+		if (!ft_strncmp(*(g_env.env_var + i), variable, ft_strlen(variable)))
 		{
 			j = 0;
-			while (j < ft_strlen(variable) + 1 && *(*(env.env_var + i) + j))
+			while (j < ft_strlen(variable) + 1 && *(*(g_env.env_var + i) + j))
 				j++;
-			return (strdup(*(env.env_var + i) + j));
+			return (strdup(*(g_env.env_var + i) + j));
 		}
 		i++;
 	}
@@ -93,8 +93,12 @@ int	construct_paths(t_instructions *instructions)
 		*(paths_ptr + i) = find_path(system_paths,
 				**(instructions->tokens + i));
 		if (!*(paths_ptr + i) && !is_builtin(**(instructions->tokens + i)))
+		{
+			free(system_paths);
 			return (0);
+		}
 		i++;
 	}
+	free(system_paths);
 	return (1);
 }

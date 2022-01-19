@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:57:48 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:07:03 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,16 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-int	execute_builtin(int b, char **command, char *path)
+int	execute_builtin(int b, char **command, t_instructions instructions)
 {
 	if (b == 1)
 		return (chdir(*(command + 1)));
 	if (b == 2)
-		exit_gracefully();
+		clean_up_and_exit(instructions, true, true);
 	if (b == 3)
-		echo(command);
+		echo(command, instructions);
 	if (b == 4)
-		pwd();
+		pwd(instructions);
 	if (b == 5)
 	{
 		printf("export placeholder");
@@ -52,9 +52,6 @@ int	execute_builtin(int b, char **command, char *path)
 		exit_gracefully();
 	}
 	if (b == 7)
-	{
-		printf("env placeholder");
-		exit_gracefully();
-	}
+		env(instructions);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 09:41:58 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:02:23 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ typedef struct s_instructions
 typedef struct s_environment
 {
 	char	**env_var;
+	int		size;
+	char	exit_status;
 
 }	t_environment;
 
@@ -60,6 +62,10 @@ void	infinite_loop(void);
 void	open_pipes(int m, int n, int fd[][n]);
 void	close_pipes(int m, int n, int fd[][n]);
 
+//expand_variables.c
+char	*get_variable(int *i, char *s);
+void	expand_variables(char **s);
+
 //get_tokens.c
 char	***get_tokens(char *s);
 int		get_command(char ***array, char *command);
@@ -77,6 +83,7 @@ void	free_tokens(char ***tokens);
 void	free_io(char **io);
 void	free_paths(char **paths);
 void	exit_gracefully(void);
+void	clean_up_and_exit(t_instructions instructions, bool global, bool ext);
 
 //get_io_files.c
 char	**get_io(char *s);
@@ -86,7 +93,7 @@ void	parse_doublequotes(char *s, int *i);
 
 //execute_builtins.c
 int		is_builtin(char *command);
-int		execute_builtin(int b, char **command, char *path);
+int		execute_builtin(int b, char **command, t_instructions instructions);
 
 //get_io_files_utils.c
 void	manage_greater_than(char *s, char **io);
@@ -105,6 +112,7 @@ void	*ft_memset(void *s, int c, size_t n);
 size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *c);
 int		ft_strncmp(const char *str1, const char *str2, size_t num);
+size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 //construct_command_paths.c
 char	*find_path(char *system_paths, char *command);
@@ -129,10 +137,17 @@ void	open_pipes(int m, int n, int fd[][n]);
 void	close_pipes(int m, int n, int fd[][n]);
 void	connect_pipes(int i, int count, t_redirection redirection);
 
+//manage_environment_variables.c
+void	init_env(int argc, char *argv[], char *envp[]);
+void	free_global(void);
+
 //echo.c
-void	echo(char **command);
+void	echo(char **command, t_instructions instructions);
 
 //pwd.c
-void	pwd(void);
+void	pwd(t_instructions instructions);
+
+//env.c
+void	env(t_instructions instructions);
 
 #endif

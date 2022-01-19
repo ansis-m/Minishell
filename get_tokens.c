@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:07:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 09:06:13 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 09:13:24 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,17 @@ int	get_arguments(char **array, char *command)
 {
 	int		size;
 	int		offset;
+	char	quote;
 
 	size = 0;
 	offset = 0;
 	initial_offset(&offset, &command);
-	if (*command == 34)
+	if (*command == 34 || *command == 39)
 	{
+		quote = *command;
 		command++;
 		offset += 2;
-		while (*(command + size) && *(command + size) != 34)
+		while (*(command + size) && *(command + size) != quote)
 			size++;
 	}
 	else

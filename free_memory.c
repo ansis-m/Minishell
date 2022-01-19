@@ -6,11 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/15 11:20:36 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/18 18:23:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern t_environment	g_env;
 
 void	free_tokens(char ***tokens)
 {
@@ -63,4 +65,19 @@ void	exit_gracefully(void)
 	rl_clear_history();
 	printf("\n");
 	exit(0);
+}
+
+void	clean_up_and_exit(t_instructions instructions, bool global, bool ext)
+{
+	if (global)
+		free_global();
+	free(instructions.path);
+	free_io(instructions.io);
+	free_paths(instructions.command_paths);
+	free_tokens(instructions.tokens);
+	if (ext)
+	{
+		rl_clear_history();
+		exit(0);
+	}
 }
