@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 12:40:41 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 13:40:00 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,12 @@ void	env(t_instructions instructions);
 
 //export.c
 void	export(char **command, t_instructions instructions);
-int		check_arguments(char **command);
 int		searh_argument(char **global_ptr, char *argument, char *command);
+void	edit_env_variable(int indicator, char *command);
+void	add_env_variable(char *command);
+
+//export_utils.c
+void	extract_argument(char *argument, char *command);
+int		check_arguments(char **command);
 
 #endif

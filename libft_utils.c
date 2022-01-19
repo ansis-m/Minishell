@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 15:41:40 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 11:55:42 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/19 13:52:51 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ void	*ft_calloc(size_t count, size_t size)
 	void	*result;
 
 	result = malloc(count * size);
+	if(!result)
+	{
+		printf("problem allocating memory with ft_calloc\n");
+		perror("ft_calloc");
+		exit(1);
+	}
 	if (result)
 		ft_memset(result, 0, count * size);
 	return (result);
