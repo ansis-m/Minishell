@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 10:35:14 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 11:59:01 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_environment
 	char	**env_var;
 	int		size;
 	char	exit_status;
+	char	*previous;
 
 }	t_environment;
 
@@ -146,6 +147,9 @@ void	echo(char **command, t_instructions instructions);
 
 //pwd.c
 void	pwd(t_instructions instructions);
+
+//cd.c
+void	cd(char	**command);
 
 //env.c
 void	env(t_instructions instructions);
