@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 20:39:36 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 10:35:05 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	is_builtin(char *command)
 int	execute_builtin(int b, char **command, t_instructions instructions)
 {
 	if (b == 1)
-		return (chdir(*(command + 1)));
+		cd(command);
 	if (b == 2)
 		clean_up_and_exit(instructions, true, true);
 	if (b == 3)

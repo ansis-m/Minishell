@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 19:45:29 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 10:04:40 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,17 @@ int	run_command(char **s)
 	instructions.path = get_path(*s);
 	instructions.tokens = get_tokens(*s);
 	instructions.n_commands = count_pipes(*s) + 1;
+	char ***temp = instructions.tokens;
+	for (int i = 0; *(temp + i) != 0; i++)
+	{
+		printf("\e[0;31mcommand: %s\n", *(*(temp + i) + 0));
+		for(int j = 1; *(*(temp + i) + j) != 0; j++)
+			printf("argument: %s\n", *(*(temp + i) + j));
+		printf("~~~~~~~~~~~~~~~~~~\n");		
+	}
+	for(int i = 0; i < 5; i++)
+		printf("redirection filename: %s\n", instructions.io[i]);
+	printf("\e[0;37m\n");
 	if (construct_paths(&instructions))
 		execute_commands(instructions);
 	clean_up_and_exit(instructions, false, false);
