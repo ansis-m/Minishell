@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 09:48:17 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 16:38:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	allocate_io(char ***io)
 void	parse_doublequotes(char *s, int *i)
 {
 	(*i)++;
-	while (*(s + *i) != '"')
+	while (*(s + *i) && *(s + *i) != 34)
 		(*i)++;
 }
 
@@ -82,9 +82,10 @@ char	**get_io(char *s)
 
 	allocate_io(&io);
 	i = 0;
+	printf("string to parse %s\n", s);
 	while (*(s + i))
 	{
-		if (*(s + i) == '"')
+		if (*(s + i) == 34)
 			parse_doublequotes(s, &i);
 		if (*(s + i) == '<')
 			get_redirection(s + i, io + 4, NULL, false);

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 15:52:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 18:16:41 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,13 @@ int	sprintf_exit_status(int	*i, char *ptr)
 	bool	trailing;
 
 	j = 0;
-	*i += 2;
+	(*i) += 2;
 	e = g_env.exit_status;
 	if (e == 0)
-		return (*ptr = '0');
+	{
+		*ptr = '0';
+		return (1);
+	}
 	trailing = false;
 	divider = 100000;
 	while (divider)
