@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 17:20:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 11:58:13 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*command_not_found(char *command)
 {
 	if (! is_builtin(command))
 		printf("\nCommand '%s' not found!\n", command);
+	g_env.exit_status = 127;
 	return (NULL);
 }
 
@@ -72,13 +73,8 @@ char	*find_system_paths(char *variable)
 	return (NULL);
 }
 
-int	construct_paths(t_instructions *instructions)
+void	allocate_paths(t_instructions *instructions)
 {
-	char	*system_paths;
-	char	**paths_ptr;
-	int		i;
-
-	system_paths = find_system_paths("PATH");
 	instructions->command_paths
 		= (char **)ft_calloc(instructions->n_commands + 1, sizeof(char *));
 	if (! instructions->command_paths)
@@ -86,6 +82,16 @@ int	construct_paths(t_instructions *instructions)
 		perror("Problem allocating command paths");
 		exit(1);
 	}
+}
+
+int	construct_paths(t_instructions *instructions)
+{
+	char	*system_paths;
+	char	**paths_ptr;
+	int		i;
+
+	system_paths = find_system_paths("PATH");
+	allocate_paths(instructions);
 	paths_ptr = instructions->command_paths;
 	i = 0;
 	while (i < instructions->n_commands)

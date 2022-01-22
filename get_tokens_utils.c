@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:13:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/14 18:22:55 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 11:43:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	count_pipes(char *s)
 		{
 			if (*(s + i + 1) == '|')
 			{
-				i += 2; //implement bonus or operator ||
+				i += 2;
 				continue ;
 			}
 			pipes++;
@@ -54,7 +54,7 @@ void	ft_strlcpy(char *dst, const char *src, size_t dstsize)
 	*(dst + i) = '\0';
 }
 
-bool	ft_isalnum(int c) //some errors
+bool	ft_isalnum(int c)
 {
 	if ((c >= '0' && c <= '9' ) || (c >= 'A' && c <= 'Z' )
 		|| (c >= 'a' && c <= 'z' ))

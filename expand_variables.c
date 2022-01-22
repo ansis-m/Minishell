@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 10:47:34 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 11:37:02 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,11 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	char	*local;
 
 	local = *ptr;
+	if (*(s + *i + 1) == '?')
+	{
+		*ptr += sprintf_exit_status(i, *ptr);
+		return ;
+	}
 	(*i)++;
 	variable = get_variable(i, s);
 	expanded = find_system_paths(variable);
@@ -65,34 +70,31 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	free(expanded);
 }
 
-int	sprintf_exit_status(char *ptr)
+int	sprintf_exit_status(int	*i, char *ptr)
 {
-	int		i;
+	int		j;
 	int		e;
 	int		divider;
 	bool	trailing;
 
-	i = 0;
+	j = 0;
+	*i += 2;
 	e = g_env.exit_status;
 	if (e == 0)
-	{
-		*ptr = '0';
-		return (1);
-	}
+		return (*ptr = '0');
 	trailing = false;
 	divider = 100000;
 	while (divider)
 	{
 		if (e / divider || trailing)
 		{
-			*(ptr++) = '0' + e / divider;
+			*(ptr + j++) = '0' + e / divider;
 			trailing = true;
-			i++;
 		}
 		e = e % divider;
 		divider /= 10;
 	}
-	return (i);
+	return (j);
 }
 
 void	expand_variables(char **s)
@@ -102,9 +104,7 @@ void	expand_variables(char **s)
 	int		i;
 	bool	quotes;
 
-	quotes = false;
-	check_command_line(s);
-	ft_memset(temp, 0, 20000);
+	init_variables(&quotes, s, temp);
 	ptr = temp;
 	i = 0;
 	while (*(*s + i))
@@ -115,19 +115,11 @@ void	expand_variables(char **s)
 			while (*(*s + i) && *(*s + i) != 39)
 				*(ptr++) = *(*s + i++);
 		}
-		if (*(*s + i) == '$')
-		{
-			if (*(*s + i + 1) == '?')
-			{
-				ptr += sprintf_exit_status(ptr);
-				i += 2;
-				continue ;
-			}
+		else if (*(*s + i) == '$')
 			expand(&i, *s, &ptr, quotes);
-		}
-		if (*(*s + i) == 34)
+		else if (*(*s + i) == 34)
 			quotes = 1 - quotes;
-		if (*(*s + i))
+		else if (*(*s + i))
 			*(ptr++) = *(*s + i++);
 	}
 	free(*s);
