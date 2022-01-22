@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 10:26:39 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 15:50:34 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ int	run_command(char **s)
 	t_instructions	instructions;
 
 	expand_variables(s);
+	printf("expanded %s\n", *s);
 	instructions.io = get_io(*s);
+	for(int i = 0; i < 5; i++)
+		printf("i/o %s\n", *(instructions.io + i));
 	instructions.path = get_path(*s);
 	instructions.tokens = get_tokens(*s);
 	instructions.n_commands = count_pipes(*s) + 1;

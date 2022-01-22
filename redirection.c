@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:16:44 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 09:22:12 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 15:27:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,62 +55,47 @@ int	get_input(char **io)
 	}
 }
 
-int	get_output(char **io)
+int	manage_fd(char *io, int fileno, bool delete)
 {
 	int	fd;
 
+	if (delete)
+		unlink(io);
+	fd = open(io, O_RDWR | O_CREAT | O_APPEND, 0666);
+	if (fd == -1)
+	{
+		printf("Problem opening/creating file %s\n", io);
+		return (fileno);
+	}
+	dup2(fd, fileno);
+	return (fd);
+}
+
+int	get_output(char **io)
+{
 	if (io[0] == NULL && io[2] == NULL)
 		return (STDOUT_FILENO);
 	else if (io[0] != NULL)
-	{
-		unlink(io[0]);
-		fd = open(io[0], O_RDWR | O_CREAT, 0666);
-		if (fd == -1)
-		{
-			printf("Problem opening/creating file %s\n", io[0]);
-			return (STDOUT_FILENO);
-		}
-		dup2(fd, STDOUT_FILENO);
-	}
+		return (manage_fd(io[0], STDOUT_FILENO, true));
 	else if (io[2] != NULL)
-	{
-		fd = open(io[2], O_RDWR | O_APPEND | O_CREAT, 0666);
-		if (fd == -1)
-		{
-			printf("Problem opening/creating file %s\n", io[2]);
-			return (STDOUT_FILENO);
-		}
-		dup2(fd, STDOUT_FILENO);
-	}
-	return (fd);
+		return (manage_fd(io[2], STDOUT_FILENO, false));
+	return (STDOUT_FILENO);
 }
 
 int	get_err_output(char **io)
 {
-	int	fd;
+	bool	delete;
 
 	if (io[1] == NULL && io[3] == NULL)
 		return (STDERR_FILENO);
 	else if (io[1] != NULL)
 	{
-		unlink(io[1]);
-		fd = open(io[1], O_RDWR | O_CREAT, 0666);
-		if (fd == -1)
-		{
-			printf("Problem opening/creating file %s\n", io[1]);
-			return (STDERR_FILENO);
-		}
-		dup2(fd, STDERR_FILENO);
+		if (io[0] != NULL && (ft_strncmp(io[0], io[1], ft_strlen(io[0]))
+				|| ft_strncmp(io[0], io[1], ft_strlen(io[1]))))
+			delete = true;
+		return (manage_fd(io[1], STDERR_FILENO, delete));
 	}
 	else if (io[3] != NULL)
-	{
-		fd = open(io[3], O_RDWR | O_APPEND | O_CREAT, 0777);
-		if (fd == -1)
-		{
-			printf("Problem opening/creating file %s\n", io[3]);
-			return (STDERR_FILENO);
-		}
-		dup2(fd, STDERR_FILENO);
-	}
-	return (fd);
+		return (manage_fd(io[3], STDERR_FILENO, false));
+	return (STDERR_FILENO);
 }

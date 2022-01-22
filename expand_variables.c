@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 11:37:02 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 15:52:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	expand_variables(char **s)
 			expand(&i, *s, &ptr, quotes);
 		else if (*(*s + i) == 34)
 			quotes = 1 - quotes;
-		else if (*(*s + i))
+		if (*(*s + i))
 			*(ptr++) = *(*s + i++);
 	}
 	free(*s);
