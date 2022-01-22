@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:00:57 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 19:42:25 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 09:49:47 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,6 @@ void	env(t_instructions instructions)
 			printf("%s\n", *(g_env.env_var + i));
 		i++;
 	}
+	g_env.exit_status = 0;
 	clean_up_and_exit(instructions, true, true);
 }

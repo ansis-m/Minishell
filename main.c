@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 10:04:40 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 10:14:35 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ int	execute_commands(t_instructions instructions)
 {
 	t_redirection	redirection;
 	int				i;
+	int				status;
 	int				b;
 	int				pid;
 	char			***tokens;
 
 	i = 0;
+	status = 0;
 	tokens = instructions.tokens;
 	init_redirection(&redirection, &instructions);
 	pid = 0;
@@ -41,15 +43,19 @@ int	execute_commands(t_instructions instructions)
 					execute_builtin(b, *(tokens + i), instructions);
 				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
 				perror("\e[0;36mError executing command");
-				printf("%s: was not executed\e[0;37m\n", **(tokens + i));
+				printf("%s: was not executed\n", **(tokens + i));
+				printf("exiting with exit status 2\e[0;37m\n");
+				g_env.exit_status = 2;
 				exit(2);
 			}
 		}
 		i++;
 	}
 	close_redirection(&redirection, &instructions);
-	if (pid)
-		waitpid(pid, NULL, WCONTINUED);
+	if (pid > 0)
+		waitpid(pid, &status, WCONTINUED);
+	if (WIFEXITED(status))
+		g_env.exit_status = WEXITSTATUS(status);
 	return (0);
 }
 

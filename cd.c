@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:29:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 14:29:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 10:08:02 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ void	change_dir(char *new, char *current)
 	{
 		free(g_env.previous);
 		g_env.previous = current;
+		g_env.exit_status = 0;
 	}
 	else
 	{
+		g_env.exit_status = 1;
 		printf("cd %s: no such file or directory\n", new);
 		free(current);
 	}

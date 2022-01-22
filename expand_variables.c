@@ -6,11 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 14:39:48 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:15:24 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_environment	g_env;
 
 char	*get_variable(int *i, char *s)
 {
@@ -84,7 +86,15 @@ void	expand_variables(char **s)
 				*(ptr++) = *(*s + i++);
 		}
 		if (*(*s + i) == '$')
+		{
+			if (*(*s + i + 1) == '?')
+			{
+				ptr += sprintf(ptr, "%d", g_env.exit_status);
+				i += 2;
+				continue ;
+			}
 			expand(&i, *s, &ptr, quotes);
+		}
 		if (*(*s + i) == 34)
 			quotes = 1 - quotes;
 		if (*(*s + i))

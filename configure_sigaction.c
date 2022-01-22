@@ -6,11 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:19:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/12 11:03:17 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 18:22:43 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_environment	g_env;
 
 //Ctrl-C == SIGINT kill child processes and print a new terminal
 //Ctrl-D == EOF exit the shell
@@ -19,6 +21,7 @@ void	c_sig_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
+		g_env.exit_status = 130;
 		printf("\n");
 		infinite_loop();
 	}

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 10:12:23 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 20:39:08 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 09:53:19 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,10 @@ void	export(char **command)
 	int		i;
 
 	if (!check_arguments(command))
+	{
+		g_env.exit_status = 1;
 		return ;
+	}
 	i = 1;
 	while (*(command + i))
 	{
@@ -121,4 +124,5 @@ void	export(char **command)
 			edit_env_variable(indicator, *(command + i));
 		i++;
 	}
+	g_env.exit_status = 0;
 }

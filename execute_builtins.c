@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 10:35:05 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:37:02 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_builtin(char *command)
 		return (3);
 	if (strlen(command) == 3 && !strncmp(command, "pwd", 3))
 		return (4);
+	if (strlen(command) == 6 && !strncmp(command, "setenv", 6))
+		return (5);
 	if (strlen(command) == 6 && !strncmp(command, "export", 6))
 		return (5);
 	if (strlen(command) == 5 && !strncmp(command, "unset", 5))

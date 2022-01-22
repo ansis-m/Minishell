@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 11:59:01 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/21 17:58:00 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_environment
 {
 	char	**env_var;
 	int		size;
-	char	exit_status;
+	int		exit_status;
 	char	*previous;
 
 }	t_environment;
