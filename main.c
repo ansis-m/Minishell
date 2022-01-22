@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 10:14:35 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 10:26:39 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int	execute_commands(t_instructions instructions)
 	status = 0;
 	tokens = instructions.tokens;
 	init_redirection(&redirection, &instructions);
-	pid = 0;
 	while (*(tokens + i))
 	{
+		pid = 0;
 		b = is_builtin(**(tokens + i));
 		if (b == 1 || b == 5 || b == 2 || b == 6)
 			execute_builtin(b, *(tokens + i), instructions);
@@ -53,9 +53,11 @@ int	execute_commands(t_instructions instructions)
 	}
 	close_redirection(&redirection, &instructions);
 	if (pid > 0)
+	{
 		waitpid(pid, &status, WCONTINUED);
-	if (WIFEXITED(status))
-		g_env.exit_status = WEXITSTATUS(status);
+		if (WIFEXITED(status))
+			g_env.exit_status = WEXITSTATUS(status);
+	}
 	return (0);
 }
 
@@ -88,7 +90,6 @@ int	run_command(char **s)
 void	infinite_loop(void)
 {
 	char		*s;
-	static int	return_status;
 
 	while (true)
 	{
@@ -104,7 +105,7 @@ void	infinite_loop(void)
 			continue ;
 		}
 		add_history(s);
-		return_status = run_command(&s);
+		run_command(&s);
 		free(s);
 	}
 }

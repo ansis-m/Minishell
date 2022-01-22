@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 18:15:24 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/22 10:47:34 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,36 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	free(expanded);
 }
 
+int	sprintf_exit_status(char *ptr)
+{
+	int		i;
+	int		e;
+	int		divider;
+	bool	trailing;
+
+	i = 0;
+	e = g_env.exit_status;
+	if (e == 0)
+	{
+		*ptr = '0';
+		return (1);
+	}
+	trailing = false;
+	divider = 100000;
+	while (divider)
+	{
+		if (e / divider || trailing)
+		{
+			*(ptr++) = '0' + e / divider;
+			trailing = true;
+			i++;
+		}
+		e = e % divider;
+		divider /= 10;
+	}
+	return (i);
+}
+
 void	expand_variables(char **s)
 {
 	char	temp[20000];
@@ -89,7 +119,7 @@ void	expand_variables(char **s)
 		{
 			if (*(*s + i + 1) == '?')
 			{
-				ptr += sprintf(ptr, "%d", g_env.exit_status);
+				ptr += sprintf_exit_status(ptr);
 				i += 2;
 				continue ;
 			}
