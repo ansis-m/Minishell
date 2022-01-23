@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 16:38:29 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 19:09:20 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	allocate_io(char ***io)
 {
 	int	i;
 
-	*io = (char **)malloc(sizeof(char *) * 5);
+	*io = (char **)malloc(sizeof(char *) * 6);
 	if (!*io)
 	{
 		perror("problem with memory allocation");
@@ -75,6 +75,27 @@ void	parse_doublequotes(char *s, int *i)
 		(*i)++;
 }
 
+void	get_heredoc(char *s, char **io, char **io_err, bool combined)
+{
+	char	temp[500];
+	char	*ptr;
+
+	memset(temp, 0, 500);
+	ptr = temp;
+	*(s++) = ' ';
+	*s = ' ';
+	while (*s == ' ')
+		s++;
+	while (*s && *s != ' ')
+	{
+		*(ptr++) = *s;
+		*(s++) = ' ';
+	}
+	*io = strdup(temp);
+	if (combined)
+		*io_err = strdup(temp);
+}
+
 char	**get_io(char *s)
 {
 	char	**io;
@@ -87,7 +108,9 @@ char	**get_io(char *s)
 	{
 		if (*(s + i) == 34)
 			parse_doublequotes(s, &i);
-		if (*(s + i) == '<')
+		if (*(s + i) == '<' && *(s + i + 1) == '<')
+			get_heredoc(s + i, io + 5, NULL, false);
+		else if (*(s + i) == '<')
 			get_redirection(s + i, io + 4, NULL, false);
 		else if (*(s + i) == '>')
 			manage_greater_than(s + i, io);
