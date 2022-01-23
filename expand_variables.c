@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 18:16:41 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 08:19:03 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	local = *ptr;
 	if (*(s + *i + 1) == '?')
 	{
-		*ptr += sprintf_exit_status(i, *ptr);
+		(*i) += 2;
+		*ptr += sprintf_exit_status(*ptr);
 		return ;
 	}
 	(*i)++;
@@ -70,7 +71,7 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	free(expanded);
 }
 
-int	sprintf_exit_status(int	*i, char *ptr)
+int	sprintf_exit_status(char *ptr)
 {
 	int		j;
 	int		e;
@@ -78,7 +79,6 @@ int	sprintf_exit_status(int	*i, char *ptr)
 	bool	trailing;
 
 	j = 0;
-	(*i) += 2;
 	e = g_env.exit_status;
 	if (e == 0)
 	{

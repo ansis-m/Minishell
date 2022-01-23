@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 11:58:13 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 08:33:01 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ char	*find_path(char *system_paths, char *command)
 
 	ptr = temp;
 	memset(temp, 0, 1000);
-	if (stat(command, &info) != -1)
-		return (ft_strdup(command));
 	while (*system_paths && !is_builtin(command))
 	{
 		*(ptr++) = *(system_paths++);
@@ -86,9 +84,10 @@ void	allocate_paths(t_instructions *instructions)
 
 int	construct_paths(t_instructions *instructions)
 {
-	char	*system_paths;
-	char	**paths_ptr;
-	int		i;
+	char		*system_paths;
+	char		**paths_ptr;
+	struct stat	info;
+	int			i;
 
 	system_paths = find_system_paths("PATH");
 	allocate_paths(instructions);
@@ -96,8 +95,11 @@ int	construct_paths(t_instructions *instructions)
 	i = 0;
 	while (i < instructions->n_commands)
 	{
-		*(paths_ptr + i) = find_path(system_paths,
-				**(instructions->tokens + i));
+		if (stat(**(instructions->tokens + i), &info) != -1)
+			*(paths_ptr + i) = ft_strdup(**(instructions->tokens + i));
+		else
+			*(paths_ptr + i) = find_path(system_paths,
+					**(instructions->tokens + i));
 		if (!*(paths_ptr + i) && !is_builtin(**(instructions->tokens + i)))
 		{
 			free(system_paths);

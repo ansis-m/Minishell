@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 11:38:15 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 08:18:22 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*get_variable(int *i, char *s);
 void	expand_variables(char **s);
 void	check_command_line(char **s);
 void	expand(int *i, char *s, char **ptr, bool quotes);
-int		sprintf_exit_status(int *i, char *ptr);
+int		sprintf_exit_status(char *ptr);
 
 //expand_variables_utils.c
 void	init_variables(bool *quotes, char **s, char *temp);
@@ -138,6 +138,9 @@ void	close_redirection(t_redirection	*redirection,
 int		get_input(char **io);
 int		get_err_output(char **io);
 int		get_output(char **io);
+
+//redirection_utils.c
+int		manage_fd(char *io, int fileno, bool delete);
 
 //pipes.c
 void	open_pipes(int m, int n, int fd[][n]);

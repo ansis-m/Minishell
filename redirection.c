@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:16:44 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 15:27:44 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 08:10:28 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,22 +53,6 @@ int	get_input(char **io)
 		dup2(fd, STDIN_FILENO);
 		return (fd);
 	}
-}
-
-int	manage_fd(char *io, int fileno, bool delete)
-{
-	int	fd;
-
-	if (delete)
-		unlink(io);
-	fd = open(io, O_RDWR | O_CREAT | O_APPEND, 0666);
-	if (fd == -1)
-	{
-		printf("Problem opening/creating file %s\n", io);
-		return (fileno);
-	}
-	dup2(fd, fileno);
-	return (fd);
 }
 
 int	get_output(char **io)
