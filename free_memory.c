@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/18 18:23:48 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:30:55 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	free_io(char **io)
 		i++;
 	}
 	free(io);
+	unlink("./.temp");
 }
 
 void	free_paths(char **paths)

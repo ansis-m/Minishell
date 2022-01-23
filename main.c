@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 19:09:53 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:31:13 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	run_command(char **s)
 			printf("argument: %s\n", *(*(temp + i) + j));
 		printf("~~~~~~~~~~~~~~~~~~\n");		
 	}
-	for(int i = 0; i < 6; i++)
+	for(int i = 0; i < 5; i++)
 		printf("redirection filename: %s\n", instructions.io[i]);
 	printf("\e[0;37m\n");
 	if (construct_paths(&instructions))
