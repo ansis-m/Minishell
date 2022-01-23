@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 20:31:39 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/23 20:47:38 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ char	**get_io(char *s)
 
 	allocate_io(&io);
 	i = 0;
-	printf("string to parse %s\n", s);
 	while (*(s + i))
 	{
 		if (*(s + i) == 34)
