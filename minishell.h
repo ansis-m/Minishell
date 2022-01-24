@@ -156,6 +156,8 @@ void	init_env(int argc, char *argv[], char *envp[]);
 void	free_global(void);
 
 //echo.c
+int	num_args(char **args);
+int	ft_strcmp(const char *s1, const char *s2);
 void	echo(char **command, t_instructions instructions);
 
 //pwd.c
