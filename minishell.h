@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 10:31:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 12:34:23 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,8 @@ void	pwd(t_instructions instructions);
 
 //cd.c
 void	cd(char	**command);
+void	remove_quotes(char *temp);
+void	change_dir(char *new, char *current);
 
 //env.c
 void	env(t_instructions instructions);
@@ -184,5 +186,6 @@ bool	delete(char **command, int i, int j);
 
 //closed_quotes.h
 bool	closed_quotes(char *s, char q);
+void	remove_unpaired_quotes(char **s);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:07:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 10:56:14 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 11:56:11 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,26 @@ int	get_arguments(char **array, char *command)
 	size = 0;
 	offset = 0;
 	initial_offset(&offset, &command);
-	if ((*command == 34 || *command == 39) && closed_quotes(command, *command))
+	if (*command == 34 || *command == 39)
 	{
-		quote = *command;
-		command++;
-		offset += 2;
-		while (*(command + size) && *(command + size) != quote)
-			size++;
+		if (closed_quotes(command, *command))
+		{
+			quote = *command;
+			command++;
+			offset++;
+			while (*(command + size) && *(command + size) != quote)
+				size++;
+		}
+		else
+			command++;
+		offset++;
 	}
 	else
 		while (*(command + size) && *(command + size) != ' '
 			&& *(command + size) != '|' && *(command + size) != '>'
 			&& *(command + size) != '<')
 			size++;
-	*array = (char *)malloc(sizeof(char) * (size + 1));
+	*array = (char *)ft_calloc(size + 1, sizeof(char));
 	ft_strlcpy(*array, command, size + 1);
 	return (offset + size);
 }
