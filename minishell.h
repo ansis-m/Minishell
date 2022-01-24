@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 20:29:57 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 10:31:28 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,5 +181,8 @@ int		check_arguments(char **command);
 void	unset(char **command);
 int		check_unset_arguments(char **command);
 bool	delete(char **command, int i, int j);
+
+//closed_quotes.h
+bool	closed_quotes(char *s, char q);
 
 #endif

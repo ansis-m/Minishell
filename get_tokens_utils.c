@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:13:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 11:43:29 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 11:10:16 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,18 @@
 int	count_pipes(char *s)
 {
 	int	i;
+	int	j;
 	int	pipes;
 
 	pipes = 0;
 	i = 0;
 	while (*(s + i))
 	{
-		if (*(s + i) == '"')
+		if ((*(s + i) == 34 || *(s + i) == 39) && closed_quotes(s + i, *(s + i)))
 		{
+			j = i;
 			i++;
-			while (*(s + i) != '"')
+			while (*(s + i) != *(s + j))
 				i++;
 		}
 		if (*(s + i) == '|')

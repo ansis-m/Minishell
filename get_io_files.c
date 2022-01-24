@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 20:47:38 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 10:47:42 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,11 @@ void	allocate_io(char ***io)
 
 void	parse_doublequotes(char *s, int *i)
 {
+	char q;
+
+	q = *s;
 	(*i)++;
-	while (*(s + *i) && *(s + *i) != 34)
+	while (*(s + *i) && *(s + *i) != q)
 		(*i)++;
 }
 
@@ -85,7 +88,7 @@ char	**get_io(char *s)
 	i = 0;
 	while (*(s + i))
 	{
-		if (*(s + i) == 34)
+		if ((*(s + i) == 34 || *(s + i) == 39) && closed_quotes(s + i, *(s + i)))
 			parse_doublequotes(s, &i);
 		if (*(s + i) == '<' && *(s + i + 1) == '<')
 			get_heredoc(s + i, io + 4);
