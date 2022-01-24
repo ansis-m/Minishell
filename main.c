@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 20:44:08 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 10:21:03 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	execute_commands(t_instructions instructions)
 		b = is_builtin(**(tokens + i));
 		if (b == 1 || b == 5 || b == 2 || b == 6)
 			execute_builtin(b, *(tokens + i), instructions);
-		else
+		else if (*(tokens + i) && **(tokens + i))
 		{
 			pid = fork();
 			if (pid == 0)
@@ -70,6 +70,7 @@ int	run_command(char **s)
 	instructions.path = get_path(*s);
 	instructions.tokens = get_tokens(*s);
 	instructions.n_commands = count_pipes(*s) + 1;
+	free(*s);
 	if (construct_paths(&instructions))
 		execute_commands(instructions);
 	clean_up_and_exit(instructions, false, false);
@@ -95,7 +96,6 @@ void	infinite_loop(void)
 		}
 		add_history(s);
 		run_command(&s);
-		free(s);
 	}
 }
 
