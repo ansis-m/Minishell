@@ -6,13 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 14:15:35 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:53:07 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_environment	g_env;
+extern t_environment	g_env;
 
 char	*get_variable(int *i, char *s)
 {

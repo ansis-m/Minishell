@@ -6,13 +6,13 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:55:36 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 10:06:01 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 19:55:46 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_environment	g_env;
+extern t_environment	g_env;
 
 void	echo(char **command, t_instructions instructions)
 {
