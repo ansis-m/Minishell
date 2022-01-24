@@ -6,27 +6,19 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 10:47:42 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:18:28 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* This function gets I/O redirections and
-substitues all the chars associated with redirection in string s with spaces*/
-/* io array:
+/* 
 io[0] holds  "> filename" (the same as 1> filename)
 io[1] holds "2>filename" (redirects stderr)
 io[2] holds ">> filename" (1>> filename means the same)
 io[3] holds "2>>filename" (redirects stderr in append mode)
 io[4] holds "< filename"
-&> filename (both stderr and stdout) -modifies both io[0] and io[1]
-&>>filename - modifies both io[2] and io[3]
-2>&1 copies io[0] to io[1] and copies io[2] to io[3]
-1>&2 vice versa
->& redirect both*/
-
-/* << */
+*/
 
 void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
@@ -71,7 +63,7 @@ void	allocate_io(char ***io)
 
 void	parse_doublequotes(char *s, int *i)
 {
-	char q;
+	char	q;
 
 	q = *s;
 	(*i)++;
@@ -88,7 +80,8 @@ char	**get_io(char *s)
 	i = 0;
 	while (*(s + i))
 	{
-		if ((*(s + i) == 34 || *(s + i) == 39) && closed_quotes(s + i, *(s + i)))
+		if ((*(s + i) == 34 || *(s + i) == 39)
+			&& closed_quotes(s + i, *(s + i)))
 			parse_doublequotes(s, &i);
 		if (*(s + i) == '<' && *(s + i + 1) == '<')
 			get_heredoc(s + i, io + 4);

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 12:34:23 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:16:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	expand(int *i, char *s, char **ptr, bool quotes);
 int		sprintf_exit_status(char *ptr);
 
 //expand_variables_utils.c
-void	init_variables(bool *quotes, char **s, char *temp);
+void	init_variables(bool *quotes, char **s, char *temp, int *i);
 
 //get_tokens.c
 char	***get_tokens(char *s);

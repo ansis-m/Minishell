@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 10:41:15 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/24 14:15:35 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,8 @@ void	expand_variables(char **s)
 	int		i;
 	bool	quotes;
 
-	init_variables(&quotes, s, temp);
+	init_variables(&quotes, s, temp, &i);
 	ptr = temp;
-	i = 0;
 	while (*(*s + i))
 	{
 		if (*(*s + i) == 39 && closed_quotes(*s + i, 39))
@@ -120,7 +119,8 @@ void	expand_variables(char **s)
 		}
 		else if (*(*s + i) == '$')
 			expand(&i, *s, &ptr, quotes);
-		else if ((*(*s + i) == 34 && closed_quotes(*s + i, 34) && !quotes) || (*(*s + i) == 34 && quotes))
+		else if ((*(*s + i) == 34 && closed_quotes(*s + i, 34) && !quotes)
+			|| (*(*s + i) == 34 && quotes))
 			quotes = 1 - quotes;
 		if (*(*s + i))
 			*(ptr++) = *(*s + i++);
