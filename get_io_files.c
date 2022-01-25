@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 12:40:18 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:28:28 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
 	char	temp[500];
 	char	*ptr;
+	int		fd;
 
 	memset(temp, 0, 500);
 	ptr = temp;
@@ -32,13 +33,15 @@ void	get_redirection(char *s, char **io, char **io_err, bool combined)
 		*(s + 1) = ' ';
 	while (*s == ' ')
 		s++;
-	while (*s && *s != ' ')
+	while (*s && *s != ' ' && *s != '<' && *s != '>' && *s != '&')
 	{
 		*(ptr++) = *s;
 		*(s++) = ' ';
 	}
 	free(*io);
 	*io = strdup(temp);
+	fd = open(temp, O_RDWR | O_CREAT | O_APPEND, 0666);
+	close(fd);
 	if (combined)
 		*io_err = strdup(temp);
 }
@@ -65,7 +68,7 @@ void	parse_doublequotes(char *s, int *i)
 {
 	char	q;
 
-	q = *s;
+	q = *(s + *i);
 	(*i)++;
 	while (*(s + *i) && *(s + *i) != q)
 		(*i)++;

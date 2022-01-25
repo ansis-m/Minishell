@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 16:54:52 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 18:58:55 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:27:52 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,7 @@ io[2] holds ">> filename" (1>> filename means the same)
 io[3] holds "2>>filename" (redirects stderr in append mode)
 io[4] holds "< filename"
 io[5] holds "<< token"
-&> filename (both stderr and stdout) -modifies both io[0] and io[1]
-&>>filename - modifies both io[2] and io[3]
-2>&1 copies io[0] to io[1] and copies io[2] to io[3]
-1>&2 vice versa
->& redirect both*/
+*/
 
 void	manage_two(char *s, char **io)
 {
