@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 19:46:38 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 13:13:21 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 16:50:06 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	unset(char **command)
 			if (delete(command, i, j))
 			{
 				free(*(g_env.env_var + j));
-				*(g_env.env_var + j) = ft_strdup(" ");
+				*(g_env.env_var + j) = ft_strdup("");
 				break ;
 			}
 			j++;
