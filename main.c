@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 13:49:11 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:14:27 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,28 @@
 
 t_environment	g_env;
 
-int	execute_commands(t_instructions instructions)
+void	execute_child(int i, int b, t_instructions instructions,
+		t_redirection redirection)
+{
+	char	***tokens;
+
+	tokens = instructions.tokens;
+	connect_pipes(i, instructions.n_commands, redirection);
+	if (b)
+		execute_builtin(b, *(tokens + i), instructions);
+	execve(*(instructions.command_paths + i), *(tokens + i), NULL);
+	exit_with_error(**(tokens + i));
+}
+
+void	execute_commands(t_instructions instructions)
 {
 	t_redirection	redirection;
 	int				i;
-	int				status;
 	int				b;
 	int				pid;
 	char			***tokens;
 
 	i = 0;
-	status = 0;
 	tokens = instructions.tokens;
 	init_redirection(&redirection, &instructions);
 	while (*(tokens + i))
@@ -37,28 +48,12 @@ int	execute_commands(t_instructions instructions)
 		{
 			pid = fork();
 			if (pid == 0)
-			{
-				connect_pipes(i, instructions.n_commands, redirection);
-				if (b)
-					execute_builtin(b, *(tokens + i), instructions);
-				execve(*(instructions.command_paths + i), *(tokens + i), NULL);
-				perror("\e[0;36mError executing command");
-				printf("%s: was not executed\n", **(tokens + i));
-				printf("exiting with exit status 2\e[0;37m\n");
-				g_env.exit_status = 2;
-				exit(2);
-			}
+				execute_child(i, b, instructions, redirection);
 		}
 		i++;
 	}
 	close_redirection(&redirection, &instructions);
-	if (pid > 0)
-	{
-		waitpid(pid, &status, WCONTINUED);
-		if (WIFEXITED(status))
-			g_env.exit_status = WEXITSTATUS(status);
-	}
-	return (0);
+	set_exit_status(pid);
 }
 
 int	run_command(char **s)

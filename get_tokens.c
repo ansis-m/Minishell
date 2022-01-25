@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:07:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 14:08:43 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 10:30:45 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	count_arguments(char *command)
 
 void	initial_offset(int *offset, char **command)
 {
+	*offset = 0;
 	while (**command == ' ' || **command == '\t')
 	{
 		(*offset)++;
@@ -66,7 +67,6 @@ int	get_arguments(char **array, char *command)
 	char	quote;
 
 	size = 0;
-	offset = 0;
 	initial_offset(&offset, &command);
 	if (*command == 34 || *command == 39)
 	{
@@ -83,12 +83,9 @@ int	get_arguments(char **array, char *command)
 		offset++;
 	}
 	else
-		while (*(command + size) && *(command + size) != ' '
-			&& *(command + size) != '|' && *(command + size) != '>'
-			&& *(command + size) != '<')
+		while (valid_char(*(command + size)))
 			size++;
-	*array = (char *)ft_calloc(size + 1, sizeof(char));
-	ft_strlcpy(*array, command, size + 1);
+	create_array(array, command, size + 1);
 	return (offset + size);
 }
 

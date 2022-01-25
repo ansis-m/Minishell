@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:36:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 14:38:26 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 10:27:51 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,12 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 		return (dstsize + strlen_src);
 	else
 		return (strlen_dst + strlen_src);
+}
+
+bool	ft_isalnum(int c)
+{
+	if ((c >= '0' && c <= '9' ) || (c >= 'A' && c <= 'Z' )
+		|| (c >= 'a' && c <= 'z' ))
+		return (true);
+	return (false);
 }

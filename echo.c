@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:55:36 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 23:47:36 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/25 10:35:55 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,6 @@ int	num_args(char **args)
 	return (i);
 }
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	size_t	i;
-
-	i = 0;
-	while (s1[i] == s2[i])
-	{
-		if (s1[i] == '\0' && s2[i] == '\0')
-			return (0);
-		i++;
-	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
 void	echo(char **command, t_instructions instructions)
 {
 	int		i;
@@ -45,8 +31,10 @@ void	echo(char **command, t_instructions instructions)
 
 	newline = true;
 	i = 1;
-	if(num_args(command) > 1){
-		while (*(command + i) && ft_strcmp(*(command + i), "-n") == 0){
+	if (num_args(command) > 1)
+	{
+		while (*(command + i) && ft_strncmp(*(command + i), "-n", 2) == 0)
+		{
 			newline = false;
 			i++;
 		}
@@ -58,10 +46,8 @@ void	echo(char **command, t_instructions instructions)
 			i++;
 		}
 	}
-	
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
 	clean_up_and_exit(instructions, true, true);
 	g_env.exit_status = 0;
 }
-

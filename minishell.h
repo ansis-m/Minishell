@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 14:16:29 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:13:56 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ void	infinite_loop(void);
 void	open_pipes(int m, int n, int fd[][n]);
 void	close_pipes(int m, int n, int fd[][n]);
 
+//main_process_utils.c
+void	exit_with_error(char *s);
+void	set_exit_status(int pid);
+
 //expand_variables.c
 char	*get_variable(int *i, char *s);
 void	expand_variables(char **s);
@@ -82,8 +86,9 @@ int		count_arguments(char *command);
 //get_tokens_utils.c
 int		count_pipes(char *s);
 void	ft_strlcpy(char *dst, const char *src, size_t dstsize);
-bool	ft_isalnum(int c);
 bool	in_charset(int c);
+bool	valid_char(char c);
+void	create_array(char **array, char *command, int size);
 
 //free_memory.c
 void	free_tokens(char ***tokens);
@@ -123,6 +128,9 @@ void	*ft_memset(void *s, int c, size_t n);
 size_t	ft_strlen(const char *c);
 char	*ft_strdup(const char *c);
 int		ft_strncmp(const char *str1, const char *str2, size_t num);
+
+//libft_utils_2.h
+bool	ft_isalnum(int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 
 //construct_command_paths.c
@@ -156,8 +164,7 @@ void	init_env(int argc, char *argv[], char *envp[]);
 void	free_global(void);
 
 //echo.c
-int	num_args(char **args);
-int	ft_strcmp(const char *s1, const char *s2);
+int		num_args(char **args);
 void	echo(char **command, t_instructions instructions);
 
 //pwd.c
