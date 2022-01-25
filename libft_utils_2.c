@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:36:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 10:27:51 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:48:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize)
 {
-	size_t	strlen_src;
-	size_t	strlen_dst;
-	size_t	i;
+	size_t		strlen_src;
+	size_t		strlen_dst;
+	size_t		i;
 
 	strlen_src = ft_strlen(src);
 	strlen_dst = ft_strlen(dst);

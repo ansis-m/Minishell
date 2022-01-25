@@ -6,19 +6,19 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 11:13:56 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 12:19:40 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include	<unistd.h>
-# include	<stdlib.h>
-# include	<stdbool.h>
-# include	<sys/types.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdbool.h>
+# include <sys/types.h>
 # include <stdio.h>
-# include	<signal.h>
+# include <signal.h>
 # include <sys/time.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -93,7 +93,7 @@ void	create_array(char **array, char *command, int size);
 //free_memory.c
 void	free_tokens(char ***tokens);
 void	free_io(char **io);
-void	free_paths(char **paths);
+void	free_paths(char **paths, int size);
 void	exit_gracefully(void);
 void	clean_up_and_exit(t_instructions instructions, bool global, bool ext);
 

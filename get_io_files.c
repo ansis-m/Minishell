@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 14:18:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 12:40:18 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**get_io(char *s)
 
 	allocate_io(&io);
 	i = 0;
-	while (*(s + i))
+	while (s && *(s + i))
 	{
 		if ((*(s + i) == 34 || *(s + i) == 39)
 			&& closed_quotes(s + i, *(s + i)))

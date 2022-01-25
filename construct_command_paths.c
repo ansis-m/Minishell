@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 10:16:45 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 12:53:52 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	*find_path(char *system_paths, char *command)
 
 	ptr = temp;
 	memset(temp, 0, 1000);
-	while (*system_paths && !is_builtin(command))
+	while (system_paths && *system_paths && !is_builtin(command))
 	{
 		*(ptr++) = *(system_paths++);
 		if (*system_paths == ':' || *system_paths == '\0')

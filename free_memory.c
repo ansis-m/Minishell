@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/11 19:48:39 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 20:30:55 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 12:19:04 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,22 @@ void	free_io(char **io)
 	unlink("./.temp");
 }
 
-void	free_paths(char **paths)
+void	free_paths(char **paths, int size)
 {
 	int	i;
 
 	i = 0;
-	while (paths && *(paths + i))
+	while (paths && i < size)
 	{
-		free(*(paths + i));
+		if (*(paths + i))
+		{
+			free(*(paths + i));
+			*(paths + i) = NULL;
+		}
 		i++;
 	}
 	free(paths);
+	paths = NULL;
 }
 
 void	exit_gracefully(void)
@@ -74,7 +79,7 @@ void	clean_up_and_exit(t_instructions instructions, bool global, bool ext)
 		free_global();
 	free(instructions.path);
 	free_io(instructions.io);
-	free_paths(instructions.command_paths);
+	free_paths(instructions.command_paths, instructions.n_commands);
 	free_tokens(instructions.tokens);
 	if (ext)
 	{

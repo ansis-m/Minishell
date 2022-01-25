@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 09:55:36 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 10:35:55 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/25 11:56:55 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	echo(char **command, t_instructions instructions)
 	}
 	if (newline)
 		write(STDOUT_FILENO, "\n", 1);
-	clean_up_and_exit(instructions, true, true);
 	g_env.exit_status = 0;
+	clean_up_and_exit(instructions, true, true);
 }
