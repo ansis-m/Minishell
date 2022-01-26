@@ -115,6 +115,10 @@ void	export(char **command)
 	i = 1;
 	while (*(command + i))
 	{
+		if(!check_equal_sign(command[i])){
+			g_env.exit_status = 1;
+			return ;
+		}
 		ft_memset(argument, 0, 1000);
 		extract_argument(argument, *(command + i));
 		indicator = searh_argument(&global_ptr, argument, *(command + i));

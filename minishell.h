@@ -187,6 +187,7 @@ void	add_env_variable(char *command);
 //export_utils.c
 void	extract_argument(char *argument, char *command);
 int		check_arguments(char **command);
+bool	check_equal_sign(char *str);
 
 //unset.c
 void	unset(char **command);
