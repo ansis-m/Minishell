@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 10:12:23 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 09:53:19 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/27 00:05:41 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,8 @@ void	export(char **command)
 	i = 1;
 	while (*(command + i))
 	{
-		if(!check_equal_sign(command[i])){
-			g_env.exit_status = 1;
+		if (!check_equal_sign(command[i]))
 			return ;
-		}
 		ft_memset(argument, 0, 1000);
 		extract_argument(argument, *(command + i));
 		indicator = searh_argument(&global_ptr, argument, *(command + i));

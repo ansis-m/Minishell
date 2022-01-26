@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:36:21 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/19 19:54:30 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/27 00:05:25 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,23 @@ void	extract_argument(char *argument, char *command)
 bool	check_equal_sign(char *str)
 {
 	int	i;
+	int	flag;
 
 	i = 0;
+	flag = 0;
 	while (str[i])
 	{
 		if (str[i] == '=')
-			return (true);
+		{
+			flag = 1;
+			break ;
+		}
 		i++;
 	}
-	return (false);
+	if (!flag)
+	{
+		g_env.exit_status = 1;
+		return (false);
+	}
+	return (true);
 }
-
