@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:36:21 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/27 00:05:25 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/27 22:43:45 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_arguments(char **command)
 
 	if (!*(command + 1))
 	{
-		printf("No arguments to export\n");
+		env_extended();
 		return (0);
 	}
 	i = 1;
@@ -56,23 +56,13 @@ void	extract_argument(char *argument, char *command)
 bool	check_equal_sign(char *str)
 {
 	int	i;
-	int	flag;
 
 	i = 0;
-	flag = 0;
 	while (str[i])
 	{
 		if (str[i] == '=')
-		{
-			flag = 1;
-			break ;
-		}
+			return (true);
 		i++;
 	}
-	if (!flag)
-	{
-		g_env.exit_status = 1;
-		return (false);
-	}
-	return (true);
+	return (false);
 }

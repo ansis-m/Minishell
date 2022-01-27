@@ -177,6 +177,7 @@ void	change_dir(char *new, char *current);
 
 //env.c
 void	env(t_instructions instructions);
+void	env_extended(void);
 
 //export.c
 void	export(char **command);
