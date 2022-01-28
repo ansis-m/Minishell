@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:17:33 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/21 14:19:09 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 14:33:11 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	init_env(int argc, char *argv[], char *envp[])
 	j = 0;
 	while (j < i)
 	{
+		if (!ft_strncmp(envp[j], "HOME=", 5))
+			g_env.home = ft_strdup(envp[j] + 5);
 		*(g_env.env_var + j) = ft_strdup(envp[j]);
 		j++;
 	}
@@ -51,5 +53,6 @@ void	free_global(void)
 		free(*(g_env.env_var + i));
 		i++;
 	}
+	free(g_env.home);
 	free(g_env.env_var);
 }

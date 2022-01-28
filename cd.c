@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:29:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 13:50:16 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 14:35:18 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void	cd(char **command)
 
 	ft_memset(current, 0, sizeof(char) * 6000);
 	getcwd(current, 6000);
-	if (*(command + 1) == NULL || **(command + 1) == '~'
-		|| !ft_strncmp(*(command + 1), "--", 3))
+	if (!*(command + 1))
+		change_dir(g_env.home, ft_strdup(current));
+	else if (**(command + 1) == '~' || !ft_strncmp(*(command + 1), "--", 3))
 		check_stupid_input(command, current);
 	else if ((**(command + 1) == '-'
 			&& ft_strlen(*(command + 1)) == 1))
