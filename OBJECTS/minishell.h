@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 12:19:40 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 12:14:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ int		ft_strncmp(const char *str1, const char *str2, size_t num);
 //libft_utils_2.h
 bool	ft_isalnum(int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
+size_t	ft_strlcpy1(char *dst, const char *src, size_t dstsize);
 
 //construct_command_paths.c
 char	*find_path(char *system_paths, char *command);

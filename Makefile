@@ -6,7 +6,7 @@
 #    By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/10 16:22:42 by amalecki          #+#    #+#              #
-#    Updated: 2022/01/25 11:40:45 by amalecki         ###   ########.fr        #
+#    Updated: 2022/01/28 11:53:32 by amalecki         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ get_here_document.c closed_quotes.c free_memory.c configure_sigaction.c
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror -g
 
 OBJECTS 	= ${SRC:.c=.o}
 

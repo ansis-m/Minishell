@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 12:53:52 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 10:01:31 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern t_environment	g_env;
 
 char	*command_not_found(char *command)
 {
-	if (! is_builtin(command))
+	if (!is_builtin(command))
 		printf("\nCommand '%s' not found!\n", command);
 	g_env.exit_status = 127;
 	return (NULL);
@@ -30,7 +30,7 @@ char	*find_path(char *system_paths, char *command)
 	int			i;
 
 	ptr = temp;
-	memset(temp, 0, 1000);
+	ft_memset(temp, 0, 1000);
 	while (system_paths && *system_paths && !is_builtin(command))
 	{
 		*(ptr++) = *(system_paths++);
@@ -45,7 +45,7 @@ char	*find_path(char *system_paths, char *command)
 			ptr = temp;
 			if (stat(ptr, &info) != -1)
 				return (ft_strdup(ptr));
-			memset(temp, 0, 1000);
+			ft_memset(temp, 0, 1000);
 		}
 	}
 	return (command_not_found(command));
@@ -64,7 +64,7 @@ char	*find_system_paths(char *variable)
 			j = 0;
 			while (j < ft_strlen(variable) + 1 && *(*(g_env.env_var + i) + j))
 				j++;
-			return (strdup(*(g_env.env_var + i) + j));
+			return (ft_strdup(*(g_env.env_var + i) + j));
 		}
 		i++;
 	}

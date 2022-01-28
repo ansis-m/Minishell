@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 16:28:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 10:00:43 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	get_redirection(char *s, char **io, char **io_err, bool combined)
 	char	*ptr;
 	int		fd;
 
-	memset(temp, 0, 500);
+	ft_memset(temp, 0, 500);
 	ptr = temp;
 	*s = ' ';
 	if (*(s + 1) == '&')
@@ -39,11 +39,11 @@ void	get_redirection(char *s, char **io, char **io_err, bool combined)
 		*(s++) = ' ';
 	}
 	free(*io);
-	*io = strdup(temp);
+	*io = ft_strdup(temp);
 	fd = open(temp, O_RDWR | O_CREAT | O_APPEND, 0666);
 	close(fd);
 	if (combined)
-		*io_err = strdup(temp);
+		*io_err = ft_strdup(temp);
 }
 
 void	allocate_io(char ***io)

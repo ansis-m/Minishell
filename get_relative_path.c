@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/14 17:19:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/17 11:51:29 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 10:02:02 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*get_path(char *s)
 			s++;
 			while (*s && *s != ' ')
 				*(ptr++) = *(s++);
-			return (strdup(path));
+			return (ft_strdup(path));
 		}
 		s++;
 	}

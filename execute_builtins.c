@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/15 11:09:17 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 10:14:39 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 10:03:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ int	is_builtin(char *command)
 {
 	if (!command)
 		return (0);
-	if (ft_strlen(command) == 2 && !strncmp(command, "cd", 2))
+	if (ft_strlen(command) == 2 && !ft_strncmp(command, "cd", 2))
 		return (1);
-	if (ft_strlen(command) == 4 && !strncmp(command, "exit", 4))
+	if (ft_strlen(command) == 4 && !ft_strncmp(command, "exit", 4))
 		return (2);
-	if (ft_strlen(command) == 4 && !strncmp(command, "echo", 4))
+	if (ft_strlen(command) == 4 && !ft_strncmp(command, "echo", 4))
 		return (3);
-	if (ft_strlen(command) == 3 && !strncmp(command, "pwd", 3))
+	if (ft_strlen(command) == 3 && !ft_strncmp(command, "pwd", 3))
 		return (4);
-	if (ft_strlen(command) == 6 && !strncmp(command, "setenv", 6))
+	if (ft_strlen(command) == 6 && !ft_strncmp(command, "setenv", 6))
 		return (5);
-	if (ft_strlen(command) == 6 && !strncmp(command, "export", 6))
+	if (ft_strlen(command) == 6 && !ft_strncmp(command, "export", 6))
 		return (5);
-	if (ft_strlen(command) == 5 && !strncmp(command, "unset", 5))
+	if (ft_strlen(command) == 5 && !ft_strncmp(command, "unset", 5))
 		return (6);
-	if (ft_strlen(command) == 3 && !strncmp(command, "env", 3))
+	if (ft_strlen(command) == 3 && !ft_strncmp(command, "env", 3))
 		return (7);
 	return (0);
 }

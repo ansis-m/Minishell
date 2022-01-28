@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:29:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/22 10:08:02 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/28 13:50:16 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,27 +43,49 @@ void	remove_quotes(char *temp)
 	}
 }
 
-void	cd(char **command)
+void	check_stupid_input(char **command, char *current)
 {
 	char	*temp;
+	char	*temp1;
+	char	*temp2;
+
+	temp1 = ft_strdup("$HOME");
+	expand_variables(&temp1);
+	remove_quotes(temp1);
+	temp = (char *)ft_calloc(6000, sizeof(char));
+	ft_strlcpy(temp, temp1 + 1, 5000);
+	temp2 = ft_strdup("$USER");
+	expand_variables(&temp2);
+	remove_quotes(temp2);
+	if (!ft_strncmp(*(command + 1) + 1, temp2 + 1, ft_strlen(temp2 + 1)))
+	{
+		free(*(command + 1));
+		*(command + 1) = ft_strdup("~");
+	}
+	if (temp && *(command + 1) && **(command + 1) == '~'
+		&& ft_strlen(*(command + 1)) > 1)
+		ft_strlcat(temp, *(command + 1) + 1, 5500);
+	change_dir(temp, ft_strdup(current));
+	free(temp);
+	free(temp1);
+	free(temp2);
+}
+
+void	cd(char **command)
+{
 	char	current[6000];
 
 	ft_memset(current, 0, sizeof(char) * 6000);
 	getcwd(current, 6000);
-	if (*(command + 1) == NULL || **(command + 1) == '~')
-	{
-		temp = ft_strdup("$HOME");
-		expand_variables(&temp);
-		remove_quotes(temp);
-		if (temp && *(command + 1) && **(command + 1) == '~'
-			&& ft_strlen(*(command + 1)) > 1)
-			ft_strlcat(temp + 1, *(command + 1) + 1, 5999);
-		change_dir(temp + 1, ft_strdup(current));
-		free(temp);
-	}
+	if (*(command + 1) == NULL || **(command + 1) == '~'
+		|| !ft_strncmp(*(command + 1), "--", 3))
+		check_stupid_input(command, current);
 	else if ((**(command + 1) == '-'
 			&& ft_strlen(*(command + 1)) == 1))
+	{
+		printf("%s\n", g_env.previous);
 		change_dir(g_env.previous, ft_strdup(current));
+	}
 	else
 		change_dir(*(command + 1), ft_strdup(current));
 }
