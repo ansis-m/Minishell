@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/25 16:29:01 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 16:53:51 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,8 @@ int	run_command(char **s)
 {
 	t_instructions	instructions;
 
-	if (check_redirection_edge_cases(s[0]))
+	if (evale_goes_crazy(s[0]))
 	{
-		g_env.exit_status = 1;
 		free(*s);
 		return (0);
 	}
