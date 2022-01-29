@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 10:12:23 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/27 22:22:22 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/29 12:51:28 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,7 @@ void	export(char **command)
 	int		i;
 
 	if (!check_arguments(command))
-	{
-		g_env.exit_status = 1;
 		return ;
-	}
 	i = 1;
 	while (*(command + i))
 	{

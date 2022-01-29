@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:29:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 14:35:18 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 13:35:10 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	cd(char **command)
 {
 	char	current[6000];
 
+	g_env.oldpwd = true;
 	ft_memset(current, 0, sizeof(char) * 6000);
 	getcwd(current, 6000);
 	if (!*(command + 1))

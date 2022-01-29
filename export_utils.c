@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:36:21 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/27 22:43:45 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/29 13:46:13 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ int	check_arguments(char **command)
 {
 	int	i;
 
-	if (!*(command + 1))
+	if (!*(command + 1) || !ft_strncmp(*(command + 1), "#", 2))
 	{
 		env_extended();
+		g_env.exit_status = 0;
 		return (0);
 	}
 	i = 1;
@@ -29,6 +30,7 @@ int	check_arguments(char **command)
 		if (**(command + i) == '-')
 		{
 			printf("Options not accepted for export\n");
+			g_env.exit_status = 1;
 			return (0);
 		}
 		else if (ft_strlen(*(command + i)) > 1999)

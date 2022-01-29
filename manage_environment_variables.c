@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:17:33 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 14:33:11 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 13:49:19 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,8 @@ void	init_env(int argc, char *argv[], char *envp[])
 	int	j;
 
 	i = 0;
-	while (envp && *(envp + i))
+	while (envp && *(envp + i) && argc && argv)
 		i++;
-	if (argc > 1)
-		printf("Minishell does not take arguments: '%s' not used\n", argv[1]);
 	g_env.env_var = (char **)ft_calloc(i + 1, sizeof(char *));
 	if (!g_env.env_var)
 	{
@@ -35,10 +33,12 @@ void	init_env(int argc, char *argv[], char *envp[])
 	{
 		if (!ft_strncmp(envp[j], "HOME=", 5))
 			g_env.home = ft_strdup(envp[j] + 5);
-		*(g_env.env_var + j) = ft_strdup(envp[j]);
+		if (ft_strncmp(envp[j], "OLDPWD", 6))
+			*(g_env.env_var + j) = ft_strdup(envp[j]);
 		j++;
 	}
 	g_env.size = i;
+	g_env.oldpwd = false;
 	g_env.previous = ft_strdup(getenv("HOME"));
 }
 
