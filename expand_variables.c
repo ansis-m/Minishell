@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 19:53:07 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 12:19:56 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ void	expand(int *i, char *s, char **ptr, bool quotes)
 	char	*local;
 
 	local = *ptr;
-	if (*(s + *i + 1) == '?')
+	if (*(s + *i + 1) == '?' || *(s + *i + 1) == '0')
 	{
-		(*i) += 2;
-		*ptr += sprintf_exit_status(*ptr);
+		expand_special_cases(i, s, ptr);
 		return ;
 	}
 	(*i)++;

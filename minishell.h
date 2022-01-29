@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 14:44:07 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/29 12:20:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int		sprintf_exit_status(char *ptr);
 
 //expand_variables_utils.c
 void	init_variables(bool *quotes, char **s, char *temp, int *i);
+void	expand_special_cases(int *i, char *s, char **ptr);
 
 //get_tokens.c
 char	***get_tokens(char *s);
