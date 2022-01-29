@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 10:01:31 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 16:24:29 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ char	*command_not_found(char *command)
 char	*find_path(char *system_paths, char *command)
 {
 	struct stat	info;
-	char		temp[1000];
+	char		temp[20000];
 	char		*ptr;
 	int			i;
 
 	ptr = temp;
-	ft_memset(temp, 0, 1000);
+	ft_memset(temp, 0, 20000);
 	while (system_paths && *system_paths && !is_builtin(command))
 	{
 		*(ptr++) = *(system_paths++);
