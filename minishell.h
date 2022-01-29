@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 14:26:15 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 14:44:07 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	close_pipes(int m, int n, int fd[][n]);
 //main_process_utils.c
 void	exit_with_error(char *s);
 void	set_exit_status(int pid);
+int		check_redirection_edge_cases(char *s);
+int		count_char_in_str(char *s, char c);
+int		check_redirection_extended(char *s, char *err, int str_len, int error);
 
 //expand_variables.c
 char	*get_variable(int *i, char *s);

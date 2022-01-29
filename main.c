@@ -60,6 +60,12 @@ int	run_command(char **s)
 {
 	t_instructions	instructions;
 
+	if (check_redirection_edge_cases(s[0]))
+	{
+		g_env.exit_status = 1;
+		free(*s);
+		return (0);
+	}
 	expand_variables(s);
 	remove_unpaired_quotes(s);
 	instructions.io = get_io(*s);
