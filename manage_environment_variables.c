@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:17:33 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 13:49:19 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 17:11:44 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,11 @@ void	init_env(int argc, char *argv[], char *envp[])
 			g_env.home = ft_strdup(envp[j] + 5);
 		if (ft_strncmp(envp[j], "OLDPWD", 6))
 			*(g_env.env_var + j) = ft_strdup(envp[j]);
+		else
+			*(g_env.env_var + j) = ft_strdup("");
 		j++;
 	}
 	g_env.size = i;
-	g_env.oldpwd = false;
 	g_env.previous = ft_strdup(getenv("HOME"));
 }
 

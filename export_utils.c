@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 13:36:21 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 13:46:13 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 16:57:17 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	check_arguments(char **command)
 {
 	int	i;
 
-	if (!*(command + 1) || !ft_strncmp(*(command + 1), "#", 2))
+	if (!*(command + 1) || !ft_strncmp(*(command + 1), "#", 1))
 	{
 		env_extended();
 		g_env.exit_status = 0;
