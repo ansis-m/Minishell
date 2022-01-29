@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 13:52:13 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/29 15:07:01 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ void	change_dir(char *new, char *current);
 //env.c
 void	env(t_instructions instructions);
 void	env_extended(void);
+void	sort(char **sorted, int size);
+void	print_sorted(char **sorted);
 
 //export.c
 void	export(char **command);
