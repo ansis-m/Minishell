@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:36:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/30 12:25:56 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/30 21:14:14 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,20 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	}
 	*(result + i) = '\0';
 	return (result);
+}
+
+size_t	ft_count_char(char *str, char c)
+{
+	int		i;
+	int		count;
+
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			count++;
+		i++;
+	}
+	return (count);
 }
