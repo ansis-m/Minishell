@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 14:36:54 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 12:14:25 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 12:25:56 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,27 @@ size_t	ft_strlcpy1(char *dst, const char *src, size_t dstsize)
 	if (dstsize)
 		*(dst + i) = '\0';
 	return (strlen);
+}
+
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
+{
+	char	*result;
+	size_t	i;
+
+	i = 0;
+	if (!s)
+		return (NULL);
+	result = (char *)malloc(len + 1);
+	if (!result)
+	{
+		perror("Problem with memory allocation");
+		exit(1);
+	}
+	while (i < len)
+	{
+		*(result + i) = *(s + start + i);
+		i++;
+	}
+	*(result + i) = '\0';
+	return (result);
 }
