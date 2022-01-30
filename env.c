@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:00:57 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 15:43:35 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 07:49:10 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ void	env(t_instructions instructions)
 			printf("%s\n", *(g_env.env_var + i));
 		i++;
 	}
-	if (g_env.oldpwd && g_env.previous)
-		printf("OLDPWD=%s\n", g_env.previous);
 	g_env.exit_status = 0;
 	clean_up_and_exit(instructions, true, true);
 }

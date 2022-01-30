@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 10:29:18 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 13:35:10 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 07:54:07 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,24 @@ extern t_environment	g_env;
 
 void	change_dir(char *new, char *current)
 {
+	char	temp[2000];
+	char	buf[2000];
+
 	if (chdir(new) == 0)
 	{
 		free(g_env.previous);
 		g_env.previous = current;
 		g_env.exit_status = 0;
+		ft_memset(temp, 0, 2000);
+		ft_strlcpy(temp, "OLDPWD=", 2000);
+		ft_strlcat(temp, current, 2000);
+		export((char *[]){"cd", temp, NULL});
+		ft_memset(temp, 0, 2000);
+		ft_strlcpy(temp, "PWD=", 2000);
+		memset(buf, 0, 2000);
+		getcwd(buf, 2000);
+		ft_strlcat(temp, buf, 2000);
+		export((char *[]){"cd", temp, NULL});
 	}
 	else
 	{
@@ -75,7 +88,6 @@ void	cd(char **command)
 {
 	char	current[6000];
 
-	g_env.oldpwd = true;
 	ft_memset(current, 0, sizeof(char) * 6000);
 	getcwd(current, 6000);
 	if (!*(command + 1))

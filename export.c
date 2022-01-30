@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 10:12:23 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 12:51:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 07:09:05 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 extern t_environment	g_env;
 
-int	searh_argument(char **global_ptr, char *argument, char *command)
+int	searh_argument(char *argument, char *command)
 {
 	int	i;
 	int	len;
 
 	len = ft_strlen(argument);
 	i = 0;
-	*global_ptr = NULL;
 	while (*(g_env.env_var + i))
 	{
 		if (!ft_strncmp(argument, *(g_env.env_var + i), len)
@@ -30,7 +29,6 @@ int	searh_argument(char **global_ptr, char *argument, char *command)
 		{
 			if (*(command + len) == '=')
 			{
-				*global_ptr = (*(g_env.env_var + i));
 				return (i);
 			}
 			else if (*(command + len) == ' ' || *(command + len) == '\0')
@@ -103,7 +101,6 @@ void	add_env_variable(char *command)
 void	export(char **command)
 {
 	char	argument[2000];
-	char	*global_ptr;
 	int		indicator;
 	int		i;
 
@@ -116,7 +113,7 @@ void	export(char **command)
 			return ;
 		ft_memset(argument, 0, 1000);
 		extract_argument(argument, *(command + i));
-		indicator = searh_argument(&global_ptr, argument, *(command + i));
+		indicator = searh_argument(argument, *(command + i));
 		if (indicator == -3)
 			add_env_variable(*(command + i));
 		else if (indicator >= 0)
