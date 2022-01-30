@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/30 20:13:24 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:15:32 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ bool	ft_isalnum(int c);
 size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 size_t	ft_strlcpy1(char *dst, const char *src, size_t dstsize);
 char	*ft_strsub(char const *s, unsigned int start, size_t len);
+size_t	ft_count_char(char *str, char c);
 
 //construct_command_paths.c
 char	*find_path(char *system_paths, char *command);
@@ -214,6 +215,7 @@ int		evale_goes_crazy(char *s);
 
 //goes_crazy_2.c
 int		check_edge_unset(char *s);
+int		check_slashes(char *s);
 
 //check_tokens.c
 bool	check_tokens(char ***token);

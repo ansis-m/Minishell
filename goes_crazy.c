@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:27:58 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/30 12:12:57 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/30 22:41:04 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,12 @@ int	evale_goes_crazy(char *s)
 	if (error == 0)
 		error = check_redirection_edge_cases(s);
 	if (error == 0)
+	{
 		error = check_edge_unset(s);
+	}
+	if (error == 0)
+	{
+		error = check_slashes(s);
+	}	
 	return (error);
 }
