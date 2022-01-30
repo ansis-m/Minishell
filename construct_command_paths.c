@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 17:06:55 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/29 16:24:29 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 18:23:14 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern t_environment	g_env;
 char	*command_not_found(char *command)
 {
 	if (!is_builtin(command))
-		printf("\nCommand '%s' not found!\n", command);
+		printf("Command '%s' not found!\n", command);
 	g_env.exit_status = 127;
 	return (NULL);
 }

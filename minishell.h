@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/30 12:14:36 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/30 20:13:24 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <fcntl.h>
 
 # define TERMINAL "MINISHELL OF BOLT and ANSIS: "
-# define C_CHAR_SET "-'=_~#+@.,/"
+# define C_CHAR_SET "-'=_-~#+@.,/\\"
 
 typedef struct s_instructions
 {
@@ -200,9 +200,10 @@ void	unset(char **command);
 int		check_unset_arguments(char **command);
 bool	delete(char **command, int i, int j);
 
-//closed_quotes.h
+//closed_quotes.c
 bool	closed_quotes(char *s, char q);
 void	remove_unpaired_quotes(char **s);
+bool	check_repeating_quotes(char *s);
 
 //goes_crazy.c
 int		check_redirection_edge_cases(char *s);
@@ -213,5 +214,9 @@ int		evale_goes_crazy(char *s);
 
 //goes_crazy_2.c
 int		check_edge_unset(char *s);
+
+//check_tokens.c
+bool	check_tokens(char ***token);
+char	get_last_char(char *string);
 
 #endif

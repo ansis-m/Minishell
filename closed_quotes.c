@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 10:28:52 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/24 13:36:13 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/30 20:12:59 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ bool	closed_quotes(char *s, char q)
 	return (false);
 }
 
+bool	check_repeating_quotes(char *s)
+{
+	if (*s == *(s + 1))
+	{
+		*s = ' ';
+		*(s + 1) = ' ';
+		return (true);
+	}
+	return (false);
+}
+
 void	remove_unpaired_quotes(char **s)
 {
 	int		i;
@@ -39,6 +50,8 @@ void	remove_unpaired_quotes(char **s)
 	{
 		if (*(*s + i) == 34 || *(*s + i) == 39)
 		{
+			if (check_repeating_quotes(*s + i))
+				continue ;
 			if (!closed_quotes(*s + i, *(*s + i)))
 				*(*s + i) = ' ';
 			else
