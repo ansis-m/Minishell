@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 12:29:08 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:50:29 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +216,7 @@ int		evale_goes_crazy(char *s);
 
 //goes_crazy_2.c
 int		check_edge_unset(char *s);
-int		check_slashes(char *s);
 int		check_special_symbols(char *s);
-int		check_weird_dollar_cases(char *s);
 
 //check_tokens.c
 bool	check_tokens(char ***token);

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 14:22:34 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:25:10 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	infinite_loop(void)
 int	main(int argc, char *argv[], char *envp[])
 {
 	init_env(argc, argv, envp);
+	add_env_variable("UID=1000");
 	configure_sigaction();
 	infinite_loop();
 	return (0);
