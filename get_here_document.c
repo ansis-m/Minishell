@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/23 20:26:09 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 10:04:55 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 11:02:10 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,13 @@ void	get_heredoc(char *s, char **io)
 	ft_memset(temp, 0, 500);
 	ptr = temp;
 	*(s++) = ' ';
-	*s = ' ';
+	*(s++) = ' ';
 	while (*s == ' ')
 		s++;
+	if (*s == '<' || *s == '>' || *s == '\0' || *s == '\n')
+	{
+		return ;
+	}
 	while (*s && *s != ' ')
 	{
 		*(ptr++) = *s;
