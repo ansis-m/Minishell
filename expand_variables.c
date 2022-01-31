@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 13:09:37 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:06:48 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ char	*get_variable(int *i, char *s)
 
 	ft_memset(temp, 0, 2000);
 	ptr = temp;
-	while (s && *(s + *i) && *(s + *i) != '$')
+	while (s && *(s + *i))
 	{
 		*(ptr++) = *(s + *i);
-		*(s + *i) = ' ';
-		if (*(s + *i + 1) == ' ' || *(s + *i + 1) == 34
-			|| *(s + *i + 1) == 39 || *(s + *i) != '$')
+		(*i) += 1;
+		if (*(s + *i) == ' ' || *(s + *i) == 34 || *(s + *i) == 39)
 			break ;
-		*i += 1;
+		if (*(s + *i) == '$')
+		{
+			break ;
+		}
 	}
-	printf("temp %s\n", temp);
 	if (ft_strlen(temp))
 		return (ft_strdup(temp));
 	return (NULL);
@@ -124,7 +125,7 @@ void	expand_variables(char **s)
 		else if ((*(*s + i) == 34 && closed_quotes(*s + i, 34) && !quotes)
 			|| (*(*s + i) == 34 && quotes))
 			quotes = 1 - quotes;
-		if (*(*s + i))
+		else if (*(*s + i))
 			*(ptr++) = *(*s + i++);
 	}
 	free(*s);

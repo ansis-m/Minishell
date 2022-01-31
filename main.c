@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 12:33:35 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 14:08:18 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	run_command(char **s)
 {
 	t_instructions	instructions;
 
-	// if (evale_goes_crazy(s[0]))
-	// {
-	// 	free(*s);
-	// 	return (0);
-	// }
+	if (evale_goes_crazy(s[0]))
+	{
+		free(*s);
+		return (0);
+	}
 	expand_variables(s);
 	remove_unpaired_quotes(s);
 	instructions.io = get_io(*s);
