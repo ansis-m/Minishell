@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 14:25:10 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 15:12:28 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,13 @@ int	run_command(char **s)
 	instructions.tokens = get_tokens(*s);
 	instructions.n_commands = count_pipes(*s) + 1;
 	free(*s);
-	if (construct_paths(&instructions) && check_tokens(instructions.tokens))
-		execute_commands(instructions);
-	clean_up_and_exit(instructions, false, false);
+	if (check_tokens(instructions.tokens))
+	{
+		if (construct_paths(&instructions))
+			execute_commands(instructions);
+		else
+			clean_up_and_exit(instructions, false, false);
+	}
 	return (0);
 }
 
