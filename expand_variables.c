@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_variables.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 20:19:28 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 14:42:52 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 13:09:37 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@ char	*get_variable(int *i, char *s)
 
 	ft_memset(temp, 0, 2000);
 	ptr = temp;
-	while (s && *(s + *i))
+	while (s && *(s + *i) && *(s + *i) != '$')
 	{
 		*(ptr++) = *(s + *i);
-		*i += 1;
-		if (*(s + *i) == ' ' || *(s + *i) == 34 || *(s + *i) == 39)
+		*(s + *i) = ' ';
+		if (*(s + *i + 1) == ' ' || *(s + *i + 1) == 34
+			|| *(s + *i + 1) == 39 || *(s + *i) != '$')
 			break ;
+		*i += 1;
 	}
+	printf("temp %s\n", temp);
 	if (ft_strlen(temp))
 		return (ft_strdup(temp));
 	return (NULL);
