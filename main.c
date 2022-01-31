@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
+/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 14:08:18 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 17:52:03 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	infinite_loop(void)
 int	main(int argc, char *argv[], char *envp[])
 {
 	init_env(argc, argv, envp);
+	add_env_variable("UID=1000");
 	configure_sigaction();
 	infinite_loop();
 	return (0);

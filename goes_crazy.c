@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:27:58 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/31 15:34:25 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 17:51:19 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,17 @@ int	count_char_in_str(char *s, char c)
 
 int	check_redirection_extended(char *s, char *err, int str_len, int error)
 {
-	if (s[0] == '<')
+	if (count_char_in_str(s, '<') == str_len)
 	{
-		if (s[1] == '<' && s[2] == ' ')
-			return (error);
 		error = 1;
 		g_env.exit_status = 2;
-		if ((count_char_in_str(s, '<') == str_len)
-			&& (str_len > 0 && str_len < 4))
+		if (str_len > 0 && str_len < 4)
 			printf("%s 'newline'\n", err);
-		else if ((count_char_in_str(s, '<') == str_len) && (str_len == 4))
+		else if (str_len == 4)
 			printf("%s '<'\n", err);
-		else if ((count_char_in_str(s, '<') == str_len) && (str_len == 5))
+		else if (str_len == 5)
 			printf("%s '<<'\n", err);
-		else if ((count_char_in_str(s, '<') == str_len) && (str_len > 5))
+		else if (str_len > 5)
 			printf("%s '<<<'\n", err);
 	}
 	return (error);
@@ -102,15 +99,7 @@ int	evale_goes_crazy(char *s)
 	}
 	if (error == 0)
 	{
-		error = check_slashes(s);
-	}
-	if (error == 0)
-	{
 		error = check_special_symbols(s);
-	}
-	if (error == 0)
-	{
-		error = check_weird_dollar_cases(s);
 	}			
 	return (error);
 }

@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 11:48:30 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/31 14:31:02 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 17:50:09 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,32 +41,6 @@ int	check_edge_unset(char *s)
 	return (error);
 }
 
-int	check_slashes(char *s)
-{
-	int		error;
-	char	*half_slash;
-
-	error = 0;
-	if ((ft_strlen(s) == ft_count_char(s, '/'))
-		|| (ft_strlen(s) == ft_count_char(s, '/'))
-		|| ((ft_count_char(s, '/') + ft_count_char(s, '.')) == ft_strlen(s)))
-	{
-		error = 1;
-		g_env.exit_status = 126;
-		printf("%s: Is a directory\n", s);
-	}
-	else if ((ft_count_char(s, '\\') == ft_strlen(s))
-		&& (ft_strlen(s) % 2 == 0))
-	{
-		half_slash = ft_strsub(s, 0, ft_strlen(s) / 2);
-		error = 1;
-		g_env.exit_status = 126;
-		printf("%s: command not found\n", half_slash);
-		free(half_slash);
-	}
-	return (error);
-}
-
 int	check_special_symbols(char *s)
 {
 	int		error;
@@ -83,30 +57,6 @@ int	check_special_symbols(char *s)
 		printf("syntax error near unexpected token `%s'\n", err_str);
 		free(err_str);
 		g_env.exit_status = 2;
-	}
-	return (error);
-}
-
-int	check_weird_dollar_cases(char *s)
-{
-	int		error;
-	char	*echo_str;
-
-	error = 0;
-	if ((s[0] == '$') && ((s[1] == ' ') || (s[1] == '\0')))
-	{
-		error = 1;
-		printf("%s", "$: command not found\n");
-		g_env.exit_status = 127;
-	}
-	else if ((ft_strncmp(s, "echo $", 6) == 0)
-		&& (s[6] == ' ' || s[6] == '\0'))
-	{
-		error = 1;
-		echo_str = ft_strsub(s, 5, ft_strlen(s) - 5);
-		printf("%s\n", echo_str);
-		free(echo_str);
-		g_env.exit_status = 0;
 	}
 	return (error);
 }
