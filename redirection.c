@@ -6,26 +6,31 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 10:16:44 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/23 08:10:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:29:36 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_redirection(t_redirection	*redirection,
+extern t_environment	g_env;
+
+int	init_redirection(t_redirection	*redirection,
 t_instructions	*instructions)
 {
 	redirection->stdin_copy = dup(STDIN_FILENO);
 	redirection->stdout_copy = dup(STDOUT_FILENO);
 	redirection->stderr_copy = dup(STDERR_FILENO);
 	redirection->input = get_input(instructions->io);
+	if (redirection->input == -666)
+		return (0);
 	redirection->output = get_output(instructions->io);
 	redirection->err_output = get_err_output(instructions->io);
 	open_pipes(instructions->n_commands - 1, 2, redirection->fd);
+	return (1);
 }
 
 void	close_redirection(t_redirection	*redirection,
-t_instructions	*instructions)
+t_instructions	*instructions, int pid)
 {
 	close(redirection->input);
 	close(redirection->output);
@@ -34,6 +39,7 @@ t_instructions	*instructions)
 	dup2(redirection->stdout_copy, STDOUT_FILENO);
 	dup2(redirection->stderr_copy, STDERR_FILENO);
 	close_pipes(instructions->n_commands - 1, 2, redirection->fd);
+	set_exit_status(pid);
 }
 
 int	get_input(char **io)
@@ -47,8 +53,11 @@ int	get_input(char **io)
 		fd = open(io[4], O_RDONLY, 0666);
 		if (fd == -1)
 		{
-			printf("file %s does not exist\n", io[4]);
-			return (STDIN_FILENO);
+			write(STDERR_FILENO, io[4], ft_strlen(io[4]));
+			write(STDERR_FILENO, " does not exist\n",
+				ft_strlen(" does not exist\n"));
+			g_env.exit_status = 1;
+			return (-666);
 		}
 		dup2(fd, STDIN_FILENO);
 		return (fd);

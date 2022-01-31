@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/12 10:02:12 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/28 10:00:43 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:01:12 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,29 @@ io[2] holds ">> filename" (1>> filename means the same)
 io[3] holds "2>>filename" (redirects stderr in append mode)
 io[4] holds "< filename"
 */
+
+void	get_input_redirection(char *s, char **io, char **io_err, bool combined)
+{
+	char	temp[500];
+	char	*ptr;
+
+	ft_memset(temp, 0, 500);
+	ptr = temp;
+	*s = ' ';
+	if (*(s + 1) == '&')
+		*(s + 1) = ' ';
+	while (*s == ' ')
+		s++;
+	while (*s && *s != ' ' && *s != '<' && *s != '>' && *s != '&')
+	{
+		*(ptr++) = *s;
+		*(s++) = ' ';
+	}
+	free(*io);
+	*io = ft_strdup(temp);
+	if (combined)
+		*io_err = ft_strdup(temp);
+}
 
 void	get_redirection(char *s, char **io, char **io_err, bool combined)
 {
@@ -89,7 +112,7 @@ char	**get_io(char *s)
 		if (*(s + i) == '<' && *(s + i + 1) == '<')
 			get_heredoc(s + i, io + 4);
 		else if (*(s + i) == '<')
-			get_redirection(s + i, io + 4, NULL, false);
+			get_input_redirection(s + i, io + 4, NULL, false);
 		else if (*(s + i) == '>')
 			manage_greater_than(s + i, io);
 		else if (*(s + i) == '&')

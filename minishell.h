@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 09:56:07 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:29:08 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	clean_up_and_exit(t_instructions instructions, bool global, bool ext);
 char	**get_io(char *s);
 void	allocate_io(char ***io);
 void	get_redirection(char *s, char **io, char **io_err, bool combined);
+void	get_input_redirection(char *s, char **io, char **io_err, bool combined);
 void	parse_doublequotes(char *s, int *i);
 
 //get_io_files_utils.c
@@ -147,10 +148,10 @@ char	*find_system_paths(char *variable);
 char	*get_path(char *s);
 
 //redirection.c
-void	init_redirection(t_redirection	*redirection,
+int		init_redirection(t_redirection	*redirection,
 			t_instructions	*instructions);
 void	close_redirection(t_redirection	*redirection,
-			t_instructions	*instructions);
+			t_instructions	*instructions, int pid);
 int		get_input(char **io);
 int		get_err_output(char **io);
 int		get_output(char **io);

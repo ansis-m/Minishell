@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 11:15:51 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 12:28:33 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	execute_commands(t_instructions instructions)
 
 	i = 0;
 	tokens = instructions.tokens;
-	init_redirection(&redirection, &instructions);
+	if (!init_redirection(&redirection, &instructions))
+		return ;
 	while (*(tokens + i))
 	{
 		pid = 0;
@@ -53,8 +54,7 @@ void	execute_commands(t_instructions instructions)
 		}
 		i++;
 	}
-	close_redirection(&redirection, &instructions);
-	set_exit_status(pid);
+	close_redirection(&redirection, &instructions, pid);
 }
 
 int	run_command(char **s)
