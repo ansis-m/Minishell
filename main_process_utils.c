@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_process_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/25 11:10:47 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 11:38:11 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 11:25:13 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,11 @@ extern t_environment	g_env;
 void	exit_with_error(char *s)
 {
 	perror("\e[0;36mError executing command");
-	printf("%s: was not executed\n", s);
-	printf("exiting with exit status 2\e[0;37m\n");
+	write(STDERR_FILENO, s, ft_strlen(s));
+	write(STDERR_FILENO, " : was not executed\n",
+		ft_strlen(" : was not executed\n"));
+	write(STDERR_FILENO, "exiting with status 2\e[0;37m\n",
+		ft_strlen("exiting with status 2\e[0;37m\n"));
 	g_env.exit_status = 2;
 	exit(2);
 }

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 09:53:43 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/01/31 11:15:51 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	execute_child(int i, int b, t_instructions instructions,
 	connect_pipes(i, instructions.n_commands, redirection);
 	if (b)
 		execute_builtin(b, *(tokens + i), instructions);
-	execve(*(instructions.command_paths + i), *(tokens + i), NULL);
+	else
+		execve(*(instructions.command_paths + i), *(tokens + i), NULL);
 	exit_with_error(**(tokens + i));
 }
 
