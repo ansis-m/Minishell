@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 11:48:30 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/31 12:53:50 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 14:31:02 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,8 @@ int	check_special_symbols(char *s)
 
 int	check_weird_dollar_cases(char *s)
 {
-	int	error;
+	int		error;
+	char	*echo_str;
 
 	error = 0;
 	if ((s[0] == '$') && ((s[1] == ' ') || (s[1] == '\0')))
@@ -98,10 +99,13 @@ int	check_weird_dollar_cases(char *s)
 		printf("%s", "$: command not found\n");
 		g_env.exit_status = 127;
 	}
-	else if (ft_strncmp(s, "echo $", 6) == 0)
+	else if ((ft_strncmp(s, "echo $", 6) == 0)
+		&& (s[6] == ' ' || s[6] == '\0'))
 	{
 		error = 1;
-		printf("%c\n", '$');
+		echo_str = ft_strsub(s, 5, ft_strlen(s) - 5);
+		printf("%s\n", echo_str);
+		free(echo_str);
 		g_env.exit_status = 0;
 	}
 	return (error);
