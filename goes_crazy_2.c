@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 11:48:30 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/31 10:41:03 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 11:41:21 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,26 @@ int	check_slashes(char *s)
 		g_env.exit_status = 126;
 		printf("%s: command not found\n", half_slash);
 		free(half_slash);
+	}
+	return (error);
+}
+
+int	check_special_symbols(char *s)
+{
+	int		error;
+	char	*err_str;
+
+	error = 0;
+	if ((s[0] == '|') || (s[0] == '&') || (s[0] == ';'))
+	{
+		error = 1;
+		if ((s[1] == '|') || (s[1] == '&') || (s[1] == ';'))
+			err_str = ft_strsub(s, 0, 2);
+		else
+			err_str = ft_strsub(s, 0, 1);
+		printf("syntax error near unexpected token `%s'\n", err_str);
+		free(err_str);
+		g_env.exit_status = 2;
 	}
 	return (error);
 }
