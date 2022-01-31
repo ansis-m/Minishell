@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:27:58 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/31 15:12:34 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 15:34:25 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,15 @@ int	check_redirection_edge_cases(char *s)
 	err = "syntax error near unexpected token";
 	str_len = ft_strlen(s);
 	error = 0;
-	if (s[0] == '>')
+	if (count_char_in_str(s, '>') == str_len)
 	{
 		error = 1;
 		g_env.exit_status = 2;
-		if ((count_char_in_str(s, '>') == str_len)
-			&& (str_len > 0 && str_len < 3))
+		if (str_len > 0 && str_len < 3)
 			printf("%s 'newline'\n", err);
-		else if ((count_char_in_str(s, '>') == str_len) && (str_len == 3))
+		else if (str_len == 3)
 			printf("%s '>'\n", err);
-		else if ((count_char_in_str(s, '>') == str_len) && (str_len > 3))
+		else if (str_len > 3)
 			printf("%s '>>'\n", err);
 	}
 	if (s[0] == '<')
