@@ -6,11 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/01/31 09:49:36 by amalecki         ###   ########.fr       */
-=======
 /*   Updated: 2022/01/31 12:41:25 by keshav           ###   ########.fr       */
->>>>>>> 56f65bc102bfc186dbe7ba8f0f33973dc523c685
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +27,7 @@
 # include <fcntl.h>
 
 # define TERMINAL "MINISHELL OF BOLT and ANSIS: "
-# define C_CHAR_SET "-'=_-~$#+@.,/\\"
+# define C_CHAR_SET "-'=_-~#+@.,/\\"
 
 typedef struct s_instructions
 {

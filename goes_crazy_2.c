@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 11:48:30 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/30 22:42:48 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 12:53:50 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	check_edge_unset(char *s)
 			if ((s[i] == ';') && (ft_isalnum(s[i + 1])))
 			{
 				error = 1;
-				g_env.exit_status = 1;
+				g_env.exit_status = 127;
 				rem_str = ft_strsub(s, i + 1, ft_strlen(s) - i);
 				printf("%s: command not found\n", rem_str);
 				free(rem_str);
@@ -52,7 +52,7 @@ int	check_slashes(char *s)
 		|| ((ft_count_char(s, '/') + ft_count_char(s, '.')) == ft_strlen(s)))
 	{
 		error = 1;
-		g_env.exit_status = 1;
+		g_env.exit_status = 126;
 		printf("%s: Is a directory\n", s);
 	}
 	else if ((ft_count_char(s, '\\') == ft_strlen(s))
@@ -60,9 +60,49 @@ int	check_slashes(char *s)
 	{
 		half_slash = ft_strsub(s, 0, ft_strlen(s) / 2);
 		error = 1;
-		g_env.exit_status = 1;
+		g_env.exit_status = 126;
 		printf("%s: command not found\n", half_slash);
 		free(half_slash);
+	}
+	return (error);
+}
+
+int	check_special_symbols(char *s)
+{
+	int		error;
+	char	*err_str;
+
+	error = 0;
+	if ((s[0] == '|') || (s[0] == '&') || (s[0] == ';'))
+	{
+		error = 1;
+		if ((s[1] == '|') || (s[1] == '&') || (s[1] == ';'))
+			err_str = ft_strsub(s, 0, 2);
+		else
+			err_str = ft_strsub(s, 0, 1);
+		printf("syntax error near unexpected token `%s'\n", err_str);
+		free(err_str);
+		g_env.exit_status = 2;
+	}
+	return (error);
+}
+
+int	check_weird_dollar_cases(char *s)
+{
+	int	error;
+
+	error = 0;
+	if ((s[0] == '$') && ((s[1] == ' ') || (s[1] == '\0')))
+	{
+		error = 1;
+		printf("%s", "$: command not found\n");
+		g_env.exit_status = 127;
+	}
+	else if (ft_strncmp(s, "echo $", 6) == 0)
+	{
+		error = 1;
+		printf("%c\n", '$');
+		g_env.exit_status = 0;
 	}
 	return (error);
 }

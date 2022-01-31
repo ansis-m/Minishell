@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:27:58 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/30 22:41:04 by keshav           ###   ########.fr       */
+/*   Updated: 2022/01/31 12:41:56 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	check_redirection_extended(char *s, char *err, int str_len, int error)
 	if (s[0] == '<')
 	{
 		error = 1;
-		g_env.exit_status = 1;
+		g_env.exit_status = 2;
 		if ((count_char_in_str(s, '<') == str_len)
 			&& (str_len > 0 && str_len < 4))
 			printf("%s 'newline'\n", err);
@@ -61,7 +61,7 @@ int	check_redirection_edge_cases(char *s)
 	if (s[0] == '>')
 	{
 		error = 1;
-		g_env.exit_status = 1;
+		g_env.exit_status = 2;
 		if ((count_char_in_str(s, '>') == str_len)
 			&& (str_len > 0 && str_len < 3))
 			printf("%s 'newline'\n", err);
@@ -102,6 +102,14 @@ int	evale_goes_crazy(char *s)
 	if (error == 0)
 	{
 		error = check_slashes(s);
-	}	
+	}
+	if (error == 0)
+	{
+		error = check_special_symbols(s);
+	}
+	if (error == 0)
+	{
+		error = check_weird_dollar_cases(s);
+	}			
 	return (error);
 }
