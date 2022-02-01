@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 11:48:30 by keshav            #+#    #+#             */
-/*   Updated: 2022/02/01 13:12:32 by keshav           ###   ########.fr       */
+/*   Updated: 2022/02/01 14:30:14 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,27 +61,29 @@ int	check_special_symbols(char *s)
 	return (error);
 }
 
-bool	ft_contains_substr(char *str, char *substr)
+int	compare(const char *x, const char *y)
 {
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	while (str[i])
+	while (*x && *y)
 	{
-		if (str[i] == substr[j])
+		if (*x != *y)
 		{
-			j++;
-			if (substr[j] == '\0')
-				return (true);
+			return (0);
 		}
-		else
+		x++;
+		y++;
+	}
+	return (*y == '\0');
+}
+
+bool	ft_strstr(const char *str, const char *sub_str)
+{
+	while (*str != '\0')
+	{
+		if ((*str == *sub_str) && compare(str, sub_str))
 		{
-			i = i - j + 1;
-			j = 0;
+			return (true);
 		}
-		i++;
+		str++;
 	}
 	return (false);
 }
@@ -93,17 +95,20 @@ int	check_in_mid_redirection(char *str)
 
 	error = 0;
 	err_str = "syntax error near unexpected token";
-	if (ft_contains_substr(str, "> >") || ft_contains_substr(str, ">>>"))
+	if (str)
 	{
-		error = 1;
-		printf("%s '>'\n", err_str);
-		g_env.exit_status = 2;
-	}
-	else if (ft_contains_substr(str, "< <") || ft_contains_substr(str, "<<<<"))
-	{
-		error = 1;
-		printf("%s '<'\n", err_str);
-		g_env.exit_status = 2;
+		if (ft_strstr(str, "< <") || ft_strstr(str, "<<<<"))
+		{
+			error = 1;
+			printf("%s '<'\n", err_str);
+			g_env.exit_status = 2;
+		}
+		else if (ft_strstr(str, "> >") || ft_strstr(str, ">>>"))
+		{
+			error = 1;
+			printf("%s '>'\n", err_str);
+			g_env.exit_status = 2;
+		}
 	}
 	return (error);
 }
