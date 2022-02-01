@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:30:37 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 15:12:28 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/02/01 09:36:30 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ int	run_command(char **s)
 		else
 			clean_up_and_exit(instructions, false, false);
 	}
+	clean_up_and_exit(instructions, false, false);
 	return (0);
 }
 
