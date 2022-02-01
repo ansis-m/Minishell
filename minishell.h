@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/31 17:50:29 by keshav           ###   ########.fr       */
+/*   Updated: 2022/02/01 12:47:44 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,8 @@ int		evale_goes_crazy(char *s);
 //goes_crazy_2.c
 int		check_edge_unset(char *s);
 int		check_special_symbols(char *s);
+bool	ft_contains_substr(char *str, char *substr);
+int		check_in_mid_redirection(char *str);
 
 //check_tokens.c
 bool	check_tokens(char ***token);

@@ -6,7 +6,7 @@
 /*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/29 16:27:58 by keshav            #+#    #+#             */
-/*   Updated: 2022/01/31 17:51:19 by keshav           ###   ########.fr       */
+/*   Updated: 2022/02/01 12:53:03 by keshav           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ int	evale_goes_crazy(char *s)
 	error = check_pwd_edge_case(s);
 	if (error == 0)
 		error = check_redirection_edge_cases(s);
+	if (error == 0)
+	{
+		error = check_in_mid_redirection(s);
+	}
 	if (error == 0)
 	{
 		error = check_edge_unset(s);
