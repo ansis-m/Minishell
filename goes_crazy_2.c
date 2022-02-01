@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   goes_crazy_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/30 11:48:30 by keshav            #+#    #+#             */
-/*   Updated: 2022/02/01 13:12:32 by keshav           ###   ########.fr       */
+/*   Updated: 2022/02/01 11:04:18 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ bool	ft_contains_substr(char *str, char *substr)
 {
 	int	i;
 	int	j;
+	int	len_str;
 
 	i = 0;
 	j = 0;
-	while (str[i])
+	len_str = ft_strlen(str);
+	while (str && substr && i < len_str && i >= 0 && str[i])
 	{
 		if (str[i] == substr[j])
 		{
