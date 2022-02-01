@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: keshav <keshav@student.42.fr>              +#+  +:+       +#+        */
+/*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 16:27:35 by amalecki          #+#    #+#             */
-/*   Updated: 2022/02/01 12:47:44 by keshav           ###   ########.fr       */
+/*   Updated: 2022/02/01 09:58:04 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include <fcntl.h>
 
 # define TERMINAL "MINISHELL OF BOLT and ANSIS: "
-# define C_CHAR_SET "-'=_-~$#+@.,/\\"
+# define C_CHAR_SET "-'=_-~:!$#+@.,/\\"
 
 typedef struct s_instructions
 {

@@ -6,7 +6,7 @@
 /*   By: amalecki <amalecki@students.42wolfsburg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 10:28:52 by amalecki          #+#    #+#             */
-/*   Updated: 2022/01/30 20:12:59 by amalecki         ###   ########.fr       */
+/*   Updated: 2022/02/01 10:44:35 by amalecki         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,9 @@ bool	closed_quotes(char *s, char q)
 	while (*s)
 	{
 		if (*s == q)
+		{
 			return (true);
+		}
 		s++;
 	}
 	return (false);
